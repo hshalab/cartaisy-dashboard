@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated API (regenerate with: npm run generate:api)
+# Uncomment next line if you don't want to commit generated files
+# /lib/api/generated
