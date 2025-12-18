@@ -175,8 +175,8 @@ export default function HomePage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-3" />
-          <p className="text-slate-600">Loading your dashboard...</p>
+          <RefreshCw className="w-6 h-6 animate-spin text-blue-600 mx-auto mb-2" />
+          <p className="text-xs text-slate-500">Loading your dashboard...</p>
         </div>
       </div>
     );
@@ -191,46 +191,46 @@ export default function HomePage() {
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl" />
 
         <div className="relative">
-          <div className="flex items-center gap-2 text-blue-400 text-sm font-medium mb-2">
-            <Sparkles className="w-4 h-4" />
+          <div className="flex items-center gap-2 text-blue-400 text-xs font-medium mb-2">
+            <Sparkles className="w-3.5 h-3.5" />
             <span>Welcome to Cartaisy</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+          <h1 className="text-2xl font-semibold tracking-tight text-white mb-1">
             {getGreeting()}, {firstName}!
           </h1>
-          <p className="text-slate-400 text-lg max-w-2xl">
+          <p className="text-slate-400 text-sm max-w-2xl">
             Your mobile commerce dashboard is ready. Build, customize, and launch your app experience.
           </p>
 
           {/* Quick Stats Row */}
-          <div className="flex flex-wrap gap-6 mt-8">
+          <div className="flex flex-wrap gap-6 mt-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                <Layers className="w-5 h-5 text-blue-400" />
+              <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
+                <Layers className="w-4 h-4 text-blue-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{stats?.totalComponents || 0}</p>
-                <p className="text-sm text-slate-400">Components</p>
+                <p className="text-xl font-semibold text-white">{stats?.totalComponents || 0}</p>
+                <p className="text-xs font-medium text-slate-400">Components</p>
               </div>
             </div>
-            <div className="w-px h-12 bg-white/10 hidden sm:block" />
+            <div className="w-px h-10 bg-white/10 hidden sm:block" />
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                <FolderOpen className="w-5 h-5 text-emerald-400" />
+              <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
+                <FolderOpen className="w-4 h-4 text-emerald-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{stats?.collectionsCount || 0}</p>
-                <p className="text-sm text-slate-400">Collections</p>
+                <p className="text-xl font-semibold text-white">{stats?.collectionsCount || 0}</p>
+                <p className="text-xs font-medium text-slate-400">Collections</p>
               </div>
             </div>
-            <div className="w-px h-12 bg-white/10 hidden sm:block" />
+            <div className="w-px h-10 bg-white/10 hidden sm:block" />
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                <CheckCircle2 className="w-5 h-5 text-green-400" />
+              <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
+                <CheckCircle2 className="w-4 h-4 text-green-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">Active</p>
-                <p className="text-sm text-slate-400">App Status</p>
+                <p className="text-xl font-semibold text-white">Active</p>
+                <p className="text-xs font-medium text-slate-400">App Status</p>
               </div>
             </div>
           </div>
@@ -239,8 +239,8 @@ export default function HomePage() {
 
       {/* Quick Actions Grid */}
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-slate-900">Quick Actions</h2>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">Quick Actions</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {quickActions.map((action) => {
@@ -249,16 +249,16 @@ export default function HomePage() {
               <Link
                 key={action.title}
                 href={action.href}
-                className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5 hover:border-slate-300 hover:shadow-lg transition-all duration-300"
+                className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-4 hover:border-slate-300 hover:shadow-lg transition-all duration-300"
               >
-                <div className={`w-12 h-12 rounded-xl ${action.bgLight} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon className={`w-6 h-6 bg-gradient-to-br ${action.gradient} bg-clip-text text-transparent`} style={{ color: action.gradient.includes('blue') ? '#3b82f6' : action.gradient.includes('emerald') ? '#10b981' : action.gradient.includes('violet') ? '#8b5cf6' : '#64748b' }} />
+                <div className={`w-10 h-10 rounded-lg ${action.bgLight} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                  <Icon className={`w-5 h-5 bg-gradient-to-br ${action.gradient} bg-clip-text text-transparent`} style={{ color: action.gradient.includes('blue') ? '#3b82f6' : action.gradient.includes('emerald') ? '#10b981' : action.gradient.includes('violet') ? '#8b5cf6' : '#64748b' }} />
                 </div>
-                <h3 className="font-semibold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-sm font-semibold text-slate-900 mb-0.5 group-hover:text-blue-600 transition-colors">
                   {action.title}
                 </h3>
-                <p className="text-sm text-slate-500">{action.description}</p>
-                <ArrowRight className="absolute bottom-5 right-5 w-5 h-5 text-slate-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
+                <p className="text-xs text-slate-500">{action.description}</p>
+                <ArrowRight className="absolute bottom-4 right-4 w-4 h-4 text-slate-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
               </Link>
             );
           })}
@@ -269,69 +269,69 @@ export default function HomePage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* App Status Card */}
         <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
+          <div className="p-5 border-b border-slate-100">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900">App Overview</h2>
-                <p className="text-sm text-slate-500 mt-1">Your mobile app configuration status</p>
+                <h2 className="text-sm font-semibold tracking-tight text-slate-900">App Overview</h2>
+                <p className="text-xs text-slate-500 mt-0.5">Your mobile app configuration status</p>
               </div>
               <Link
                 href="/dashboard/app-builder"
-                className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                className="text-xs font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1"
               >
-                Manage <ArrowRight className="w-4 h-4" />
+                Manage <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
 
-          <div className="p-6">
+          <div className="p-5">
             {/* Status Indicators */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-              <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-100">
-                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                  <Eye className="w-5 h-5 text-emerald-600" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-100">
+                <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center">
+                  <Eye className="w-4 h-4 text-emerald-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-emerald-700">{stats?.activeComponents || 0}</p>
-                  <p className="text-sm text-emerald-600">Active</p>
+                  <p className="text-xl font-semibold tracking-tight text-emerald-700">{stats?.activeComponents || 0}</p>
+                  <p className="text-xs font-medium text-emerald-600">Active</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-slate-50 to-gray-50 border border-slate-100">
-                <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
-                  <EyeOff className="w-5 h-5 text-slate-500" />
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-br from-slate-50 to-gray-50 border border-slate-100">
+                <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
+                  <EyeOff className="w-4 h-4 text-slate-500" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-slate-700">{stats?.hiddenComponents || 0}</p>
-                  <p className="text-sm text-slate-500">Hidden</p>
+                  <p className="text-xl font-semibold tracking-tight text-slate-700">{stats?.hiddenComponents || 0}</p>
+                  <p className="text-xs font-medium text-slate-500">Hidden</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100">
-                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                  <Clock className="w-5 h-5 text-blue-600" />
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100">
+                <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center">
+                  <Clock className="w-4 h-4 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-blue-700 truncate">{stats?.lastUpdated || 'Never'}</p>
-                  <p className="text-sm text-blue-600">Last update</p>
+                  <p className="text-base font-semibold tracking-tight text-blue-700 truncate">{stats?.lastUpdated || 'Never'}</p>
+                  <p className="text-xs font-medium text-blue-600">Last update</p>
                 </div>
               </div>
             </div>
 
             {/* Component Types */}
-            <div className="space-y-3">
-              <p className="text-sm font-medium text-slate-700">Component Breakdown</p>
-              <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Component Breakdown</p>
+              <div className="grid grid-cols-2 gap-2">
                 {componentTypes.map((comp) => {
                   const Icon = comp.icon;
                   return (
                     <div
                       key={comp.type}
-                      className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors"
+                      className="flex items-center gap-2.5 p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors"
                     >
-                      <div className={`w-8 h-8 rounded-lg ${comp.color} flex items-center justify-center`}>
-                        <Icon className="w-4 h-4" />
+                      <div className={`w-7 h-7 rounded-md ${comp.color} flex items-center justify-center`}>
+                        <Icon className="w-3.5 h-3.5" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-slate-900 truncate">{comp.label}</p>
+                        <p className="text-xs font-medium text-slate-900 truncate">{comp.label}</p>
                       </div>
                     </div>
                   );
@@ -343,15 +343,15 @@ export default function HomePage() {
 
         {/* Recent Activity */}
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
+          <div className="p-5 border-b border-slate-100">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900">Recent Activity</h2>
-                <p className="text-sm text-slate-500 mt-1">Latest changes</p>
+                <h2 className="text-sm font-semibold tracking-tight text-slate-900">Recent Activity</h2>
+                <p className="text-xs text-slate-500 mt-0.5">Latest changes</p>
               </div>
               <Link
                 href="/dashboard/activity"
-                className="text-sm font-medium text-blue-600 hover:text-blue-700"
+                className="text-xs font-medium text-blue-600 hover:text-blue-700"
               >
                 View all
               </Link>
@@ -360,22 +360,22 @@ export default function HomePage() {
 
           <div className="p-4">
             {stats?.recentActivity && stats.recentActivity.length > 0 ? (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {stats.recentActivity.map((activity, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors"
+                    className="flex items-start gap-2.5 p-2.5 rounded-lg hover:bg-slate-50 transition-colors"
                   >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 ${
                       activity.action === 'create' ? 'bg-emerald-100 text-emerald-600' :
                       activity.action === 'update' ? 'bg-blue-100 text-blue-600' :
                       activity.action === 'delete' ? 'bg-red-100 text-red-600' :
                       'bg-slate-100 text-slate-600'
                     }`}>
-                      <Activity className="w-4 h-4" />
+                      <Activity className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-900 truncate">
+                      <p className="text-xs font-medium text-slate-900 truncate">
                         {activity.action.charAt(0).toUpperCase() + activity.action.slice(1)}d {activity.resourceName}
                       </p>
                       <p className="text-xs text-slate-500">{activity.timeAgo}</p>
@@ -384,12 +384,12 @@ export default function HomePage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8">
-                <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3">
-                  <Activity className="w-6 h-6 text-slate-400" />
+              <div className="text-center py-6">
+                <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-2">
+                  <Activity className="w-5 h-5 text-slate-400" />
                 </div>
-                <p className="text-sm text-slate-600">No recent activity</p>
-                <p className="text-xs text-slate-400 mt-1">Changes will appear here</p>
+                <p className="text-xs font-medium text-slate-600">No recent activity</p>
+                <p className="text-xs text-slate-400 mt-0.5">Changes will appear here</p>
               </div>
             )}
           </div>
@@ -397,33 +397,33 @@ export default function HomePage() {
       </div>
 
       {/* Getting Started Section */}
-      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6">
-        <div className="flex flex-col md:flex-row md:items-center gap-6">
+      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-5">
+        <div className="flex flex-col md:flex-row md:items-center gap-5">
           <div className="flex-1">
-            <div className="flex items-center gap-2 text-blue-600 text-sm font-medium mb-2">
-              <Sparkles className="w-4 h-4" />
+            <div className="flex items-center gap-1.5 text-blue-600 text-xs font-medium mb-1.5">
+              <Sparkles className="w-3.5 h-3.5" />
               <span>Get Started</span>
             </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-2">
+            <h3 className="text-base font-semibold tracking-tight text-slate-900 mb-1">
               Ready to build your mobile experience?
             </h3>
-            <p className="text-slate-600">
+            <p className="text-xs text-slate-500">
               Use the App Builder to create stunning carousels, banners, and collection displays for your customers.
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             <Link
               href="/dashboard/app-builder"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors"
             >
-              <Smartphone className="w-4 h-4" />
+              <Smartphone className="w-3.5 h-3.5" />
               Open App Builder
             </Link>
             <Link
               href="/dashboard/app-builder/preview"
-              className="inline-flex items-center gap-2 px-5 py-2.5 border border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
             >
-              <Eye className="w-4 h-4" />
+              <Eye className="w-3.5 h-3.5" />
               Preview App
             </Link>
           </div>
@@ -432,22 +432,22 @@ export default function HomePage() {
 
       {/* Team Activity (if super admin) */}
       {session?.user?.role === 'super_admin' && (
-        <div className="rounded-xl border border-slate-200 bg-white p-6">
-          <div className="flex items-center justify-between mb-4">
+        <div className="rounded-xl border border-slate-200 bg-white p-5">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center">
-                <Users className="w-5 h-5 text-violet-600" />
+              <div className="w-9 h-9 rounded-lg bg-violet-100 flex items-center justify-center">
+                <Users className="w-4 h-4 text-violet-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900">Team Management</h3>
-                <p className="text-sm text-slate-500">Manage your team members and permissions</p>
+                <h3 className="text-sm font-semibold text-slate-900">Team Management</h3>
+                <p className="text-xs text-slate-500">Manage your team members and permissions</p>
               </div>
             </div>
             <Link
               href="/dashboard/team"
-              className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1"
+              className="text-xs font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1"
             >
-              Manage Team <ArrowRight className="w-4 h-4" />
+              Manage Team <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>

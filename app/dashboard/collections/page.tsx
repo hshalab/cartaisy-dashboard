@@ -40,8 +40,8 @@ export default function CollectionsPage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="w-8 h-8 animate-spin text-emerald-600 mx-auto mb-3" />
-          <p className="text-slate-600">Loading collections...</p>
+          <RefreshCw className="w-6 h-6 animate-spin text-emerald-600 mx-auto mb-2" />
+          <p className="text-xs text-slate-500">Loading collections...</p>
         </div>
       </div>
     );
@@ -56,14 +56,14 @@ export default function CollectionsPage() {
           <div className="absolute inset-0 bg-grid-white/[0.02]" />
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
           <div className="relative">
-            <div className="flex items-center gap-2 text-emerald-400 text-sm font-medium mb-2">
+            <div className="flex items-center gap-2 text-emerald-400 text-xs font-medium mb-2">
               <FolderOpen className="w-4 h-4" />
               <span>Collections</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="text-2xl font-semibold tracking-tight text-white mb-2">
               Shopify Collections
             </h1>
-            <p className="text-slate-400 text-lg">
+            <p className="text-slate-400 text-sm">
               Browse and manage your product collections
             </p>
           </div>
@@ -71,13 +71,13 @@ export default function CollectionsPage() {
 
         <div className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-12">
           <div className="flex flex-col items-center text-center max-w-md mx-auto">
-            <div className="w-20 h-20 rounded-2xl bg-slate-100 flex items-center justify-center mb-6">
-              <LinkIcon className="w-10 h-10 text-slate-400" />
+            <div className="w-16 h-16 rounded-xl bg-slate-100 flex items-center justify-center mb-6">
+              <LinkIcon className="w-8 h-8 text-slate-400" />
             </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-2">
+            <h3 className="text-base font-semibold text-slate-900 mb-2">
               Connect Your Shopify Store
             </h3>
-            <p className="text-slate-500 mb-8">
+            <p className="text-xs text-slate-500 mb-8">
               To view and manage your collections, you need to connect your Shopify store first.
               Head to settings to get started.
             </p>
@@ -102,14 +102,14 @@ export default function CollectionsPage() {
           <div className="absolute inset-0 bg-grid-white/[0.02]" />
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
           <div className="relative">
-            <div className="flex items-center gap-2 text-emerald-400 text-sm font-medium mb-2">
+            <div className="flex items-center gap-2 text-emerald-400 text-xs font-medium mb-2">
               <FolderOpen className="w-4 h-4" />
               <span>Collections</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="text-2xl font-semibold tracking-tight text-white mb-2">
               Shopify Collections
             </h1>
-            <p className="text-slate-400 text-lg">
+            <p className="text-slate-400 text-sm">
               Browse and manage your product collections
             </p>
           </div>
@@ -117,13 +117,13 @@ export default function CollectionsPage() {
 
         <div className="rounded-xl border border-red-200 bg-red-50 p-8">
           <div className="flex flex-col items-center text-center">
-            <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
-              <AlertCircle className="w-8 h-8 text-red-600" />
+            <div className="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center mb-4">
+              <AlertCircle className="w-6 h-6 text-red-600" />
             </div>
-            <h3 className="text-lg font-semibold text-red-900 mb-2">
+            <h3 className="text-base font-semibold text-red-900 mb-2">
               Failed to Load Collections
             </h3>
-            <p className="text-red-700 mb-6 max-w-md">{error}</p>
+            <p className="text-xs text-slate-500 mb-6 max-w-md">{error}</p>
             <Button onClick={refetch} variant="outline" className="gap-2">
               <RefreshCw className="w-4 h-4" />
               Try Again
@@ -143,14 +143,14 @@ export default function CollectionsPage() {
           <div className="absolute inset-0 bg-grid-white/[0.02]" />
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
           <div className="relative">
-            <div className="flex items-center gap-2 text-emerald-400 text-sm font-medium mb-2">
+            <div className="flex items-center gap-2 text-emerald-400 text-xs font-medium mb-2">
               <FolderOpen className="w-4 h-4" />
               <span>Collections</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="text-2xl font-semibold tracking-tight text-white mb-2">
               Shopify Collections
             </h1>
-            <p className="text-slate-400 text-lg">
+            <p className="text-slate-400 text-sm">
               Browse and manage your product collections
             </p>
           </div>
@@ -158,13 +158,13 @@ export default function CollectionsPage() {
 
         <div className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-12">
           <div className="flex flex-col items-center text-center max-w-md mx-auto">
-            <div className="w-20 h-20 rounded-2xl bg-slate-100 flex items-center justify-center mb-6">
-              <FolderOpen className="w-10 h-10 text-slate-400" />
+            <div className="w-16 h-16 rounded-xl bg-slate-100 flex items-center justify-center mb-6">
+              <FolderOpen className="w-8 h-8 text-slate-400" />
             </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-2">
+            <h3 className="text-base font-semibold text-slate-900 mb-2">
               No Collections Found
             </h3>
-            <p className="text-slate-500 mb-8">
+            <p className="text-xs text-slate-500 mb-8">
               Your Shopify store doesn't have any collections yet. Create collections in your
               Shopify admin to see them here.
             </p>
@@ -196,14 +196,14 @@ export default function CollectionsPage() {
         <div className="relative">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
-              <div className="flex items-center gap-2 text-emerald-400 text-sm font-medium mb-2">
+              <div className="flex items-center gap-2 text-emerald-400 text-xs font-medium mb-2">
                 <FolderOpen className="w-4 h-4" />
                 <span>Collections</span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              <h1 className="text-2xl font-semibold tracking-tight text-white mb-2">
                 Shopify Collections
               </h1>
-              <p className="text-slate-400 text-lg max-w-xl">
+              <p className="text-slate-400 text-sm max-w-xl">
                 Browse and manage your product collections from Shopify.
               </p>
             </div>
@@ -211,21 +211,21 @@ export default function CollectionsPage() {
             {/* Quick Stats */}
             <div className="flex gap-6">
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <FolderOpen className="w-7 h-7 text-emerald-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-2">
+                  <FolderOpen className="w-5 h-5 text-emerald-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">{collections.length}</p>
-                <p className="text-sm text-slate-400">Collections</p>
+                <p className="text-xl font-semibold text-white">{collections.length}</p>
+                <p className="text-xs font-medium text-slate-400">Collections</p>
               </div>
               <div className="w-px bg-white/10" />
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <Package className="w-7 h-7 text-teal-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-2">
+                  <Package className="w-5 h-5 text-teal-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">
+                <p className="text-xl font-semibold text-white">
                   {collections.reduce((acc, c) => acc + (c.productsCount || 0), 0)}
                 </p>
-                <p className="text-sm text-slate-400">Products</p>
+                <p className="text-xs font-medium text-slate-400">Products</p>
               </div>
             </div>
           </div>
@@ -241,7 +241,7 @@ export default function CollectionsPage() {
             placeholder="Search collections..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
           />
         </div>
 
@@ -315,10 +315,10 @@ export default function CollectionsPage() {
                 </div>
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-slate-900 truncate group-hover:text-emerald-600 transition-colors" title={collection.title}>
+                <h3 className="text-sm font-semibold text-slate-900 truncate group-hover:text-emerald-600 transition-colors" title={collection.title}>
                   {collection.title}
                 </h3>
-                <p className="text-sm text-slate-500 truncate mt-1">
+                <p className="text-xs text-slate-500 truncate mt-1">
                   {collection.handle}
                 </p>
                 {collection.productsCount !== undefined && (
@@ -353,10 +353,10 @@ export default function CollectionsPage() {
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-slate-900 truncate group-hover:text-emerald-600 transition-colors">
+                <h3 className="text-sm font-semibold text-slate-900 truncate group-hover:text-emerald-600 transition-colors">
                   {collection.title}
                 </h3>
-                <p className="text-sm text-slate-500 truncate">
+                <p className="text-xs text-slate-500 truncate">
                   /{collection.handle}
                 </p>
               </div>
@@ -380,11 +380,11 @@ export default function CollectionsPage() {
       {/* Empty Search Results */}
       {searchQuery && filteredCollections.length === 0 && (
         <div className="rounded-xl border border-slate-200 bg-slate-50 p-12 text-center">
-          <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
-            <Search className="w-8 h-8 text-slate-400" />
+          <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center mx-auto mb-4">
+            <Search className="w-6 h-6 text-slate-400" />
           </div>
-          <h3 className="text-lg font-semibold text-slate-900 mb-2">No collections found</h3>
-          <p className="text-slate-500">
+          <h3 className="text-base font-semibold text-slate-900 mb-2">No collections found</h3>
+          <p className="text-xs text-slate-500">
             Try adjusting your search terms or clear the filter
           </p>
           <Button
@@ -398,14 +398,14 @@ export default function CollectionsPage() {
       )}
 
       {/* Pro Tips */}
-      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-6">
+      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-5">
         <div className="flex flex-col md:flex-row md:items-center gap-6">
-          <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-6 h-6 text-emerald-600" />
+          <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+            <Sparkles className="w-5 h-5 text-emerald-600" />
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-slate-900 mb-1">Collection Tips</h3>
-            <p className="text-sm text-slate-600">
+            <h3 className="text-sm font-semibold text-slate-900 mb-1">Collection Tips</h3>
+            <p className="text-xs text-slate-500">
               Collections are synced from your Shopify store. Use them in your App Builder to create
               collection displays and showcases for your mobile app customers.
             </p>

@@ -5,17 +5,11 @@ import { CustomerOrder, customersApi } from '@/lib/api/customers';
 import { format } from 'date-fns';
 import { Package, ChevronLeft, ChevronRight, Loader2, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { formatCurrency } from '@/lib/formatCurrency';
 import { cn } from '@/lib/utils';
 
 interface CustomerOrderHistoryProps {
   customerId: string;
-}
-
-function formatCurrency(amount: number, currency = 'USD'): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-  }).format(amount);
 }
 
 function getStatusColor(status: string): string {

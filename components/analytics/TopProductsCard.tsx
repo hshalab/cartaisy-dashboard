@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Package, Loader2 } from 'lucide-react';
 import Image from 'next/image';
+import { formatCurrency } from '@/lib/formatCurrency';
 
 interface Product {
   id: string;
@@ -14,10 +15,11 @@ interface Product {
 
 interface TopProductsCardProps {
   products: Product[];
+  currency?: string;
   isLoading?: boolean;
 }
 
-export function TopProductsCard({ products, isLoading = false }: TopProductsCardProps) {
+export function TopProductsCard({ products, currency = 'USD', isLoading = false }: TopProductsCardProps) {
   return (
     <Card className="h-full">
       <CardHeader className="pb-3">
@@ -61,7 +63,7 @@ export function TopProductsCard({ products, isLoading = false }: TopProductsCard
                   </p>
                 </div>
                 <div className="text-sm font-semibold text-slate-900">
-                  ${product.sales.toLocaleString()}
+                  {formatCurrency(product.sales, currency)}
                 </div>
               </div>
             ))}

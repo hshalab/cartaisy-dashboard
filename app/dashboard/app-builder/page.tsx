@@ -188,77 +188,77 @@ function SortableItem({ section, stats, onToggleVisibility, isDragOverlay = fals
       }`}
     >
       {/* Position indicator */}
-      <div className={`absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+      <div className={`absolute -left-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center text-xs font-semibold ${
         section.isVisible ? 'bg-slate-900 text-white' : 'bg-slate-300 text-slate-600'
       }`}>
         {index + 1}
       </div>
 
-      <div className="p-4 pl-6">
-        <div className="flex items-center gap-4">
+      <div className="p-3 pl-5">
+        <div className="flex items-center gap-3">
           {/* Drag Handle */}
           <button
             {...(!isDragOverlay ? attributes : {})}
             {...(!isDragOverlay ? listeners : {})}
-            className={`p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors ${
+            className={`p-1.5 rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors ${
               isDragOverlay ? 'cursor-grabbing' : 'cursor-grab active:cursor-grabbing'
             }`}
           >
-            <GripVertical className="w-5 h-5" />
+            <GripVertical className="w-4 h-4" />
           </button>
 
           {/* Icon */}
-          <div className={`w-12 h-12 rounded-xl ${config.bgColor} flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-105`}>
-            <Icon className={`w-6 h-6 ${config.color}`} />
+          <div className={`w-10 h-10 rounded-lg ${config.bgColor} flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-105`}>
+            <Icon className={`w-5 h-5 ${config.color}`} />
           </div>
 
           {/* Content */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-slate-900">{config.title}</h3>
+            <div className="flex items-center gap-1.5">
+              <h3 className="text-sm font-semibold text-slate-900">{config.title}</h3>
               {section.isVisible ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
-                  <Eye className="w-3 h-3" />
+                <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
+                  <Eye className="w-2.5 h-2.5" />
                   Visible
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-500">
-                  <EyeOff className="w-3 h-3" />
+                <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-500">
+                  <EyeOff className="w-2.5 h-2.5" />
                   Hidden
                 </span>
               )}
             </div>
-            <p className="text-sm text-slate-500 mt-0.5">{config.description}</p>
+            <p className="text-xs text-slate-500">{config.description}</p>
           </div>
 
           {/* Count Badge */}
-          <div className="flex flex-col items-center px-4">
-            <span className="text-2xl font-bold text-slate-900">{count}</span>
+          <div className="flex flex-col items-center px-3">
+            <span className="text-lg font-semibold text-slate-900">{count}</span>
             <span className="text-xs text-slate-500">{count === 1 ? 'item' : 'items'}</span>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             {/* Visibility Toggle */}
             <button
               onClick={() => onToggleVisibility(section.type)}
-              className={`p-2.5 rounded-lg transition-all ${
+              className={`p-2 rounded-md transition-all ${
                 section.isVisible
                   ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
                   : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600'
               }`}
               title={section.isVisible ? 'Hide from app' : 'Show in app'}
             >
-              {section.isVisible ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+              {section.isVisible ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
             </button>
 
             {/* Manage Link */}
             <Link
               href={config.path}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors font-medium text-sm"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors text-xs font-medium"
             >
               Manage
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
@@ -409,15 +409,15 @@ export default function AppBuilderPage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-3" />
-          <p className="text-slate-600">Loading App Builder...</p>
+          <RefreshCw className="w-6 h-6 animate-spin text-blue-600 mx-auto mb-2" />
+          <p className="text-xs text-slate-500">Loading App Builder...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8 pb-8">
+    <div className="space-y-6 pb-8">
       {/* Hero Header */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
         <div className="absolute inset-0 bg-grid-white/[0.02]" />
@@ -427,42 +427,42 @@ export default function AppBuilderPage() {
         <div className="relative">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
-              <div className="flex items-center gap-2 text-blue-400 text-sm font-medium mb-2">
-                <Sparkles className="w-4 h-4" />
+              <div className="flex items-center gap-1.5 text-blue-400 text-xs font-medium mb-2">
+                <Sparkles className="w-3.5 h-3.5" />
                 <span>App Builder</span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              <h1 className="text-2xl font-semibold tracking-tight text-white mb-1">
                 Design Your App Experience
               </h1>
-              <p className="text-slate-400 text-lg max-w-xl">
+              <p className="text-slate-400 text-sm max-w-xl">
                 Drag and drop to reorder components. Toggle visibility to control what your customers see.
               </p>
             </div>
 
             {/* Quick Stats */}
-            <div className="flex gap-6">
+            <div className="flex gap-5">
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <Layers className="w-7 h-7 text-blue-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-1.5">
+                  <Layers className="w-5 h-5 text-blue-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">{totalComponents}</p>
-                <p className="text-sm text-slate-400">Total Items</p>
+                <p className="text-xl font-semibold text-white">{totalComponents}</p>
+                <p className="text-xs font-medium text-slate-400">Total Items</p>
               </div>
               <div className="w-px bg-white/10" />
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <Eye className="w-7 h-7 text-emerald-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-1.5">
+                  <Eye className="w-5 h-5 text-emerald-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">{visibleSections}</p>
-                <p className="text-sm text-slate-400">Visible</p>
+                <p className="text-xl font-semibold text-white">{visibleSections}</p>
+                <p className="text-xs font-medium text-slate-400">Visible</p>
               </div>
               <div className="w-px bg-white/10" />
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <EyeOff className="w-7 h-7 text-slate-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-1.5">
+                  <EyeOff className="w-5 h-5 text-slate-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">{sections.length - visibleSections}</p>
-                <p className="text-sm text-slate-400">Hidden</p>
+                <p className="text-xl font-semibold text-white">{sections.length - visibleSections}</p>
+                <p className="text-xs font-medium text-slate-400">Hidden</p>
               </div>
             </div>
           </div>
@@ -470,31 +470,31 @@ export default function AppBuilderPage() {
       </div>
 
       {/* Action Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-white border border-slate-200">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 rounded-xl bg-white border border-slate-200">
+        <div className="flex items-center gap-2">
           <Link
             href="/dashboard/app-builder/preview"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition-colors font-medium"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition-colors text-sm font-medium"
           >
-            <Monitor className="w-4 h-4" />
+            <Monitor className="w-3.5 h-3.5" />
             Preview App
           </Link>
-          <span className="text-sm text-slate-500">
+          <span className="text-xs text-slate-500">
             See how your app looks on mobile
           </span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {saveSuccess && (
-            <div className="flex items-center gap-2 text-emerald-600 text-sm font-medium">
-              <CheckCircle2 className="w-4 h-4" />
+            <div className="flex items-center gap-1.5 text-emerald-600 text-xs font-medium">
+              <CheckCircle2 className="w-3.5 h-3.5" />
               Saved successfully
             </div>
           )}
           {hasChanges && (
             <>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 text-amber-700 text-sm font-medium">
-                <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-medium">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                 Unsaved changes
               </div>
               <Button
@@ -502,25 +502,25 @@ export default function AppBuilderPage() {
                 size="sm"
                 onClick={handleDiscardChanges}
                 disabled={isSaving}
-                className="gap-2"
+                className="gap-1.5 h-8 text-xs"
               >
-                <RotateCcw className="w-4 h-4" />
+                <RotateCcw className="w-3.5 h-3.5" />
                 Discard
               </Button>
               <Button
                 size="sm"
                 onClick={saveLayout}
                 disabled={isSaving}
-                className="gap-2 bg-blue-600 hover:bg-blue-700"
+                className="gap-1.5 h-8 text-xs bg-blue-600 hover:bg-blue-700"
               >
                 {isSaving ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
                     Saving...
                   </>
                 ) : (
                   <>
-                    <Save className="w-4 h-4" />
+                    <Save className="w-3.5 h-3.5" />
                     Save Changes
                   </>
                 )}
@@ -532,11 +532,11 @@ export default function AppBuilderPage() {
 
       {/* Error State */}
       {error && (
-        <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-xl">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+        <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
           <div>
-            <p className="font-medium text-red-900">Error</p>
-            <p className="text-sm text-red-700">{error}</p>
+            <p className="text-sm font-medium text-red-900">Error</p>
+            <p className="text-xs text-red-700">{error}</p>
           </div>
         </div>
       )}
@@ -544,8 +544,8 @@ export default function AppBuilderPage() {
       {/* Section Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Component Layout</h2>
-          <p className="text-sm text-slate-500 mt-1">
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">Component Layout</h2>
+          <p className="text-xs text-slate-500 mt-0.5">
             Drag to reorder how sections appear on your mobile app homescreen
           </p>
         </div>
@@ -600,25 +600,25 @@ export default function AppBuilderPage() {
       )}
 
       {/* Help Card */}
-      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
-        <div className="flex flex-col md:flex-row md:items-center gap-6">
-          <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-6 h-6 text-blue-600" />
+      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-5">
+        <div className="flex flex-col md:flex-row md:items-center gap-4">
+          <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+            <Sparkles className="w-5 h-5 text-blue-600" />
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-slate-900 mb-1">Pro Tips</h3>
-            <ul className="text-sm text-slate-600 space-y-1">
-              <li>• <strong>Drag</strong> the grip handle to reorder sections</li>
-              <li>• <strong>Toggle visibility</strong> with the eye icon to show/hide sections</li>
-              <li>• <strong>Click "Manage"</strong> to add or edit items within each section</li>
-              <li>• <strong>Preview</strong> your changes before saving to see how they look on mobile</li>
+            <h3 className="text-sm font-semibold text-slate-900 mb-1">Pro Tips</h3>
+            <ul className="text-xs text-slate-500 space-y-0.5">
+              <li>• <span className="font-medium text-slate-700">Drag</span> the grip handle to reorder sections</li>
+              <li>• <span className="font-medium text-slate-700">Toggle visibility</span> with the eye icon to show/hide sections</li>
+              <li>• <span className="font-medium text-slate-700">Click "Manage"</span> to add or edit items within each section</li>
+              <li>• <span className="font-medium text-slate-700">Preview</span> your changes before saving to see how they look on mobile</li>
             </ul>
           </div>
           <Link
             href="/dashboard/app-builder/preview"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition-colors whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors whitespace-nowrap"
           >
-            <Smartphone className="w-4 h-4" />
+            <Smartphone className="w-3.5 h-3.5" />
             Preview on Mobile
           </Link>
         </div>

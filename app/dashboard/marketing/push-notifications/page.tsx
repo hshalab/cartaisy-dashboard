@@ -293,11 +293,11 @@ export default function PushNotificationsPage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center mx-auto mb-4 animate-pulse">
-            <Bell className="w-8 h-8 text-white" />
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center mx-auto mb-3 animate-pulse">
+            <Bell className="w-6 h-6 text-white" />
           </div>
-          <RefreshCw className="w-6 h-6 animate-spin text-blue-600 mx-auto mb-3" />
-          <p className="text-slate-600">Loading push notifications...</p>
+          <RefreshCw className="w-5 h-5 animate-spin text-blue-600 mx-auto mb-2" />
+          <p className="text-xs text-slate-500">Loading push notifications...</p>
         </div>
       </div>
     );
@@ -341,13 +341,13 @@ export default function PushNotificationsPage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                'flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
+                'flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200',
                 activeTab === tab.id
                   ? 'bg-white text-slate-900 shadow-sm'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
               )}
             >
-              <Icon className="w-4 h-4" />
+              <Icon className="w-3.5 h-3.5" />
               {tab.label}
               {count !== undefined && count > 0 && (
                 <span className="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-violet-100 text-violet-700">
@@ -368,11 +368,11 @@ export default function PushNotificationsPage() {
               <div className="h-1 bg-gradient-to-r from-blue-500 via-violet-500 to-purple-500" />
               <CardHeader className="pb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center">
-                    <Send className="w-5 h-5 text-white" />
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center">
+                    <Send className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl">Compose Notification</CardTitle>
+                    <CardTitle className="text-base">Compose Notification</CardTitle>
                     <CardDescription>Create and send push notifications to your customers</CardDescription>
                   </div>
                 </div>
@@ -401,11 +401,11 @@ export default function PushNotificationsPage() {
           <div className="h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
           <CardHeader className="flex flex-row items-center justify-between border-b border-slate-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
-                <FileText className="w-5 h-5 text-white" />
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
+                <FileText className="w-4 h-4 text-white" />
               </div>
               <div>
-                <CardTitle className="text-xl">Notification Templates</CardTitle>
+                <CardTitle className="text-base">Notification Templates</CardTitle>
                 <CardDescription>Create and manage reusable notification templates</CardDescription>
               </div>
             </div>
@@ -433,11 +433,11 @@ export default function PushNotificationsPage() {
           <div className="h-1 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500" />
           <CardHeader className="flex flex-row items-center justify-between border-b border-slate-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center">
-                <Calendar className="w-5 h-5 text-white" />
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center">
+                <Calendar className="w-4 h-4 text-white" />
               </div>
               <div>
-                <CardTitle className="text-xl">Scheduled Notifications</CardTitle>
+                <CardTitle className="text-base">Scheduled Notifications</CardTitle>
                 <CardDescription>Manage notifications scheduled for future delivery</CardDescription>
               </div>
             </div>
@@ -478,11 +478,11 @@ export default function PushNotificationsPage() {
             <div className="h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
             <CardHeader className="flex flex-row items-center justify-between border-b border-slate-100">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
-                  <History className="w-5 h-5 text-white" />
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
+                  <History className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl">Notification History</CardTitle>
+                  <CardTitle className="text-base">Notification History</CardTitle>
                   <CardDescription>View all past notifications and delivery stats</CardDescription>
                 </div>
               </div>
@@ -564,31 +564,31 @@ function HeroHeader({ stats }: { stats: NotificationStats | null }) {
       <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl" />
 
       <div className="relative">
-        <div className="flex items-center gap-2 text-blue-400 text-sm font-medium mb-2">
-          <Sparkles className="w-4 h-4" />
+        <div className="flex items-center gap-2 text-blue-400 text-xs font-medium mb-2">
+          <Sparkles className="w-3.5 h-3.5" />
           <span>Marketing</span>
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Push Notifications</h1>
-        <p className="text-slate-400 text-lg max-w-2xl">
+        <h1 className="text-2xl font-semibold tracking-tight text-white mb-2">Push Notifications</h1>
+        <p className="text-slate-400 text-sm max-w-2xl">
           Engage your customers with targeted push notifications. Drive sales, announce promotions, and keep your audience connected.
         </p>
 
         {stats && (
-          <div className="flex flex-wrap gap-6 mt-8">
+          <div className="flex flex-wrap gap-5 mt-6">
             <StatBadge
-              icon={<Users className="w-5 h-5 text-blue-400" />}
+              icon={<Users className="w-4 h-4 text-blue-400" />}
               value={stats.totalCustomersWithDevices.toLocaleString()}
               label="Reachable Customers"
             />
             <div className="w-px h-12 bg-white/10 hidden sm:block" />
             <StatBadge
-              icon={<Smartphone className="w-5 h-5 text-emerald-400" />}
+              icon={<Smartphone className="w-4 h-4 text-emerald-400" />}
               value={stats.totalActiveDevices.toLocaleString()}
               label="Active Devices"
             />
             <div className="w-px h-12 bg-white/10 hidden sm:block" />
             <StatBadge
-              icon={<CheckCircle2 className="w-5 h-5 text-green-400" />}
+              icon={<CheckCircle2 className="w-4 h-4 text-green-400" />}
               value={stats.firebaseEnabled ? 'Active' : 'Inactive'}
               label="Push Status"
             />
@@ -602,10 +602,10 @@ function HeroHeader({ stats }: { stats: NotificationStats | null }) {
 function StatBadge({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">{icon}</div>
+      <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">{icon}</div>
       <div>
-        <p className="text-2xl font-bold text-white">{value}</p>
-        <p className="text-sm text-slate-400">{label}</p>
+        <p className="text-xl font-semibold text-white">{value}</p>
+        <p className="text-xs font-medium text-slate-400">{label}</p>
       </div>
     </div>
   );
@@ -647,16 +647,16 @@ function QuickStatsCards({ stats }: { stats: NotificationStats | null }) {
           <div
             key={idx}
             className={cn(
-              'p-4 rounded-xl border border-slate-200 bg-white hover:shadow-md transition-shadow'
+              'p-3 rounded-xl border border-slate-200 bg-white hover:shadow-md transition-shadow'
             )}
           >
             <div className="flex items-center gap-3">
-              <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center', card.bg)}>
-                <Icon className={cn('w-5 h-5 bg-gradient-to-br bg-clip-text', card.gradient)} style={{ color: card.gradient.includes('blue') ? '#3b82f6' : card.gradient.includes('emerald') ? '#10b981' : '#8b5cf6' }} />
+              <div className={cn('w-9 h-9 rounded-md flex items-center justify-center', card.bg)}>
+                <Icon className={cn('w-4 h-4 bg-gradient-to-br bg-clip-text', card.gradient)} style={{ color: card.gradient.includes('blue') ? '#3b82f6' : card.gradient.includes('emerald') ? '#10b981' : '#8b5cf6' }} />
               </div>
               <div>
-                <p className="text-2xl font-bold text-slate-900">{card.value}</p>
-                <p className="text-sm text-slate-500">{card.label}</p>
+                <p className="text-lg font-semibold text-slate-900">{card.value}</p>
+                <p className="text-xs text-slate-500">{card.label}</p>
               </div>
             </div>
           </div>
@@ -737,11 +737,11 @@ function StatsOverview({ stats }: { stats: NotificationStats | null }) {
           <Card key={idx} className="border-0 shadow-lg overflow-hidden group hover:shadow-xl transition-shadow">
             <div className={cn('h-1 bg-gradient-to-r', card.gradient)} />
             <CardContent className="pt-6">
-              <div className={cn('w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center mb-4', card.gradient)}>
-                <Icon className="w-6 h-6 text-white" />
+              <div className={cn('w-10 h-10 rounded-lg bg-gradient-to-br flex items-center justify-center mb-4', card.gradient)}>
+                <Icon className="w-5 h-5 text-white" />
               </div>
-              <p className="text-3xl font-bold text-slate-900 mb-1">{card.value}</p>
-              <p className="text-sm font-medium text-slate-700">{card.label}</p>
+              <p className="text-2xl font-semibold tracking-tight text-slate-900 mb-1">{card.value}</p>
+              <p className="text-xs font-medium text-slate-700">{card.label}</p>
               <p className="text-xs text-slate-500 mt-1">{card.description}</p>
             </CardContent>
           </Card>

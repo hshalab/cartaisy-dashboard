@@ -92,8 +92,8 @@ export default function TeamPage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="w-8 h-8 animate-spin text-violet-600 mx-auto mb-3" />
-          <p className="text-slate-600">Loading team...</p>
+          <RefreshCw className="w-6 h-6 animate-spin text-violet-600 mx-auto mb-2" />
+          <p className="text-xs text-slate-500">Loading team...</p>
         </div>
       </div>
     );
@@ -110,14 +110,14 @@ export default function TeamPage() {
         <div className="relative">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
-              <div className="flex items-center gap-2 text-violet-400 text-sm font-medium mb-2">
+              <div className="flex items-center gap-2 text-violet-400 text-xs font-medium mb-2">
                 <Users className="w-4 h-4" />
                 <span>Team Management</span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              <h1 className="text-2xl font-semibold tracking-tight text-white mb-2">
                 Your Team
               </h1>
-              <p className="text-slate-400 text-lg max-w-xl">
+              <p className="text-slate-400 text-sm max-w-xl">
                 Manage team members, roles, and permissions for your store.
               </p>
             </div>
@@ -125,27 +125,27 @@ export default function TeamPage() {
             {/* Quick Stats */}
             <div className="flex gap-6">
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <Users className="w-7 h-7 text-violet-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-2">
+                  <Users className="w-5 h-5 text-violet-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">{members.length}</p>
-                <p className="text-sm text-slate-400">Members</p>
+                <p className="text-xl font-semibold text-white">{members.length}</p>
+                <p className="text-xs font-medium text-slate-400">Members</p>
               </div>
               <div className="w-px bg-white/10" />
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <Crown className="w-7 h-7 text-amber-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-2">
+                  <Crown className="w-5 h-5 text-amber-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">{superAdminCount}</p>
-                <p className="text-sm text-slate-400">Super Admins</p>
+                <p className="text-xl font-semibold text-white">{superAdminCount}</p>
+                <p className="text-xs font-medium text-slate-400">Super Admins</p>
               </div>
               <div className="w-px bg-white/10" />
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <Mail className="w-7 h-7 text-pink-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-2">
+                  <Mail className="w-5 h-5 text-pink-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">{pendingInvitations.length}</p>
-                <p className="text-sm text-slate-400">Pending</p>
+                <p className="text-xl font-semibold text-white">{pendingInvitations.length}</p>
+                <p className="text-xs font-medium text-slate-400">Pending</p>
               </div>
             </div>
           </div>
@@ -153,23 +153,23 @@ export default function TeamPage() {
       </div>
 
       {/* Action Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-white border border-slate-200">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-3 rounded-xl bg-white border border-slate-200">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-violet-100 text-violet-700">
-            <Shield className="w-4 h-4" />
-            <span className="text-sm font-medium">{adminCount} Admins</span>
+          <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-violet-100 text-violet-700">
+            <Shield className="w-3.5 h-3.5" />
+            <span className="text-xs font-medium">{adminCount} Admins</span>
           </div>
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-amber-100 text-amber-700">
-            <Crown className="w-4 h-4" />
-            <span className="text-sm font-medium">{superAdminCount} Super Admins</span>
+          <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-amber-100 text-amber-700">
+            <Crown className="w-3.5 h-3.5" />
+            <span className="text-xs font-medium">{superAdminCount} Super Admins</span>
           </div>
         </div>
 
         <Button
           onClick={() => setShowInviteDialog(true)}
-          className="bg-slate-900 hover:bg-slate-800 gap-2"
+          className="bg-slate-900 hover:bg-slate-800 gap-2 text-xs h-8"
         >
-          <UserPlus className="w-4 h-4" />
+          <UserPlus className="w-3.5 h-3.5" />
           Invite Member
         </Button>
       </div>
@@ -189,25 +189,25 @@ export default function TeamPage() {
       <div>
         <div className="flex items-center gap-2 mb-4">
           <ShieldCheck className="w-5 h-5 text-slate-600" />
-          <h2 className="text-lg font-semibold text-slate-900">Active Members</h2>
-          <span className="text-sm text-slate-500">({members.length})</span>
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">Active Members</h2>
+          <span className="text-xs text-slate-500">({members.length})</span>
         </div>
 
         {members.length === 0 ? (
           <div className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-12">
             <div className="flex flex-col items-center text-center max-w-md mx-auto">
-              <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
-                <Users className="w-8 h-8 text-slate-400" />
+              <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center mb-4">
+                <Users className="w-6 h-6 text-slate-400" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">No team members yet</h3>
-              <p className="text-slate-500 mb-6">
+              <h3 className="text-base font-semibold text-slate-900 mb-2">No team members yet</h3>
+              <p className="text-xs text-slate-500 mb-6">
                 Invite your first team member to start collaborating on your store.
               </p>
               <Button
                 onClick={() => setShowInviteDialog(true)}
-                className="bg-slate-900 hover:bg-slate-800 gap-2"
+                className="bg-slate-900 hover:bg-slate-800 gap-2 text-xs h-8"
               >
-                <UserPlus className="w-4 h-4" />
+                <UserPlus className="w-3.5 h-3.5" />
                 Invite First Member
               </Button>
             </div>
@@ -233,8 +233,8 @@ export default function TeamPage() {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Clock className="w-5 h-5 text-amber-600" />
-            <h2 className="text-lg font-semibold text-slate-900">Pending Invitations</h2>
-            <span className="text-sm text-slate-500">({pendingInvitations.length})</span>
+            <h2 className="text-sm font-semibold tracking-tight text-slate-900">Pending Invitations</h2>
+            <span className="text-xs text-slate-500">({pendingInvitations.length})</span>
           </div>
 
           <div className="space-y-3">
@@ -282,14 +282,14 @@ export default function TeamPage() {
       )}
 
       {/* Pro Tips */}
-      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-violet-50 to-pink-50 p-6">
+      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-violet-50 to-pink-50 p-5">
         <div className="flex flex-col md:flex-row md:items-center gap-6">
-          <div className="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-6 h-6 text-violet-600" />
+          <div className="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
+            <Sparkles className="w-5 h-5 text-violet-600" />
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-slate-900 mb-1">Role Permissions</h3>
-            <ul className="text-sm text-slate-600 space-y-1">
+            <h3 className="text-sm font-semibold text-slate-900 mb-1">Role Permissions</h3>
+            <ul className="text-xs text-slate-500 space-y-1">
               <li>• <strong>Super Admin:</strong> Full access including team management and billing</li>
               <li>• <strong>Admin:</strong> Can manage app content but cannot invite or remove members</li>
             </ul>

@@ -173,8 +173,8 @@ export default function ActivityPage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-3" />
-          <p className="text-slate-600">Loading activity log...</p>
+          <RefreshCw className="w-6 h-6 animate-spin text-blue-600 mx-auto mb-2" />
+          <p className="text-xs text-slate-500">Loading activity log...</p>
         </div>
       </div>
     );
@@ -191,14 +191,14 @@ export default function ActivityPage() {
         <div className="relative">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
-              <div className="flex items-center gap-2 text-blue-400 text-sm font-medium mb-2">
+              <div className="flex items-center gap-2 text-blue-400 text-xs font-medium mb-2">
                 <History className="w-4 h-4" />
                 <span>Activity Log</span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              <h1 className="text-2xl font-semibold tracking-tight text-white mb-2">
                 {isSuperAdmin ? 'Team Activity' : 'Your Activity'}
               </h1>
-              <p className="text-slate-400 text-lg max-w-xl">
+              <p className="text-slate-400 text-sm max-w-xl">
                 {isSuperAdmin
                   ? 'Track all changes made by team members to components and settings.'
                   : 'View your recent activity and changes.'}
@@ -208,21 +208,21 @@ export default function ActivityPage() {
             {/* Quick Stats */}
             <div className="flex gap-6">
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <ClipboardList className="w-7 h-7 text-blue-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-2">
+                  <ClipboardList className="w-5 h-5 text-blue-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">{total}</p>
-                <p className="text-sm text-slate-400">Total Events</p>
+                <p className="text-xl font-semibold text-white">{total}</p>
+                <p className="text-xs font-medium text-slate-400">Total Events</p>
               </div>
               {isSuperAdmin && stats && (
                 <>
                   <div className="w-px bg-white/10" />
                   <div className="text-center">
-                    <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                      <FileText className="w-7 h-7 text-cyan-400" />
+                    <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-2">
+                      <FileText className="w-5 h-5 text-cyan-400" />
                     </div>
-                    <p className="text-2xl font-bold text-white">{stats.totalChanges24Hours || 0}</p>
-                    <p className="text-sm text-slate-400">Last 24h</p>
+                    <p className="text-xl font-semibold text-white">{stats.totalChanges24Hours || 0}</p>
+                    <p className="text-xs font-medium text-slate-400">Last 24h</p>
                   </div>
                 </>
               )}
@@ -237,11 +237,11 @@ export default function ActivityPage() {
       )}
 
       {/* Action Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-white border border-slate-200">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-3 rounded-xl bg-white border border-slate-200">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 text-slate-600">
+          <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-600">
             <Filter className="w-4 h-4" />
-            <span className="text-sm font-medium">
+            <span className="text-xs font-medium">
               {hasActiveFilters ? 'Filters active' : 'No filters'}
             </span>
           </div>
@@ -250,7 +250,7 @@ export default function ActivityPage() {
               variant="ghost"
               size="sm"
               onClick={handleResetFilters}
-              className="text-slate-500 hover:text-slate-700"
+              className="text-slate-500 hover:text-slate-700 text-xs"
             >
               Clear all
             </Button>
@@ -259,7 +259,7 @@ export default function ActivityPage() {
 
         <div className="flex items-center gap-3">
           {activities.length > 0 && (
-            <Button variant="outline" onClick={handleExportCSV} className="gap-2">
+            <Button variant="outline" size="sm" onClick={handleExportCSV} className="gap-2 text-xs">
               <Download className="w-4 h-4" />
               Export CSV
             </Button>
@@ -272,7 +272,7 @@ export default function ActivityPage() {
         <div className="p-4 border-b border-slate-100">
           <div className="flex items-center gap-2">
             <Filter className="w-5 h-5 text-slate-600" />
-            <h3 className="font-semibold text-slate-900">Filters</h3>
+            <h3 className="text-sm font-semibold text-slate-900">Filters</h3>
           </div>
         </div>
         <div className="p-4">
@@ -307,17 +307,17 @@ export default function ActivityPage() {
       {!isLoading && activities.length === 0 && !error && (
         <div className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-12">
           <div className="flex flex-col items-center text-center max-w-md mx-auto">
-            <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
-              <ClipboardList className="w-8 h-8 text-slate-400" />
+            <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center mb-4">
+              <ClipboardList className="w-6 h-6 text-slate-400" />
             </div>
-            <h3 className="text-lg font-semibold text-slate-900 mb-2">No activity found</h3>
-            <p className="text-slate-500 mb-4">
+            <h3 className="text-base font-semibold text-slate-900 mb-2">No activity found</h3>
+            <p className="text-xs text-slate-500 mb-4">
               {hasActiveFilters
                 ? 'Try adjusting your filters to see more results.'
                 : 'Activity will appear here as changes are made.'}
             </p>
             {hasActiveFilters && (
-              <Button variant="outline" onClick={handleResetFilters}>
+              <Button variant="outline" size="sm" onClick={handleResetFilters} className="text-xs">
                 Clear Filters
               </Button>
             )}
@@ -331,7 +331,7 @@ export default function ActivityPage() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <History className="w-5 h-5 text-slate-600" />
-              <h2 className="text-lg font-semibold text-slate-900">Activity Timeline</h2>
+              <h2 className="text-sm font-semibold tracking-tight text-slate-900">Activity Timeline</h2>
             </div>
             <div className="space-y-3">
               {activities.map((activity) => (
@@ -342,7 +342,7 @@ export default function ActivityPage() {
 
           {/* Pagination */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-white border border-slate-200">
-            <p className="text-sm text-slate-600">
+            <p className="text-xs text-slate-600">
               Showing <span className="font-medium">{offset + 1}</span> to{' '}
               <span className="font-medium">{Math.min(offset + ITEMS_PER_PAGE, total)}</span> of{' '}
               <span className="font-medium">{total}</span> results
@@ -353,12 +353,12 @@ export default function ActivityPage() {
                 size="sm"
                 onClick={handlePrevPage}
                 disabled={offset === 0}
-                className="gap-1"
+                className="gap-1 text-xs"
               >
                 <ChevronLeft className="w-4 h-4" />
                 Previous
               </Button>
-              <div className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 text-sm font-medium text-slate-700">
+              <div className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 text-xs font-medium text-slate-700">
                 Page {currentPage} of {totalPages}
               </div>
               <Button
@@ -366,7 +366,7 @@ export default function ActivityPage() {
                 size="sm"
                 onClick={handleNextPage}
                 disabled={offset + ITEMS_PER_PAGE >= total}
-                className="gap-1"
+                className="gap-1 text-xs"
               >
                 Next
                 <ChevronRight className="w-4 h-4" />
@@ -377,14 +377,14 @@ export default function ActivityPage() {
       )}
 
       {/* Pro Tips */}
-      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-blue-50 to-cyan-50 p-6">
+      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-blue-50 to-cyan-50 p-5">
         <div className="flex flex-col md:flex-row md:items-center gap-6">
-          <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-6 h-6 text-blue-600" />
+          <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+            <Sparkles className="w-5 h-5 text-blue-600" />
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-slate-900 mb-1">Activity Tracking</h3>
-            <p className="text-sm text-slate-600">
+            <h3 className="text-sm font-semibold text-slate-900 mb-1">Activity Tracking</h3>
+            <p className="text-xs text-slate-500">
               All changes to your app components, settings, and team are automatically logged.
               Use filters to find specific events or export to CSV for detailed analysis.
             </p>

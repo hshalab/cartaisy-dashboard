@@ -2,12 +2,14 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, Package } from 'lucide-react';
+import { formatCurrency } from '@/lib/formatCurrency';
 
 interface Order {
   id: string;
   customer: string;
   email: string;
   total: number;
+  currency?: string;
   status: 'pending' | 'processing' | 'completed' | 'cancelled';
   date: string;
 }
@@ -82,8 +84,11 @@ export function RecentOrdersCard({ orders, isLoading = false }: RecentOrdersCard
                     </td>
                     <td className="py-3 px-4 text-right">
                       <span className="font-semibold text-slate-900 text-sm">
-                        ${order.total.toFixed(2)}
+                        {formatCurrency(order.total, order.currency || 'USD')}
                       </span>
+                      {order.currency && order.currency !== 'USD' && (
+                        <span className="ml-1 text-xs text-slate-500">{order.currency}</span>
+                      )}
                     </td>
                   </tr>
                 ))}

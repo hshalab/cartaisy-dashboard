@@ -8,6 +8,10 @@ interface SalesData {
   averageOrderValue: number;
   totalItemsSold: number;
   currency: string;
+  /** Whether revenue includes orders from multiple currencies (converted to base) */
+  isMultiCurrency?: boolean;
+  /** List of currencies included in the revenue if multi-currency */
+  includedCurrencies?: string[];
 }
 
 interface TopProduct {
@@ -36,6 +40,7 @@ interface RecentOrder {
   orderNumber: string;
   customer: string;
   totalPrice: number;
+  currency?: string;
   status: string;
   placedAt: string;
 }
@@ -175,4 +180,65 @@ export function useConversionFunnel(options: UseAnalyticsOptions = {}) {
   }, [options.startDate, options.endDate]);
 
   return { data, isLoading, error };
+}
+
+// App Engagement Types
+export interface AppEngagementData {
+  /** Daily Active Users */
+  dau: number;
+  /** DAU change percentage vs yesterday */
+  dauChange: number;
+  /** Monthly Active Users (30-day rolling) */
+  mau: number;
+  /** MAU change percentage vs previous 30 days */
+  mauChange: number;
+  /** Average session duration in seconds */
+  avgSessionDuration: number;
+  /** Session duration change percentage */
+  sessionDurationChange: number;
+  /** Total sessions in the period */
+  totalSessions: number;
+  /** Sessions change percentage */
+  sessionsChange: number;
+  /** Daily active users trend over the date range */
+  dauTrend: Array<{
+    date: string;
+    users: number;
+  }>;
+}
+
+export function useAppEngagement(options: UseAnalyticsOptions = {}) {
+  const [data, setData] = useState<AppEngagementData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchEngagement = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const params = new URLSearchParams();
+      if (options.startDate) params.append('startDate', options.startDate);
+      if (options.endDate) params.append('endDate', options.endDate);
+
+      const response = await fetch(`/api/analytics/app-engagement?${params}`);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch app engagement data');
+      }
+
+      const result = await response.json();
+      setData(result.data || result);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load app engagement');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [options.startDate, options.endDate]);
+
+  useEffect(() => {
+    fetchEngagement();
+  }, [fetchEngagement]);
+
+  return { data, isLoading, error, refetch: fetchEngagement };
 }

@@ -18,7 +18,10 @@ import {
   Package,
   Search,
   Clock,
+  Info,
+  Smartphone,
 } from 'lucide-react';
+import { formatCurrency, getCurrencySymbol } from '@/lib/formatCurrency';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -35,7 +38,9 @@ import { ConversionFunnel } from '@/components/analytics/ConversionFunnel';
 import { LowStockCard } from '@/components/analytics/LowStockCard';
 import { TopSearchesCard } from '@/components/analytics/TopSearchesCard';
 import { HourlyActivityChart } from '@/components/analytics/HourlyActivityChart';
-import { useAnalyticsDashboard } from '@/hooks/useAnalytics';
+import { AppEngagementCards } from '@/components/analytics/AppEngagementCards';
+import { ActiveUsersChart } from '@/components/analytics/ActiveUsersChart';
+import { useAnalyticsDashboard, useAppEngagement } from '@/hooks/useAnalytics';
 
 interface StatCardProps {
   title: string;
@@ -70,26 +75,26 @@ function StatCard({
   const colors = colorClasses[color];
 
   return (
-    <div className={`relative overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-br ${colors.gradient} p-6`}>
+    <div className={`relative overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-br ${colors.gradient} p-5`}>
       {isLoading ? (
-        <div className="flex items-center justify-center h-24">
-          <Loader2 className="w-6 h-6 animate-spin text-slate-400" />
+        <div className="flex items-center justify-center h-20">
+          <Loader2 className="w-5 h-5 animate-spin text-slate-400" />
         </div>
       ) : (
         <>
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm font-medium text-slate-600">{title}</p>
-              <p className="text-3xl font-bold text-slate-900 mt-2">
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">{title}</p>
+              <p className="text-2xl font-semibold tracking-tight text-slate-900 mt-1.5">
                 {prefix}{typeof value === 'number' ? value.toLocaleString() : value}{suffix}
               </p>
               {change !== undefined && (
-                <div className={`flex items-center gap-1.5 mt-3 text-sm font-medium ${isPositive ? 'text-emerald-600' : 'text-red-600'}`}>
-                  <div className={`flex items-center justify-center w-5 h-5 rounded-full ${isPositive ? 'bg-emerald-100' : 'bg-red-100'}`}>
+                <div className={`flex items-center gap-1 mt-2 text-xs font-medium ${isPositive ? 'text-emerald-600' : 'text-red-600'}`}>
+                  <div className={`flex items-center justify-center w-4 h-4 rounded-full ${isPositive ? 'bg-emerald-100' : 'bg-red-100'}`}>
                     {isPositive ? (
-                      <ArrowUpRight className="w-3 h-3" />
+                      <ArrowUpRight className="w-2.5 h-2.5" />
                     ) : (
-                      <ArrowDownRight className="w-3 h-3" />
+                      <ArrowDownRight className="w-2.5 h-2.5" />
                     )}
                   </div>
                   <span>{Math.abs(change).toFixed(1)}%</span>
@@ -97,8 +102,8 @@ function StatCard({
                 </div>
               )}
             </div>
-            <div className={`w-14 h-14 ${colors.bg} rounded-2xl flex items-center justify-center`}>
-              <Icon className={`w-7 h-7 ${colors.icon}`} />
+            <div className={`w-11 h-11 ${colors.bg} rounded-xl flex items-center justify-center`}>
+              <Icon className={`w-5 h-5 ${colors.icon}`} />
             </div>
           </div>
         </>
@@ -155,6 +160,14 @@ export default function AnalyticsPage() {
     limit: 10,
   });
 
+  const {
+    data: appEngagement,
+    isLoading: engagementLoading,
+  } = useAppEngagement({
+    startDate,
+    endDate,
+  });
+
   const salesChartData = useMemo(() => {
     if (!data?.salesTrends) return [];
     return data.salesTrends.map(trend => ({
@@ -182,17 +195,18 @@ export default function AnalyticsPage() {
       customer: order.customer,
       email: '',
       total: order.totalPrice,
+      currency: order.currency || data?.sales?.currency || 'USD',
       status: order.status.toLowerCase() as 'pending' | 'processing' | 'completed' | 'cancelled',
       date: order.placedAt,
     }));
-  }, [data?.recentOrders]);
+  }, [data?.recentOrders, data?.sales?.currency]);
 
   if (isLoading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-3" />
-          <p className="text-slate-600">Loading analytics...</p>
+          <RefreshCw className="w-6 h-6 animate-spin text-blue-600 mx-auto mb-2" />
+          <p className="text-xs text-slate-500">Loading analytics...</p>
         </div>
       </div>
     );
@@ -200,34 +214,34 @@ export default function AnalyticsPage() {
 
   if (error) {
     return (
-      <div className="space-y-8 pb-8">
+      <div className="space-y-6 pb-8">
         {/* Hero Header */}
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
           <div className="absolute inset-0 bg-grid-white/[0.02]" />
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl" />
           <div className="relative">
-            <div className="flex items-center gap-2 text-violet-400 text-sm font-medium mb-2">
-              <BarChart3 className="w-4 h-4" />
+            <div className="flex items-center gap-1.5 text-violet-400 text-xs font-medium mb-2">
+              <BarChart3 className="w-3.5 h-3.5" />
               <span>Analytics</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="text-2xl font-semibold tracking-tight text-white mb-1">
               Store Performance
             </h1>
-            <p className="text-slate-400 text-lg">
+            <p className="text-slate-400 text-sm">
               Track sales, customers, and growth metrics
             </p>
           </div>
         </div>
 
-        <div className="rounded-xl border border-red-200 bg-red-50 p-8">
+        <div className="rounded-xl border border-red-200 bg-red-50 p-6">
           <div className="flex flex-col items-center text-center">
-            <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
-              <AlertCircle className="w-8 h-8 text-red-600" />
+            <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-3">
+              <AlertCircle className="w-6 h-6 text-red-600" />
             </div>
-            <h3 className="text-lg font-semibold text-red-900 mb-2">Failed to load analytics</h3>
-            <p className="text-red-700 mb-6 max-w-md">{error}</p>
-            <Button onClick={refetch} variant="outline" className="gap-2">
-              <RefreshCw className="w-4 h-4" />
+            <h3 className="text-sm font-semibold text-red-900 mb-1">Failed to load analytics</h3>
+            <p className="text-xs text-red-700 mb-4 max-w-md">{error}</p>
+            <Button onClick={refetch} variant="outline" size="sm" className="gap-1.5 text-sm">
+              <RefreshCw className="w-3.5 h-3.5" />
               Try Again
             </Button>
           </div>
@@ -237,7 +251,7 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div className="space-y-8 pb-8">
+    <div className="space-y-6 pb-8">
       {/* Hero Header */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
         <div className="absolute inset-0 bg-grid-white/[0.02]" />
@@ -247,48 +261,50 @@ export default function AnalyticsPage() {
         <div className="relative">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
-              <div className="flex items-center gap-2 text-violet-400 text-sm font-medium mb-2">
-                <BarChart3 className="w-4 h-4" />
+              <div className="flex items-center gap-1.5 text-violet-400 text-xs font-medium mb-2">
+                <BarChart3 className="w-3.5 h-3.5" />
                 <span>Analytics</span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              <h1 className="text-2xl font-semibold tracking-tight text-white mb-1">
                 Store Performance
               </h1>
-              <p className="text-slate-400 text-lg max-w-xl">
+              <p className="text-slate-400 text-sm max-w-xl">
                 Track sales, customers, and growth metrics for your mobile commerce store.
               </p>
             </div>
 
             {/* Quick Stats in Header */}
-            <div className="flex gap-6">
+            <div className="flex gap-5">
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <DollarSign className="w-7 h-7 text-emerald-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-1.5">
+                  <DollarSign className="w-5 h-5 text-emerald-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">
-                  ${(data?.sales?.totalRevenue ?? 0).toLocaleString()}
+                <p className="text-xl font-semibold text-white">
+                  {formatCurrency(data?.sales?.totalRevenue ?? 0, data?.sales?.currency || 'USD')}
                 </p>
-                <p className="text-sm text-slate-400">Revenue</p>
+                <p className="text-xs font-medium text-slate-400">
+                  Revenue {data?.sales?.currency && data.sales.currency !== 'USD' && `(${data.sales.currency})`}
+                </p>
               </div>
               <div className="w-px bg-white/10" />
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <ShoppingCart className="w-7 h-7 text-blue-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-1.5">
+                  <ShoppingCart className="w-5 h-5 text-blue-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">
+                <p className="text-xl font-semibold text-white">
                   {(data?.sales?.totalOrders ?? 0).toLocaleString()}
                 </p>
-                <p className="text-sm text-slate-400">Orders</p>
+                <p className="text-xs font-medium text-slate-400">Orders</p>
               </div>
               <div className="w-px bg-white/10" />
               <div className="text-center">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                  <Users className="w-7 h-7 text-violet-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-1.5">
+                  <Users className="w-5 h-5 text-violet-400" />
                 </div>
-                <p className="text-2xl font-bold text-white">
+                <p className="text-xl font-semibold text-white">
                   {(data?.customers?.totalCustomers ?? 0).toLocaleString()}
                 </p>
-                <p className="text-sm text-slate-400">Customers</p>
+                <p className="text-xs font-medium text-slate-400">Customers</p>
               </div>
             </div>
           </div>
@@ -296,34 +312,34 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Controls Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-white border border-slate-200">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 text-slate-600">
-            <Calendar className="w-4 h-4" />
-            <span className="text-sm font-medium">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 rounded-xl bg-white border border-slate-200">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-slate-100 text-slate-600">
+            <Calendar className="w-3.5 h-3.5" />
+            <span className="text-xs font-medium">
               {dateRangeOptions.find(opt => opt.value === dateRange)?.label}
             </span>
           </div>
-          <span className="text-sm text-slate-500">
+          <span className="text-xs text-slate-500">
             {startDate} to {endDate}
           </span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <Select value={dateRange} onValueChange={setDateRange}>
-            <SelectTrigger className="w-44">
+            <SelectTrigger className="w-40 h-8 text-xs">
               <SelectValue placeholder="Select period" />
             </SelectTrigger>
             <SelectContent>
               {dateRangeOptions.map(option => (
-                <SelectItem key={option.value} value={option.value}>
+                <SelectItem key={option.value} value={option.value} className="text-xs">
                   {option.label}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          <Button onClick={refetch} variant="outline" size="sm" className="gap-2">
-            <RefreshCw className="w-4 h-4" />
+          <Button onClick={refetch} variant="outline" size="sm" className="gap-1.5 h-8 text-xs">
+            <RefreshCw className="w-3.5 h-3.5" />
             Refresh
           </Button>
         </div>
@@ -331,16 +347,38 @@ export default function AnalyticsPage() {
 
       {/* Stats Cards */}
       <div>
-        <div className="flex items-center gap-2 mb-4">
-          <Activity className="w-5 h-5 text-slate-600" />
-          <h2 className="text-lg font-semibold text-slate-900">Key Metrics</h2>
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-1.5">
+            <Activity className="w-4 h-4 text-slate-600" />
+            <h2 className="text-sm font-semibold tracking-tight text-slate-900">Key Metrics</h2>
+          </div>
+          {data?.sales?.currency && (
+            <span className="text-xs text-slate-500">
+              Currency: {data.sales.currency}
+            </span>
+          )}
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+
+        {/* Multi-currency notice */}
+        {data?.sales?.isMultiCurrency && (
+          <div className="mb-3 p-2.5 rounded-lg bg-blue-50 border border-blue-200">
+            <div className="flex items-start gap-1.5">
+              <Info className="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <p className="text-xs text-blue-700">
+                Revenue shown in {data.sales.currency}. Amounts converted from original transaction currencies
+                {data.sales.includedCurrencies && data.sales.includedCurrencies.length > 0 && (
+                  <span> ({data.sales.includedCurrencies.join(', ')})</span>
+                )}.
+              </p>
+            </div>
+          </div>
+        )}
+
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           <StatCard
             title="Total Revenue"
-            value={data?.sales?.totalRevenue ?? 0}
+            value={formatCurrency(data?.sales?.totalRevenue ?? 0, data?.sales?.currency || 'USD')}
             icon={DollarSign}
-            prefix={data?.sales?.currency === 'USD' ? '$' : (data?.sales?.currency || '$') + ' '}
             color="emerald"
           />
           <StatCard
@@ -357,51 +395,67 @@ export default function AnalyticsPage() {
           />
           <StatCard
             title="Avg Order Value"
-            value={data?.sales?.averageOrderValue?.toFixed(2) ?? '0.00'}
+            value={formatCurrency(data?.sales?.averageOrderValue ?? 0, data?.sales?.currency || 'USD')}
             icon={TrendingUp}
-            prefix="$"
             color="amber"
           />
         </div>
       </div>
 
+      {/* App Engagement Section */}
+      <div>
+        <div className="flex items-center gap-1.5 mb-3">
+          <Smartphone className="w-4 h-4 text-slate-600" />
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">App Engagement</h2>
+        </div>
+        <AppEngagementCards data={appEngagement} isLoading={engagementLoading} />
+      </div>
+
       {/* Charts Row */}
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-5 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-            <div className="p-6 border-b border-slate-100">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-slate-600" />
-                <h3 className="font-semibold text-slate-900">Sales Overview</h3>
+            <div className="p-5 border-b border-slate-100">
+              <div className="flex items-center gap-1.5">
+                <TrendingUp className="w-4 h-4 text-slate-600" />
+                <h3 className="text-sm font-semibold text-slate-900">Sales Overview</h3>
               </div>
-              <p className="text-sm text-slate-500 mt-1">Revenue and orders over time</p>
+              <p className="text-xs text-slate-500 mt-0.5">Revenue and orders over time</p>
             </div>
-            <div className="p-6">
+            <div className="p-5">
               <SalesChart data={salesChartData} isLoading={isLoading} />
             </div>
           </div>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
-            <div className="flex items-center gap-2">
-              <Package className="w-5 h-5 text-slate-600" />
-              <h3 className="font-semibold text-slate-900">Top Products</h3>
+          <div className="p-5 border-b border-slate-100">
+            <div className="flex items-center gap-1.5">
+              <Package className="w-4 h-4 text-slate-600" />
+              <h3 className="text-sm font-semibold text-slate-900">Top Products</h3>
             </div>
-            <p className="text-sm text-slate-500 mt-1">Best selling items</p>
+            <p className="text-xs text-slate-500 mt-0.5">Best selling items</p>
           </div>
           <div className="p-4">
-            <TopProductsCard products={topProducts} isLoading={isLoading} />
+            <TopProductsCard products={topProducts} currency={data?.sales?.currency || 'USD'} isLoading={isLoading} />
           </div>
         </div>
       </div>
 
+      {/* Active Users Chart */}
+      <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
+        <ActiveUsersChart
+          data={appEngagement?.dauTrend ?? []}
+          isLoading={engagementLoading}
+        />
+      </div>
+
       {/* Second Row */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
-            <div className="flex items-center gap-2">
-              <Activity className="w-5 h-5 text-slate-600" />
-              <h3 className="font-semibold text-slate-900">Platform Breakdown</h3>
+          <div className="p-5 border-b border-slate-100">
+            <div className="flex items-center gap-1.5">
+              <Activity className="w-4 h-4 text-slate-600" />
+              <h3 className="text-sm font-semibold text-slate-900">Platform Breakdown</h3>
             </div>
           </div>
           <div className="p-4">
@@ -409,10 +463,10 @@ export default function AnalyticsPage() {
           </div>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-slate-600" />
-              <h3 className="font-semibold text-slate-900">Conversion Funnel</h3>
+          <div className="p-5 border-b border-slate-100">
+            <div className="flex items-center gap-1.5">
+              <TrendingUp className="w-4 h-4 text-slate-600" />
+              <h3 className="text-sm font-semibold text-slate-900">Conversion Funnel</h3>
             </div>
           </div>
           <div className="p-4">
@@ -420,10 +474,10 @@ export default function AnalyticsPage() {
           </div>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
-            <div className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-slate-600" />
-              <h3 className="font-semibold text-slate-900">Hourly Activity</h3>
+          <div className="p-5 border-b border-slate-100">
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-4 h-4 text-slate-600" />
+              <h3 className="text-sm font-semibold text-slate-900">Hourly Activity</h3>
             </div>
           </div>
           <div className="p-4">
@@ -433,26 +487,26 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Third Row */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-5 md:grid-cols-2">
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
-            <div className="flex items-center gap-2">
-              <Search className="w-5 h-5 text-slate-600" />
-              <h3 className="font-semibold text-slate-900">Top Searches</h3>
+          <div className="p-5 border-b border-slate-100">
+            <div className="flex items-center gap-1.5">
+              <Search className="w-4 h-4 text-slate-600" />
+              <h3 className="text-sm font-semibold text-slate-900">Top Searches</h3>
             </div>
-            <p className="text-sm text-slate-500 mt-1">What customers are looking for</p>
+            <p className="text-xs text-slate-500 mt-0.5">What customers are looking for</p>
           </div>
           <div className="p-4">
             <TopSearchesCard searches={data?.topSearches ?? []} isLoading={isLoading} />
           </div>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-amber-600" />
-              <h3 className="font-semibold text-slate-900">Low Stock Alert</h3>
+          <div className="p-5 border-b border-slate-100">
+            <div className="flex items-center gap-1.5">
+              <AlertCircle className="w-4 h-4 text-amber-600" />
+              <h3 className="text-sm font-semibold text-slate-900">Low Stock Alert</h3>
             </div>
-            <p className="text-sm text-slate-500 mt-1">Products that need restocking</p>
+            <p className="text-xs text-slate-500 mt-0.5">Products that need restocking</p>
           </div>
           <div className="p-4">
             <LowStockCard products={data?.lowStockProducts ?? []} isLoading={isLoading} />
@@ -462,14 +516,14 @@ export default function AnalyticsPage() {
 
       {/* Recent Orders */}
       <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-        <div className="p-6 border-b border-slate-100">
+        <div className="p-5 border-b border-slate-100">
           <div className="flex items-center justify-between">
             <div>
-              <div className="flex items-center gap-2">
-                <ShoppingCart className="w-5 h-5 text-slate-600" />
-                <h3 className="font-semibold text-slate-900">Recent Orders</h3>
+              <div className="flex items-center gap-1.5">
+                <ShoppingCart className="w-4 h-4 text-slate-600" />
+                <h3 className="text-sm font-semibold text-slate-900">Recent Orders</h3>
               </div>
-              <p className="text-sm text-slate-500 mt-1">Latest customer orders</p>
+              <p className="text-xs text-slate-500 mt-0.5">Latest customer orders</p>
             </div>
           </div>
         </div>
@@ -479,14 +533,14 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Pro Tips */}
-      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-violet-50 to-purple-50 p-6">
-        <div className="flex flex-col md:flex-row md:items-center gap-6">
-          <div className="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-6 h-6 text-violet-600" />
+      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-violet-50 to-purple-50 p-5">
+        <div className="flex flex-col md:flex-row md:items-center gap-4">
+          <div className="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
+            <Sparkles className="w-5 h-5 text-violet-600" />
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-slate-900 mb-1">Analytics Insights</h3>
-            <p className="text-sm text-slate-600">
+            <h3 className="text-sm font-semibold text-slate-900 mb-0.5">Analytics Insights</h3>
+            <p className="text-xs text-slate-500">
               Monitor your key metrics regularly to identify trends. Use the date range selector to compare
               different time periods and track your store's growth over time.
             </p>

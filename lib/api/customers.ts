@@ -16,6 +16,8 @@ export interface Customer {
   phone?: string;
   totalOrders: number;
   totalSpent: number;
+  /** Currency code for totalSpent (e.g., 'USD', 'EUR') */
+  currency?: string;
   lastOrderDate?: string;
   createdAt: string;
   updatedAt: string;

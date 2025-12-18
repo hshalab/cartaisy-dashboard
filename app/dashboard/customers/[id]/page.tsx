@@ -27,14 +27,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CustomerOrderHistory, CustomerActivityFeed } from '@/components/customers';
 import { ExportDataButton, DeleteCustomerDataModal } from '@/components/compliance';
 import { customersApi, CustomerDetail, CustomerAddress } from '@/lib/api/customers';
+import { formatCurrency } from '@/lib/formatCurrency';
 import { cn } from '@/lib/utils';
-
-function formatCurrency(amount: number, currency = 'USD'): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-  }).format(amount);
-}
 
 interface StatCardProps {
   icon: React.ElementType;
@@ -54,14 +48,14 @@ function StatCard({ icon: Icon, label, value, color }: StatCardProps) {
   const colors = colorClasses[color];
 
   return (
-    <div className="p-4 rounded-xl border border-slate-200 bg-white">
-      <div className="flex items-center gap-3">
-        <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center', colors.bg)}>
-          <Icon className={cn('w-5 h-5', colors.icon)} />
+    <div className="p-3 rounded-xl border border-slate-200 bg-white">
+      <div className="flex items-center gap-2.5">
+        <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center', colors.bg)}>
+          <Icon className={cn('w-4 h-4', colors.icon)} />
         </div>
         <div>
-          <p className="text-2xl font-bold text-slate-900">{value}</p>
-          <p className="text-sm text-slate-500">{label}</p>
+          <p className="text-lg font-semibold tracking-tight text-slate-900">{value}</p>
+          <p className="text-xs text-slate-500">{label}</p>
         </div>
       </div>
     </div>
@@ -137,7 +131,7 @@ export default function CustomerDetailPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-slate-400" />
+        <Loader2 className="w-6 h-6 animate-spin text-slate-400" />
       </div>
     );
   }
@@ -183,63 +177,63 @@ export default function CustomerDetailPage() {
       </Button>
 
       {/* Customer Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
         <div className="absolute inset-0 bg-grid-white/[0.02]" />
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl" />
 
         <div className="relative">
-          <div className="flex flex-col md:flex-row md:items-start gap-6">
+          <div className="flex flex-col md:flex-row md:items-start gap-4">
             {/* Avatar */}
-            <div className="w-20 h-20 rounded-2xl bg-white/10 flex items-center justify-center">
-              <User className="w-10 h-10 text-white" />
+            <div className="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center">
+              <User className="w-7 h-7 text-white" />
             </div>
 
             {/* Info */}
             <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-white">{customerName}</h1>
-                <span className="px-3 py-1 text-xs font-medium rounded-full bg-white/10 text-white/80">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <h1 className="text-xl font-semibold tracking-tight text-white">{customerName}</h1>
+                <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-white/10 text-white/80">
                   Member {memberSince}
                 </span>
                 {customer.acceptsMarketing ? (
-                  <span className="px-3 py-1 text-xs font-medium rounded-full bg-emerald-500/20 text-emerald-300 flex items-center gap-1">
-                    <Bell className="w-3 h-3" />
+                  <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/20 text-emerald-300 flex items-center gap-0.5">
+                    <Bell className="w-2.5 h-2.5" />
                     Subscribed
                   </span>
                 ) : (
-                  <span className="px-3 py-1 text-xs font-medium rounded-full bg-slate-500/20 text-slate-400 flex items-center gap-1">
-                    <BellOff className="w-3 h-3" />
+                  <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-slate-500/20 text-slate-400 flex items-center gap-0.5">
+                    <BellOff className="w-2.5 h-2.5" />
                     Not subscribed
                   </span>
                 )}
               </div>
 
-              <div className="flex flex-wrap items-center gap-4 text-slate-300">
+              <div className="flex flex-wrap items-center gap-3 text-slate-300 text-sm">
                 <a
                   href={`mailto:${customer.email}`}
-                  className="flex items-center gap-2 hover:text-white transition-colors"
+                  className="flex items-center gap-1.5 hover:text-white transition-colors"
                 >
-                  <Mail className="w-4 h-4" />
+                  <Mail className="w-3.5 h-3.5" />
                   {customer.email}
                 </a>
                 {customer.phone && (
                   <a
                     href={`tel:${customer.phone}`}
-                    className="flex items-center gap-2 hover:text-white transition-colors"
+                    className="flex items-center gap-1.5 hover:text-white transition-colors"
                   >
-                    <Phone className="w-4 h-4" />
+                    <Phone className="w-3.5 h-3.5" />
                     {customer.phone}
                   </a>
                 )}
               </div>
 
               {customer.tags && customer.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-4">
+                <div className="flex flex-wrap gap-1.5 mt-3">
                   {customer.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 text-xs rounded-full bg-white/10 text-white/70"
+                      className="px-1.5 py-0.5 text-xs rounded-full bg-white/10 text-white/70"
                     >
                       {tag}
                     </span>
@@ -261,14 +255,14 @@ export default function CustomerDetailPage() {
         />
         <StatCard
           icon={DollarSign}
-          label="Total Spent"
-          value={formatCurrency(customer.totalSpent)}
+          label={`Total Spent${customer.currency && customer.currency !== 'USD' ? ` (${customer.currency})` : ''}`}
+          value={formatCurrency(customer.totalSpent, customer.currency || 'USD')}
           color="emerald"
         />
         <StatCard
           icon={TrendingUp}
-          label="Avg Order Value"
-          value={formatCurrency(customer.metrics?.averageOrderValue || 0)}
+          label={`Avg Order Value${customer.currency && customer.currency !== 'USD' ? ` (${customer.currency})` : ''}`}
+          value={formatCurrency(customer.metrics?.averageOrderValue || 0, customer.currency || 'USD')}
           color="violet"
         />
         <StatCard
@@ -301,57 +295,57 @@ export default function CustomerDetailPage() {
         </TabsList>
 
         {/* Overview Tab */}
-        <TabsContent value="overview" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <TabsContent value="overview" className="space-y-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {/* Contact Information */}
-            <div className="rounded-xl border border-slate-200 bg-white p-6">
-              <h3 className="text-lg font-semibold text-slate-900 mb-4">Contact Information</h3>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
-                    <Mail className="w-4 h-4 text-slate-600" />
+            <div className="rounded-xl border border-slate-200 bg-white p-5">
+              <h3 className="text-sm font-semibold text-slate-900 mb-3">Contact Information</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-md bg-slate-100 flex items-center justify-center">
+                    <Mail className="w-3.5 h-3.5 text-slate-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Email</p>
-                    <a href={`mailto:${customer.email}`} className="text-slate-900 hover:text-blue-600">
+                    <p className="text-xs text-slate-500">Email</p>
+                    <a href={`mailto:${customer.email}`} className="text-sm text-slate-900 hover:text-blue-600">
                       {customer.email}
                     </a>
                   </div>
                 </div>
 
                 {customer.phone && (
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
-                      <Phone className="w-4 h-4 text-slate-600" />
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-md bg-slate-100 flex items-center justify-center">
+                      <Phone className="w-3.5 h-3.5 text-slate-600" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500">Phone</p>
-                      <a href={`tel:${customer.phone}`} className="text-slate-900 hover:text-blue-600">
+                      <p className="text-xs text-slate-500">Phone</p>
+                      <a href={`tel:${customer.phone}`} className="text-sm text-slate-900 hover:text-blue-600">
                         {customer.phone}
                       </a>
                     </div>
                   </div>
                 )}
 
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
-                    <Bell className="w-4 h-4 text-slate-600" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-md bg-slate-100 flex items-center justify-center">
+                    <Bell className="w-3.5 h-3.5 text-slate-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Marketing</p>
-                    <p className="text-slate-900">
+                    <p className="text-xs text-slate-500">Marketing</p>
+                    <p className="text-sm text-slate-900">
                       {customer.acceptsMarketing ? 'Subscribed to marketing' : 'Not subscribed'}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
-                    <Clock className="w-4 h-4 text-slate-600" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-md bg-slate-100 flex items-center justify-center">
+                    <Clock className="w-3.5 h-3.5 text-slate-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Customer Since</p>
-                    <p className="text-slate-900">
+                    <p className="text-xs text-slate-500">Customer Since</p>
+                    <p className="text-sm text-slate-900">
                       {format(new Date(customer.createdAt), 'MMMM d, yyyy')}
                     </p>
                   </div>
@@ -360,8 +354,8 @@ export default function CustomerDetailPage() {
             </div>
 
             {/* Addresses */}
-            <div className="rounded-xl border border-slate-200 bg-white p-6">
-              <h3 className="text-lg font-semibold text-slate-900 mb-4">Addresses</h3>
+            <div className="rounded-xl border border-slate-200 bg-white p-5">
+              <h3 className="text-sm font-semibold text-slate-900 mb-3">Addresses</h3>
               {customer.addresses && customer.addresses.length > 0 ? (
                 <div className="space-y-3">
                   {customer.addresses.map((address) => (
@@ -375,9 +369,9 @@ export default function CustomerDetailPage() {
               ) : customer.defaultAddress ? (
                 <AddressCard address={customer.defaultAddress} isDefault />
               ) : (
-                <div className="text-center py-8 text-slate-500">
-                  <MapPin className="w-8 h-8 mx-auto mb-2 text-slate-400" />
-                  <p>No addresses on file</p>
+                <div className="text-center py-6 text-slate-500">
+                  <MapPin className="w-6 h-6 mx-auto mb-1.5 text-slate-400" />
+                  <p className="text-xs">No addresses on file</p>
                 </div>
               )}
             </div>
@@ -385,23 +379,23 @@ export default function CustomerDetailPage() {
 
           {/* App Usage Info */}
           {(customer.deviceCount || customer.platforms) && (
-            <div className="rounded-xl border border-slate-200 bg-white p-6">
-              <h3 className="text-lg font-semibold text-slate-900 mb-4">App Usage</h3>
-              <div className="flex flex-wrap gap-6">
+            <div className="rounded-xl border border-slate-200 bg-white p-5">
+              <h3 className="text-sm font-semibold text-slate-900 mb-3">App Usage</h3>
+              <div className="flex flex-wrap gap-5">
                 {customer.deviceCount !== undefined && (
                   <div>
-                    <p className="text-sm text-slate-500">Devices</p>
-                    <p className="text-lg font-medium text-slate-900">{customer.deviceCount}</p>
+                    <p className="text-xs text-slate-500">Devices</p>
+                    <p className="text-base font-medium text-slate-900">{customer.deviceCount}</p>
                   </div>
                 )}
                 {customer.platforms && customer.platforms.length > 0 && (
                   <div>
-                    <p className="text-sm text-slate-500">Platforms</p>
-                    <div className="flex gap-2 mt-1">
+                    <p className="text-xs text-slate-500">Platforms</p>
+                    <div className="flex gap-1.5 mt-1">
                       {customer.platforms.map((platform) => (
                         <span
                           key={platform}
-                          className="px-2 py-1 text-sm rounded-lg bg-slate-100 text-slate-700 capitalize"
+                          className="px-2 py-0.5 text-xs rounded-md bg-slate-100 text-slate-700 capitalize"
                         >
                           {platform}
                         </span>
@@ -416,35 +410,35 @@ export default function CustomerDetailPage() {
 
         {/* Orders Tab */}
         <TabsContent value="orders">
-          <div className="rounded-xl border border-slate-200 bg-white p-6">
-            <h3 className="text-lg font-semibold text-slate-900 mb-4">Order History</h3>
+          <div className="rounded-xl border border-slate-200 bg-white p-5">
+            <h3 className="text-sm font-semibold text-slate-900 mb-3">Order History</h3>
             <CustomerOrderHistory customerId={customerId} />
           </div>
         </TabsContent>
 
         {/* Activity Tab */}
         <TabsContent value="activity">
-          <div className="rounded-xl border border-slate-200 bg-white p-6">
-            <h3 className="text-lg font-semibold text-slate-900 mb-4">Recent Activity</h3>
+          <div className="rounded-xl border border-slate-200 bg-white p-5">
+            <h3 className="text-sm font-semibold text-slate-900 mb-3">Recent Activity</h3>
             <CustomerActivityFeed customerId={customerId} />
           </div>
         </TabsContent>
       </Tabs>
 
       {/* Data & Privacy Section */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <Shield className="w-5 h-5 text-slate-600" />
-          <h2 className="text-lg font-semibold text-slate-900">Data & Privacy</h2>
+      <div className="space-y-3">
+        <div className="flex items-center gap-1.5">
+          <Shield className="w-4 h-4 text-slate-600" />
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">Data & Privacy</h2>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-6">
-          <div className="space-y-6">
+        <div className="rounded-xl border border-slate-200 bg-white p-5">
+          <div className="space-y-4">
             {/* Export Data */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
               <div>
-                <h3 className="font-medium text-slate-900">Export Customer Data</h3>
-                <p className="text-sm text-slate-500 mt-1">
+                <h3 className="text-sm font-medium text-slate-900">Export Customer Data</h3>
+                <p className="text-xs text-slate-500 mt-0.5">
                   Download all data associated with this customer in a machine-readable format (JSON).
                   Includes personal info, orders, addresses, and activity history.
                 </p>
@@ -455,11 +449,11 @@ export default function CustomerDetailPage() {
             <div className="border-t border-slate-200" />
 
             {/* GDPR Info */}
-            <div className="rounded-lg bg-blue-50 border border-blue-200 p-4">
-              <div className="flex gap-3">
-                <Shield className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                <div className="text-sm text-blue-800">
-                  <p className="font-medium mb-1">GDPR Compliance</p>
+            <div className="rounded-lg bg-blue-50 border border-blue-200 p-3">
+              <div className="flex gap-2">
+                <Shield className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                <div className="text-xs text-blue-800">
+                  <p className="font-medium mb-0.5">GDPR Compliance</p>
                   <p className="text-blue-700">
                     Under GDPR, customers have the right to access and receive a copy of their personal data.
                     Use the export feature above to fulfill data portability requests.
@@ -471,26 +465,27 @@ export default function CustomerDetailPage() {
         </div>
 
         {/* Danger Zone */}
-        <div className="rounded-xl border border-red-200 bg-red-50 p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <AlertTriangle className="w-5 h-5 text-red-600" />
-            <h3 className="font-semibold text-red-900">Danger Zone</h3>
+        <div className="rounded-xl border border-red-200 bg-red-50 p-5">
+          <div className="flex items-center gap-1.5 mb-3">
+            <AlertTriangle className="w-4 h-4 text-red-600" />
+            <h3 className="text-sm font-semibold text-red-900">Danger Zone</h3>
           </div>
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div>
-              <h4 className="font-medium text-red-900">Delete Customer Data</h4>
-              <p className="text-sm text-red-700 mt-1">
+              <h4 className="text-sm font-medium text-red-900">Delete Customer Data</h4>
+              <p className="text-xs text-red-700 mt-0.5">
                 Permanently delete this customer&apos;s personal data. Order history will be anonymized
                 but retained for legal purposes. This action cannot be fully undone after 30 days.
               </p>
             </div>
             <Button
               variant="destructive"
+              size="sm"
               onClick={() => setShowDeleteModal(true)}
-              className="gap-2 whitespace-nowrap"
+              className="gap-1.5 whitespace-nowrap text-xs"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="w-3.5 h-3.5" />
               Delete Customer Data
             </Button>
           </div>

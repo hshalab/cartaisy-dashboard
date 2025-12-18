@@ -78,8 +78,8 @@ function SettingsContent() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="w-8 h-8 animate-spin text-slate-600 mx-auto mb-3" />
-          <p className="text-slate-600">Loading settings...</p>
+          <RefreshCw className="w-6 h-6 animate-spin text-slate-600 mx-auto mb-2" />
+          <p className="text-xs text-slate-500">Loading settings...</p>
         </div>
       </div>
     );
@@ -96,14 +96,14 @@ function SettingsContent() {
         <div className="relative">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
-              <div className="flex items-center gap-2 text-slate-400 text-sm font-medium mb-2">
-                <Settings className="w-4 h-4" />
+              <div className="flex items-center gap-2 text-slate-400 text-xs font-medium mb-2">
+                <Settings className="w-3.5 h-3.5" />
                 <span>Settings</span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              <h1 className="text-2xl font-semibold tracking-tight text-white mb-2">
                 Store Settings
               </h1>
-              <p className="text-slate-400 text-lg max-w-xl">
+              <p className="text-slate-400 text-sm max-w-xl">
                 Manage your store configuration, connections, and preferences.
               </p>
             </div>
@@ -112,19 +112,19 @@ function SettingsContent() {
             {store && (
               <div className="flex gap-6">
                 <div className="text-center">
-                  <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                    <Store className="w-7 h-7 text-slate-300" />
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-2">
+                    <Store className="w-5 h-5 text-slate-300" />
                   </div>
-                  <p className="text-lg font-bold text-white truncate max-w-[120px]">{store.name}</p>
-                  <p className="text-sm text-slate-400">Store Name</p>
+                  <p className="text-base font-semibold text-white truncate max-w-[120px]">{store.name}</p>
+                  <p className="text-xs font-medium text-slate-400">Store Name</p>
                 </div>
                 <div className="w-px bg-white/10" />
                 <div className="text-center">
-                  <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-2">
-                    <CreditCard className="w-7 h-7 text-emerald-400" />
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mx-auto mb-2">
+                    <CreditCard className="w-5 h-5 text-emerald-400" />
                   </div>
-                  <p className="text-lg font-bold text-white capitalize">{store.plan?.type || 'Free'}</p>
-                  <p className="text-sm text-slate-400">Plan</p>
+                  <p className="text-base font-semibold text-white capitalize">{store.plan?.type || 'Free'}</p>
+                  <p className="text-xs font-medium text-slate-400">Plan</p>
                 </div>
               </div>
             )}
@@ -135,12 +135,12 @@ function SettingsContent() {
       {/* Success Alert */}
       {showSuccessAlert && (
         <div className="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200 rounded-xl animate-in fade-in slide-in-from-top-2">
-          <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+          <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
           </div>
           <div>
-            <p className="font-semibold text-emerald-900">Shopify Connected Successfully!</p>
-            <p className="text-sm text-emerald-700">Your Shopify store is now connected and syncing.</p>
+            <p className="text-sm font-semibold text-emerald-900">Shopify Connected Successfully!</p>
+            <p className="text-xs text-emerald-700">Your Shopify store is now connected and syncing.</p>
           </div>
         </div>
       )}
@@ -148,12 +148,12 @@ function SettingsContent() {
       {/* Error Alert */}
       {showErrorAlert && (
         <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-xl animate-in fade-in slide-in-from-top-2">
-          <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
-            <AlertCircle className="w-5 h-5 text-red-600" />
+          <div className="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+            <AlertCircle className="w-4 h-4 text-red-600" />
           </div>
           <div>
-            <p className="font-semibold text-red-900">Connection Failed</p>
-            <p className="text-sm text-red-700">Failed to connect to Shopify. Please try again.</p>
+            <p className="text-sm font-semibold text-red-900">Connection Failed</p>
+            <p className="text-xs text-red-700">Failed to connect to Shopify. Please try again.</p>
           </div>
         </div>
       )}
@@ -169,9 +169,9 @@ function SettingsContent() {
       {/* Store Information Section */}
       {store && (
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <Store className="w-5 h-5 text-slate-600" />
-            <h2 className="text-lg font-semibold text-slate-900">Store Information</h2>
+          <div className="flex items-center gap-2 mb-3">
+            <Store className="w-4 h-4 text-slate-600" />
+            <h2 className="text-sm font-semibold tracking-tight text-slate-900">Store Information</h2>
           </div>
           <StoreInfoCard
             store={store}
@@ -182,9 +182,9 @@ function SettingsContent() {
 
       {/* Shopify Connection Section */}
       <div>
-        <div className="flex items-center gap-2 mb-4">
-          <Link className="w-5 h-5 text-slate-600" />
-          <h2 className="text-lg font-semibold text-slate-900">Shopify Connection</h2>
+        <div className="flex items-center gap-2 mb-3">
+          <Link className="w-4 h-4 text-slate-600" />
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">Shopify Connection</h2>
         </div>
         <ConnectShopify />
       </div>
@@ -192,9 +192,9 @@ function SettingsContent() {
       {/* Plan & Usage Section */}
       {stats && (
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <CreditCard className="w-5 h-5 text-slate-600" />
-            <h2 className="text-lg font-semibold text-slate-900">Plan & Usage</h2>
+          <div className="flex items-center gap-2 mb-3">
+            <CreditCard className="w-4 h-4 text-slate-600" />
+            <h2 className="text-sm font-semibold tracking-tight text-slate-900">Plan & Usage</h2>
           </div>
           <PlanUsageCard
             planType={store?.plan?.type}
@@ -207,9 +207,9 @@ function SettingsContent() {
       {/* Store Settings Section */}
       {store && (
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <Shield className="w-5 h-5 text-slate-600" />
-            <h2 className="text-lg font-semibold text-slate-900">App Settings</h2>
+          <div className="flex items-center gap-2 mb-3">
+            <Shield className="w-4 h-4 text-slate-600" />
+            <h2 className="text-sm font-semibold tracking-tight text-slate-900">App Settings</h2>
           </div>
           <StoreSettingsForm
             store={store}
@@ -226,19 +226,19 @@ function SettingsContent() {
 
       {/* Compliance & Privacy Section */}
       <div>
-        <div className="flex items-center gap-2 mb-4">
-          <FileText className="w-5 h-5 text-slate-600" />
-          <h2 className="text-lg font-semibold text-slate-900">Privacy & Compliance</h2>
+        <div className="flex items-center gap-2 mb-3">
+          <FileText className="w-4 h-4 text-slate-600" />
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">Privacy & Compliance</h2>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-6">
+        <div className="rounded-xl border border-slate-200 bg-white p-5">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
-                <Shield className="w-6 h-6 text-blue-600" />
+              <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+                <Shield className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <h3 className="font-medium text-slate-900">GDPR Compliance Settings</h3>
-                <p className="text-sm text-slate-600 mt-1">
+                <h3 className="text-sm font-medium text-slate-900">GDPR Compliance Settings</h3>
+                <p className="text-xs text-slate-600 mt-1">
                   Manage data retention policies, export customer data, and configure privacy settings
                   to ensure compliance with GDPR and other data protection regulations.
                 </p>
@@ -257,14 +257,14 @@ function SettingsContent() {
       </div>
 
       {/* Pro Tips */}
-      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-zinc-50 p-6">
+      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-zinc-50 p-5">
         <div className="flex flex-col md:flex-row md:items-center gap-6">
-          <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-6 h-6 text-slate-600" />
+          <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
+            <Sparkles className="w-5 h-5 text-slate-600" />
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-slate-900 mb-1">Settings Guide</h3>
-            <p className="text-sm text-slate-600">
+            <h3 className="text-sm font-semibold text-slate-900 mb-1">Settings Guide</h3>
+            <p className="text-xs text-slate-500">
               Configure your store settings to customize your mobile app experience. Connect your
               Shopify store to sync products and collections automatically.
             </p>
@@ -275,15 +275,15 @@ function SettingsContent() {
       {/* Danger Zone */}
       {canManage && (
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <AlertTriangle className="w-5 h-5 text-red-600" />
-            <h2 className="text-lg font-semibold text-red-900">Danger Zone</h2>
+          <div className="flex items-center gap-2 mb-3">
+            <AlertTriangle className="w-4 h-4 text-red-600" />
+            <h2 className="text-sm font-semibold tracking-tight text-red-900">Danger Zone</h2>
           </div>
-          <div className="rounded-xl border border-red-200 bg-red-50 p-6">
+          <div className="rounded-xl border border-red-200 bg-red-50 p-5">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div>
-                <h3 className="font-semibold text-red-900 mb-1">Delete Store</h3>
-                <p className="text-sm text-red-700">
+                <h3 className="text-sm font-semibold text-red-900 mb-1">Delete Store</h3>
+                <p className="text-xs text-red-700">
                   Permanently delete your store, including all data, team members, and configurations.
                   This action cannot be undone.
                 </p>
@@ -319,8 +319,8 @@ export default function SettingsPage() {
       fallback={
         <div className="min-h-[60vh] flex items-center justify-center">
           <div className="text-center">
-            <RefreshCw className="w-8 h-8 animate-spin text-slate-600 mx-auto mb-3" />
-            <p className="text-slate-600">Loading settings...</p>
+            <RefreshCw className="w-6 h-6 animate-spin text-slate-600 mx-auto mb-2" />
+            <p className="text-xs text-slate-500">Loading settings...</p>
           </div>
         </div>
       }
