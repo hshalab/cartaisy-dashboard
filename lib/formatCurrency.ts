@@ -29,6 +29,11 @@ export function formatCurrency(
     maximumFractionDigits = 2,
   } = options;
 
+  // Handle invalid amounts
+  if (amount == null || isNaN(amount)) {
+    return '$0.00';
+  }
+
   try {
     const formatted = new Intl.NumberFormat(locale, {
       style: 'currency',

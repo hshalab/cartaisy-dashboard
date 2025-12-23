@@ -28,6 +28,12 @@ export interface NotificationStats {
   topic: string;
 }
 
+export interface DeepLink {
+  type: 'product' | 'collection' | 'cart' | 'order' | 'orders' | 'wishlist' | 'profile' | 'home' | 'url';
+  id?: string;
+  url?: string;
+}
+
 export interface SendNotificationPayload {
   title: string;
   body: string;
@@ -35,6 +41,7 @@ export interface SendNotificationPayload {
   imageUrl?: string;
   data?: Record<string, string>;
   scheduledFor?: string;
+  deepLink?: DeepLink;
 }
 
 export interface ScheduledNotification {
@@ -83,6 +90,10 @@ export interface NotificationHistoryItem {
   successCount: number;
   failureCount: number;
   deliveryRate: number;
+  openedCount?: number;
+  clickedCount?: number;
+  openRate?: number;
+  clickRate?: number;
   sentAt?: string;
   scheduledFor?: string;
   sentByEmail?: string;

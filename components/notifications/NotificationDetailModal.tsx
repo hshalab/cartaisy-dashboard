@@ -19,6 +19,8 @@ import {
   User,
   Target,
   ImageIcon,
+  Eye,
+  MousePointerClick,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -84,7 +86,7 @@ export function NotificationDetailModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg p-0 overflow-hidden">
+      <DialogContent className="max-w-2xl p-0 overflow-hidden max-h-[90vh] overflow-y-auto">
         {/* Header Gradient */}
         <div
           className={cn(
@@ -143,65 +145,160 @@ export function NotificationDetailModal({
               )}
 
               {/* Delivery Stats */}
-              <div className="grid grid-cols-3 gap-3">
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-4 text-center">
-                  <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-2">
-                    <Target className="w-5 h-5 text-blue-600" />
+              <div className="grid grid-cols-5 gap-3">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-3 text-center">
+                  <div className="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-2">
+                    <Target className="w-4 h-4 text-blue-600" />
                   </div>
-                  <p className="text-2xl font-bold text-slate-900">
+                  <p className="text-xl font-bold text-slate-900">
                     {notification.targetCount.toLocaleString()}
                   </p>
                   <p className="text-xs text-slate-500 font-medium">Targeted</p>
                 </div>
-                <div className="bg-gradient-to-br from-emerald-50 to-emerald-100/50 rounded-xl p-4 text-center">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center mx-auto mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                <div className="bg-gradient-to-br from-emerald-50 to-emerald-100/50 rounded-xl p-3 text-center">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center mx-auto mb-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   </div>
-                  <p className="text-2xl font-bold text-emerald-600">
+                  <p className="text-xl font-bold text-emerald-600">
                     {notification.successCount.toLocaleString()}
                   </p>
                   <p className="text-xs text-slate-500 font-medium">Delivered</p>
                 </div>
-                <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-4 text-center">
-                  <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center mx-auto mb-2">
-                    <XCircle className="w-5 h-5 text-red-600" />
+                <div className="bg-gradient-to-br from-violet-50 to-violet-100/50 rounded-xl p-3 text-center">
+                  <div className="w-9 h-9 rounded-xl bg-violet-100 flex items-center justify-center mx-auto mb-2">
+                    <Eye className="w-4 h-4 text-violet-600" />
                   </div>
-                  <p className="text-2xl font-bold text-red-600">
+                  <p className="text-xl font-bold text-violet-600">
+                    {(notification.openedCount || 0).toLocaleString()}
+                  </p>
+                  <p className="text-xs text-slate-500 font-medium">Opened</p>
+                </div>
+                <div className="bg-gradient-to-br from-amber-50 to-amber-100/50 rounded-xl p-3 text-center">
+                  <div className="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center mx-auto mb-2">
+                    <MousePointerClick className="w-4 h-4 text-amber-600" />
+                  </div>
+                  <p className="text-xl font-bold text-amber-600">
+                    {(notification.clickedCount || 0).toLocaleString()}
+                  </p>
+                  <p className="text-xs text-slate-500 font-medium">Clicked</p>
+                </div>
+                <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-3 text-center">
+                  <div className="w-9 h-9 rounded-xl bg-red-100 flex items-center justify-center mx-auto mb-2">
+                    <XCircle className="w-4 h-4 text-red-600" />
+                  </div>
+                  <p className="text-xl font-bold text-red-600">
                     {notification.failureCount.toLocaleString()}
                   </p>
                   <p className="text-xs text-slate-500 font-medium">Failed</p>
                 </div>
               </div>
 
-              {/* Delivery Rate */}
-              <div className="bg-slate-50 rounded-xl p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-slate-700">Delivery Rate</span>
-                  <span
-                    className={cn(
-                      'text-lg font-bold',
-                      notification.deliveryRate >= 95
-                        ? 'text-emerald-600'
-                        : notification.deliveryRate >= 80
-                        ? 'text-amber-600'
-                        : 'text-red-600'
-                    )}
-                  >
-                    {notification.deliveryRate.toFixed(1)}%
-                  </span>
+              {/* Rates */}
+              <div className="grid grid-cols-3 gap-3">
+                {/* Delivery Rate */}
+                <div className="bg-slate-50 rounded-xl p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-slate-700">Delivery Rate</span>
+                    <span
+                      className={cn(
+                        'text-lg font-bold',
+                        notification.deliveryRate >= 95
+                          ? 'text-emerald-600'
+                          : notification.deliveryRate >= 80
+                          ? 'text-amber-600'
+                          : 'text-red-600'
+                      )}
+                    >
+                      {notification.deliveryRate.toFixed(1)}%
+                    </span>
+                  </div>
+                  <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <div
+                      className={cn(
+                        'h-full rounded-full transition-all duration-500',
+                        notification.deliveryRate >= 95
+                          ? 'bg-gradient-to-r from-emerald-400 to-emerald-600'
+                          : notification.deliveryRate >= 80
+                          ? 'bg-gradient-to-r from-amber-400 to-amber-600'
+                          : 'bg-gradient-to-r from-red-400 to-red-600'
+                      )}
+                      style={{ width: `${Math.min(notification.deliveryRate, 100)}%` }}
+                    />
+                  </div>
                 </div>
-                <div className="h-3 bg-slate-200 rounded-full overflow-hidden">
-                  <div
-                    className={cn(
-                      'h-full rounded-full transition-all duration-500',
-                      notification.deliveryRate >= 95
-                        ? 'bg-gradient-to-r from-emerald-400 to-emerald-600'
-                        : notification.deliveryRate >= 80
-                        ? 'bg-gradient-to-r from-amber-400 to-amber-600'
-                        : 'bg-gradient-to-r from-red-400 to-red-600'
-                    )}
-                    style={{ width: `${Math.min(notification.deliveryRate, 100)}%` }}
-                  />
+
+                {/* Open Rate */}
+                <div className="bg-slate-50 rounded-xl p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-slate-700">Open Rate</span>
+                    {(() => {
+                      const openRate = notification.openRate ??
+                        (notification.successCount > 0
+                          ? ((notification.openedCount || 0) / notification.successCount) * 100
+                          : 0);
+                      return (
+                        <span
+                          className={cn(
+                            'text-lg font-bold',
+                            openRate >= 30 ? 'text-violet-600' : openRate >= 15 ? 'text-amber-600' : 'text-slate-600'
+                          )}
+                        >
+                          {openRate.toFixed(1)}%
+                        </span>
+                      );
+                    })()}
+                  </div>
+                  <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                    {(() => {
+                      const openRate = notification.openRate ??
+                        (notification.successCount > 0
+                          ? ((notification.openedCount || 0) / notification.successCount) * 100
+                          : 0);
+                      return (
+                        <div
+                          className="h-full rounded-full transition-all duration-500 bg-gradient-to-r from-violet-400 to-violet-600"
+                          style={{ width: `${Math.min(openRate, 100)}%` }}
+                        />
+                      );
+                    })()}
+                  </div>
+                </div>
+
+                {/* Click Rate */}
+                <div className="bg-slate-50 rounded-xl p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-slate-700">Click Rate</span>
+                    {(() => {
+                      const clickRate = notification.clickRate ??
+                        ((notification.openedCount || 0) > 0
+                          ? ((notification.clickedCount || 0) / (notification.openedCount || 1)) * 100
+                          : 0);
+                      return (
+                        <span
+                          className={cn(
+                            'text-lg font-bold',
+                            clickRate >= 10 ? 'text-amber-600' : clickRate >= 5 ? 'text-slate-700' : 'text-slate-500'
+                          )}
+                        >
+                          {clickRate.toFixed(1)}%
+                        </span>
+                      );
+                    })()}
+                  </div>
+                  <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                    {(() => {
+                      const clickRate = notification.clickRate ??
+                        ((notification.openedCount || 0) > 0
+                          ? ((notification.clickedCount || 0) / (notification.openedCount || 1)) * 100
+                          : 0);
+                      return (
+                        <div
+                          className="h-full rounded-full transition-all duration-500 bg-gradient-to-r from-amber-400 to-amber-600"
+                          style={{ width: `${Math.min(clickRate, 100)}%` }}
+                        />
+                      );
+                    })()}
+                  </div>
                 </div>
               </div>
 

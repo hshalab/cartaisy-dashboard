@@ -18,6 +18,7 @@ import {
   BarChart3,
   KeyRound,
   Bell,
+  ShoppingBag,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -64,6 +65,11 @@ function SidebarContent({ collapsed, onToggleCollapse }: SidebarContentProps) {
       href: "/dashboard/customers",
       label: "Customers",
       icon: <UserRound className="w-4 h-4" />,
+    },
+    {
+      href: "/dashboard/orders",
+      label: "Orders",
+      icon: <ShoppingBag className="w-4 h-4" />,
     },
     {
       href: "/dashboard/collections",

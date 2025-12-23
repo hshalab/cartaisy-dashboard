@@ -358,9 +358,9 @@ export default function CustomerDetailPage() {
               <h3 className="text-sm font-semibold text-slate-900 mb-3">Addresses</h3>
               {customer.addresses && customer.addresses.length > 0 ? (
                 <div className="space-y-3">
-                  {customer.addresses.map((address) => (
+                  {customer.addresses.map((address, index) => (
                     <AddressCard
-                      key={address.id}
+                      key={address.id || `address-${index}`}
                       address={address}
                       isDefault={address.isDefault}
                     />

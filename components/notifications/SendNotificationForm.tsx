@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Loader2, Send, CheckCircle, AlertCircle, Users, Type, MessageSquare, Clock, Calendar, FileText, X } from 'lucide-react';
+import { Loader2, Send, CheckCircle, AlertCircle, Users, Type, MessageSquare, Clock, Calendar, FileText, X, Link2, ExternalLink, ShoppingBag, Home, Heart, User as UserIcon, Package, FolderOpen } from 'lucide-react';
 import { ImageUploader } from './ImageUploader';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
@@ -24,6 +24,21 @@ interface SendNotificationFormProps {
   template?: NotificationTemplate | null;
   onClearTemplate?: () => void;
 }
+
+// Deep link types supported by the backend
+type DeepLinkType = 'product' | 'collection' | 'cart' | 'order' | 'orders' | 'wishlist' | 'profile' | 'home' | 'url';
+
+const deepLinkOptions: { value: DeepLinkType; label: string; icon: React.ReactNode; needsId: boolean; needsUrl: boolean }[] = [
+  { value: 'home', label: 'Home', icon: <Home className="w-4 h-4" />, needsId: false, needsUrl: false },
+  { value: 'product', label: 'Product', icon: <Package className="w-4 h-4" />, needsId: true, needsUrl: false },
+  { value: 'collection', label: 'Collection', icon: <FolderOpen className="w-4 h-4" />, needsId: true, needsUrl: false },
+  { value: 'cart', label: 'Cart', icon: <ShoppingBag className="w-4 h-4" />, needsId: false, needsUrl: false },
+  { value: 'order', label: 'Order', icon: <Package className="w-4 h-4" />, needsId: true, needsUrl: false },
+  { value: 'orders', label: 'Orders List', icon: <Package className="w-4 h-4" />, needsId: false, needsUrl: false },
+  { value: 'wishlist', label: 'Wishlist', icon: <Heart className="w-4 h-4" />, needsId: false, needsUrl: false },
+  { value: 'profile', label: 'Profile', icon: <UserIcon className="w-4 h-4" />, needsId: false, needsUrl: false },
+  { value: 'url', label: 'External URL', icon: <ExternalLink className="w-4 h-4" />, needsId: false, needsUrl: true },
+];
 
 export default function SendNotificationForm({
   segments,
@@ -45,6 +60,14 @@ export default function SendNotificationForm({
   const [scheduleEnabled, setScheduleEnabled] = useState(false);
   const [scheduledDate, setScheduledDate] = useState('');
   const [scheduledTime, setScheduledTime] = useState('');
+
+  // Deep link state
+  const [deepLinkEnabled, setDeepLinkEnabled] = useState(false);
+  const [deepLinkType, setDeepLinkType] = useState<DeepLinkType>('home');
+  const [deepLinkId, setDeepLinkId] = useState('');
+  const [deepLinkUrl, setDeepLinkUrl] = useState('');
+
+  const selectedDeepLinkOption = deepLinkOptions.find(opt => opt.value === deepLinkType);
 
   // Pre-fill form when template is selected
   useEffect(() => {
@@ -86,6 +109,20 @@ export default function SendNotificationForm({
         const scheduledDateTime = new Date(`${scheduledDate}T${scheduledTime}`);
         if (scheduledDateTime <= new Date()) {
           errors.scheduledDate = 'Scheduled time must be in the future';
+        }
+      }
+    }
+
+    // Validate deep link
+    if (deepLinkEnabled) {
+      if (selectedDeepLinkOption?.needsId && !deepLinkId.trim()) {
+        errors.deepLinkId = `${deepLinkType.charAt(0).toUpperCase() + deepLinkType.slice(1)} ID is required`;
+      }
+      if (selectedDeepLinkOption?.needsUrl) {
+        if (!deepLinkUrl.trim()) {
+          errors.deepLinkUrl = 'URL is required';
+        } else if (!/^https?:\/\/.+/.test(deepLinkUrl.trim())) {
+          errors.deepLinkUrl = 'Please enter a valid URL starting with http:// or https://';
         }
       }
     }
@@ -134,6 +171,15 @@ export default function SendNotificationForm({
         payload.scheduledFor = scheduledDateTime.toISOString();
       }
 
+      // Add deep link if enabled
+      if (deepLinkEnabled) {
+        payload.deepLink = {
+          type: deepLinkType,
+          ...(selectedDeepLinkOption?.needsId && { id: deepLinkId.trim() }),
+          ...(deepLinkType === 'url' && { url: deepLinkUrl.trim() }),
+        };
+      }
+
       const result = await notificationApi.broadcast(payload);
 
       console.log('✅ [DASHBOARD] Step 3: Broadcast result:', result);
@@ -153,6 +199,10 @@ export default function SendNotificationForm({
       setScheduleEnabled(false);
       setScheduledDate('');
       setScheduledTime('');
+      setDeepLinkEnabled(false);
+      setDeepLinkType('home');
+      setDeepLinkId('');
+      setDeepLinkUrl('');
       setValidationErrors({});
       onSuccess?.();
 
@@ -308,6 +358,123 @@ export default function SendNotificationForm({
         onChange={setImageUrl}
         onClear={() => setImageUrl('')}
       />
+
+      {/* Deep Link Option */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl">
+          <input
+            type="checkbox"
+            id="deepLink"
+            checked={deepLinkEnabled}
+            onChange={(e) => {
+              setDeepLinkEnabled(e.target.checked);
+              if (!e.target.checked) {
+                setDeepLinkType('home');
+                setDeepLinkId('');
+                setDeepLinkUrl('');
+              }
+            }}
+            className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+          />
+          <label htmlFor="deepLink" className="flex items-center gap-2 text-sm font-medium text-slate-700 cursor-pointer">
+            <Link2 className="w-4 h-4 text-slate-500" />
+            Add Deep Link
+          </label>
+          <span className="text-xs text-slate-400 ml-auto">Opens specific screen when tapped</span>
+        </div>
+
+        {deepLinkEnabled && (
+          <div className="space-y-4 pl-4 animate-in fade-in slide-in-from-top-2">
+            {/* Link Type Selector */}
+            <div className="space-y-2">
+              <Label className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                <Link2 className="w-4 h-4 text-slate-500" />
+                Link Type
+              </Label>
+              <Select value={deepLinkType} onValueChange={(value) => {
+                setDeepLinkType(value as DeepLinkType);
+                setDeepLinkId('');
+                setDeepLinkUrl('');
+              }}>
+                <SelectTrigger className="h-12 bg-slate-50 border-slate-200 hover:bg-slate-100 transition-colors">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {deepLinkOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value} className="py-3">
+                      <div className="flex items-center gap-2">
+                        {option.icon}
+                        <span>{option.label}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* ID Input - for product, collection, order */}
+            {selectedDeepLinkOption?.needsId && (
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                  {selectedDeepLinkOption.icon}
+                  {deepLinkType === 'product' && 'Product ID'}
+                  {deepLinkType === 'collection' && 'Collection ID'}
+                  {deepLinkType === 'order' && 'Order ID'}
+                </Label>
+                <Input
+                  placeholder={`Enter ${deepLinkType} ID...`}
+                  value={deepLinkId}
+                  onChange={(e) => setDeepLinkId(e.target.value)}
+                  className={cn(
+                    'h-12 bg-slate-50 border-slate-200 focus:bg-white transition-colors',
+                    validationErrors.deepLinkId && 'border-red-500 focus:ring-red-500'
+                  )}
+                />
+                {validationErrors.deepLinkId && (
+                  <p className="text-xs text-red-600">{validationErrors.deepLinkId}</p>
+                )}
+                <p className="text-xs text-slate-400">
+                  {deepLinkType === 'product' && 'The Shopify product ID (e.g., 7654321098765)'}
+                  {deepLinkType === 'collection' && 'The collection ID from your store'}
+                  {deepLinkType === 'order' && 'The order ID to show'}
+                </p>
+              </div>
+            )}
+
+            {/* URL Input - for external URL */}
+            {selectedDeepLinkOption?.needsUrl && (
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                  <ExternalLink className="w-4 h-4 text-slate-500" />
+                  URL
+                </Label>
+                <Input
+                  placeholder="https://example.com/page"
+                  value={deepLinkUrl}
+                  onChange={(e) => setDeepLinkUrl(e.target.value)}
+                  type="url"
+                  className={cn(
+                    'h-12 bg-slate-50 border-slate-200 focus:bg-white transition-colors',
+                    validationErrors.deepLinkUrl && 'border-red-500 focus:ring-red-500'
+                  )}
+                />
+                {validationErrors.deepLinkUrl && (
+                  <p className="text-xs text-red-600">{validationErrors.deepLinkUrl}</p>
+                )}
+                <p className="text-xs text-slate-400">External URL to open in the app browser</p>
+              </div>
+            )}
+
+            {/* Info for types that don't need additional input */}
+            {!selectedDeepLinkOption?.needsId && !selectedDeepLinkOption?.needsUrl && (
+              <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg text-sm text-blue-700">
+                {selectedDeepLinkOption?.icon}
+                <span>Tapping the notification will open the <strong>{selectedDeepLinkOption?.label}</strong> screen</span>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* Schedule Option */}
       <div className="space-y-3">
