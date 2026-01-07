@@ -470,6 +470,27 @@ export default function OrderDetailPage() {
             </div>
           </div>
 
+          {/* Cancellation Reason - Only shown for cancelled orders */}
+          {order.status === 'cancelled' && (
+            <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <XCircle className="w-4 h-4 text-red-500" />
+                <h2 className="font-semibold text-red-700">Cancellation Reason</h2>
+              </div>
+              <div className="space-y-3">
+                <p className="text-sm text-red-700">
+                  {order.cancellationReason || 'No reason provided'}
+                </p>
+                {order.cancelledAt && (
+                  <p className="text-xs text-red-500">
+                    Cancelled on {formatDate(order.cancelledAt, 'MMM d, yyyy')} at{' '}
+                    {formatDate(order.cancelledAt, 'h:mm a')}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Notes */}
           {order.notes && order.notes.length > 0 && (
             <div className="rounded-xl border border-slate-200 bg-white p-4">

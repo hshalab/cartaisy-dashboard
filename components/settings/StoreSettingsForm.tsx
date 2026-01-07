@@ -1,21 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSession } from '@/lib/auth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { AlertCircle, CheckCircle2, Loader2, RotateCcw } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Loader2, RefreshCw } from 'lucide-react';
 import { TIMEZONES } from '@/lib/data/timezones';
 import { CURRENCIES } from '@/lib/data/currencies';
 import { canManageSettings } from '@/lib/utils/permissions';
+import { useSyncFromShopify } from '@/hooks/useStoreSettings';
 
 interface StoreSettingsFormProps {
   store: {
@@ -31,173 +25,112 @@ export function StoreSettingsForm({ store, onSettingsSaved }: StoreSettingsFormP
   const { data: session } = useSession();
   const [timezone, setTimezone] = useState(store.settings?.timezone || 'UTC');
   const [currency, setCurrency] = useState(store.settings?.currency || 'USD');
-  const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [isDirty, setIsDirty] = useState(false);
 
+  const { syncFromShopify, isPending: isSyncing, error: syncError } = useSyncFromShopify();
   const canEdit = canManageSettings(session?.user?.role);
 
-  const hasChanges =
-    timezone !== (store.settings?.timezone || 'UTC') ||
-    currency !== (store.settings?.currency || 'USD');
+  // Get display labels for current values
+  const timezoneLabel = TIMEZONES.find((tz) => tz.value === timezone)?.label || timezone;
+  const currencyOption = CURRENCIES.find((curr) => curr.code === currency);
+  const currencyLabel = currencyOption
+    ? `${currencyOption.symbol} ${currencyOption.code} - ${currencyOption.name}`
+    : currency;
 
-  const handleReset = () => {
-    setTimezone(store.settings?.timezone || 'UTC');
-    setCurrency(store.settings?.currency || 'USD');
+  const handleSyncFromShopify = async () => {
+    setError('');
     setSuccess(false);
-    setError('');
-    setIsDirty(false);
-  };
 
-  const handleSave = async () => {
-    setError('');
-    setIsSaving(true);
+    const result = await syncFromShopify();
 
-    try {
-      const response = await fetch('/api/store', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          settings: { timezone, currency },
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.error || 'Failed to update settings');
-        return;
-      }
-
+    if (result?.success) {
+      // Update local state with synced values
+      setTimezone(result.data.timezone);
+      setCurrency(result.data.currency);
       setSuccess(true);
-      setIsDirty(false);
       setTimeout(() => setSuccess(false), 3000);
       onSettingsSaved();
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    } finally {
-      setIsSaving(false);
     }
+    // Error is handled by the hook and displayed via syncError
   };
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Store Settings</CardTitle>
-        <CardDescription>Configure timezone and currency preferences</CardDescription>
+        <CardDescription>
+          Currency and timezone are automatically synced from your Shopify store
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid gap-6 md:grid-cols-2">
-          {/* Timezone */}
+          {/* Timezone - Read Only */}
           <div className="space-y-2">
-            <Label htmlFor="timezone" className="text-sm font-medium">
-              Timezone
-            </Label>
-            <Select
-              value={timezone}
-              onValueChange={(value) => {
-                setTimezone(value);
-                setIsDirty(true);
-                setSuccess(false);
-              }}
-              disabled={!canEdit || isSaving}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="max-h-64">
-                {TIMEZONES.map((tz) => (
-                  <SelectItem key={tz.value} value={tz.value}>
-                    {tz.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Label className="text-sm font-medium">Timezone</Label>
+            <div className="flex items-center gap-2 p-3 bg-slate-50 border border-slate-200 rounded-md">
+              <span className="text-sm text-slate-700">{timezoneLabel}</span>
+            </div>
             <p className="text-xs text-slate-500">
-              Used for scheduling and time-based features
+              Synced from Shopify
             </p>
           </div>
 
-          {/* Currency */}
+          {/* Currency - Read Only */}
           <div className="space-y-2">
-            <Label htmlFor="currency" className="text-sm font-medium">
-              Currency
-            </Label>
-            <Select
-              value={currency}
-              onValueChange={(value) => {
-                setCurrency(value);
-                setIsDirty(true);
-                setSuccess(false);
-              }}
-              disabled={!canEdit || isSaving}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="max-h-64">
-                {CURRENCIES.map((curr) => (
-                  <SelectItem key={curr.code} value={curr.code}>
-                    {curr.symbol} {curr.code} - {curr.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Label className="text-sm font-medium">Currency</Label>
+            <div className="flex items-center gap-2 p-3 bg-slate-50 border border-slate-200 rounded-md">
+              <span className="text-sm text-slate-700">{currencyLabel}</span>
+            </div>
             <p className="text-xs text-slate-500">
-              Used for pricing and financial displays
+              Synced from Shopify
             </p>
           </div>
         </div>
 
-        {!canEdit && (
-          <div className="flex items-start gap-2 p-3 bg-slate-50 border border-slate-200 rounded-lg">
-            <AlertCircle className="w-4 h-4 text-slate-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-slate-600">
-              Only super admins can modify store settings.
-            </p>
-          </div>
-        )}
-
-        {error && (
+        {(error || syncError) && (
           <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg">
             <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-red-700">{error}</p>
+            <p className="text-sm text-red-700">{error || syncError}</p>
           </div>
         )}
 
         {success && (
           <div className="flex items-start gap-2 p-3 bg-green-50 border border-green-200 rounded-lg">
             <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-green-700">Settings saved successfully!</p>
+            <p className="text-sm text-green-700">Settings synced from Shopify successfully!</p>
           </div>
         )}
 
         {canEdit && (
-          <div className="flex gap-3 justify-end pt-4 border-t">
+          <div className="flex justify-end pt-4 border-t">
             <Button
+              onClick={handleSyncFromShopify}
+              disabled={isSyncing}
               variant="outline"
-              onClick={handleReset}
-              disabled={!isDirty || isSaving}
               className="gap-2"
             >
-              <RotateCcw className="w-4 h-4" />
-              Reset
-            </Button>
-            <Button
-              onClick={handleSave}
-              disabled={!hasChanges || isSaving}
-              className="bg-blue-600 hover:bg-blue-700 gap-2"
-            >
-              {isSaving ? (
+              {isSyncing ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Saving...
+                  Syncing...
                 </>
               ) : (
-                'Save Changes'
+                <>
+                  <RefreshCw className="w-4 h-4" />
+                  Sync from Shopify
+                </>
               )}
             </Button>
+          </div>
+        )}
+
+        {!canEdit && (
+          <div className="flex items-start gap-2 p-3 bg-slate-50 border border-slate-200 rounded-lg">
+            <AlertCircle className="w-4 h-4 text-slate-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-slate-600">
+              Only super admins can sync store settings from Shopify.
+            </p>
           </div>
         )}
       </CardContent>

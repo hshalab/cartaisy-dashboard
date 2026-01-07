@@ -101,7 +101,7 @@ export interface Order {
   paidAt?: string;
   fulfilledAt?: string;
   cancelledAt?: string;
-  cancelReason?: string;
+  cancellationReason?: string;
 }
 
 export interface OrderListItem {
@@ -540,6 +540,6 @@ function mapOrderResponse(data: Record<string, unknown>): Order {
     paidAt: data.paidAt as string | undefined,
     fulfilledAt: data.fulfilledAt as string | undefined,
     cancelledAt: data.cancelledAt as string | undefined,
-    cancelReason: data.cancelReason as string | undefined,
+    cancellationReason: data.cancellationReason as string | undefined,
   };
 }
