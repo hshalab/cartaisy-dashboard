@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Menu, X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Sparkles, Menu, X } from "lucide-react";
 
 export default function LandingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,21 +13,21 @@ export default function LandingNavbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { href: '#features', label: 'Features' },
-    { href: '#dashboard', label: 'Dashboard' },
-    { href: '#mobile-app', label: 'Mobile App' },
-    { href: '#pricing', label: 'Pricing' },
+    { href: "#features", label: "Features" },
+    { href: "#dashboard", label: "Dashboard" },
+    { href: "#mobile-app", label: "Mobile App" },
+    { href: "#pricing", label: "Pricing" },
   ];
 
   return (
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'py-3' : 'py-5'
+        isScrolled ? "py-3" : "py-5"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -37,8 +37,8 @@ export default function LandingNavbar() {
       <div
         className={`absolute inset-0 transition-all duration-500 ${
           isScrolled
-            ? 'bg-slate-950/90 backdrop-blur-xl'
-            : 'bg-gradient-to-b from-black/50 to-transparent backdrop-blur-sm'
+            ? "bg-slate-950/90 backdrop-blur-xl"
+            : "bg-gradient-to-b from-black/50 to-transparent backdrop-blur-sm"
         }`}
       />
 
@@ -58,24 +58,24 @@ export default function LandingNavbar() {
             <motion.div
               className="relative"
               whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl blur-lg opacity-40 group-hover:opacity-70 transition-opacity duration-300" />
-
+              <img src="/cartaisy-white-logo.png" width={130} alt="Cartaisy" />
               {/* Logo icon */}
-              <div className="relative w-11 h-11 bg-gradient-to-br from-purple-600 via-violet-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/25">
+              {/* <div className="relative w-11 h-11 bg-gradient-to-br from-purple-600 via-violet-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/25">
                 <Sparkles className="w-5 h-5 text-white" />
-              </div>
+              </div> */}
             </motion.div>
 
             {/* Logo text */}
-            <motion.span
+            {/* <motion.span
               className="text-2xl font-bold bg-gradient-to-r from-white via-purple-100 to-pink-100 bg-clip-text text-transparent"
               whileHover={{ scale: 1.02 }}
             >
               Cartaisy
-            </motion.span>
+            </motion.span> */}
           </Link>
 
           {/* Desktop Navigation */}
@@ -161,9 +161,9 @@ export default function LandingNavbar() {
             <motion.div
               className="md:hidden absolute top-full left-0 right-0 bg-slate-950/95 backdrop-blur-xl border-t border-white/10"
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
             >
               <div className="px-6 py-6 space-y-1">
                 {navLinks.map((link, index) => (
