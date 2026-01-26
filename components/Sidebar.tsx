@@ -199,7 +199,7 @@ function SidebarContent({ collapsed, onToggleCollapse, showSignOut = false }: Si
 
       {/* Sign Out - Only shown on mobile */}
       {showSignOut && (
-        <div className="p-2 pb-16 border-t border-slate-200">
+        <div className="p-2 border-t border-slate-200">
           <button
             onClick={() => logout()}
             className={cn(
