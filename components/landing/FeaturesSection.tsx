@@ -71,14 +71,14 @@ export default function FeaturesSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
         >
           <motion.span
             className="inline-block text-sm font-medium text-purple-400 tracking-wide uppercase"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.05 }}
           >
             Features
           </motion.span>
@@ -147,7 +147,7 @@ export default function FeaturesSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.1 }}
         >
           <p className="text-gray-400 mb-8 text-lg">
             Want to see these features in action?

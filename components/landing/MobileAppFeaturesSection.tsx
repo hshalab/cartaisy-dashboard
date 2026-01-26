@@ -70,8 +70,8 @@ export default function MobileAppFeaturesSection() {
     <section id="mobile-app" className="py-24 md:py-32 px-6 lg:px-8 relative overflow-hidden">
       {/* Background elements - more subtle */}
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/5 via-transparent to-purple-900/5" />
-      <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-purple-500 rounded-full mix-blend-multiply filter blur-[150px] opacity-[0.07]" />
-      <div className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-pink-500 rounded-full mix-blend-multiply filter blur-[150px] opacity-[0.07]" />
+      <div className="absolute top-1/2 left-1/4 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-purple-500 rounded-full blur-[80px] md:blur-[120px] opacity-[0.07] transform-gpu" />
+      <div className="absolute top-1/2 right-1/4 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-pink-500 rounded-full blur-[80px] md:blur-[120px] opacity-[0.07] transform-gpu" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header - Improved typography */}
@@ -80,14 +80,14 @@ export default function MobileAppFeaturesSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
         >
           <motion.span
             className="inline-block text-sm font-medium text-purple-400 tracking-wide uppercase"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.05 }}
           >
             Mobile App
           </motion.span>
@@ -113,7 +113,7 @@ export default function MobileAppFeaturesSection() {
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.35, delay: index * 0.05 }}
                 className="group"
               >
                 <div className="relative">
@@ -147,7 +147,7 @@ export default function MobileAppFeaturesSection() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
           >
             <div className="relative">
               {/* Phone glow */}
@@ -187,7 +187,7 @@ export default function MobileAppFeaturesSection() {
                             initial={{ opacity: 0, y: 10 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: 0.5 + i * 0.1 }}
+                            transition={{ delay: 0.15 + i * 0.05 }}
                           >
                             <div className="aspect-[4/3] bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg mb-2" />
                             <div className="space-y-1.5">
@@ -245,7 +245,7 @@ export default function MobileAppFeaturesSection() {
                     duration: 5,
                     repeat: Infinity,
                     ease: "easeInOut",
-                    delay: 0.5,
+                    delay: 0.1,
                   }}
                 >
                   <ShoppingBag className="w-full h-full text-white" />
@@ -261,7 +261,7 @@ export default function MobileAppFeaturesSection() {
                     duration: 4.5,
                     repeat: Infinity,
                     ease: "easeInOut",
-                    delay: 1,
+                    delay: 0.2,
                   }}
                 >
                   <Star className="w-full h-full text-white" />
@@ -277,7 +277,7 @@ export default function MobileAppFeaturesSection() {
                     duration: 3.5,
                     repeat: Infinity,
                     ease: "easeInOut",
-                    delay: 1.5,
+                    delay: 0.3,
                   }}
                 >
                   <Bell className="w-full h-full text-white" />
@@ -294,7 +294,7 @@ export default function MobileAppFeaturesSection() {
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.35, delay: index * 0.05 }}
                 className="group"
               >
                 <div className="relative">
@@ -329,7 +329,7 @@ export default function MobileAppFeaturesSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.1 }}
         >
           {[
             { label: 'App Downloads', value: '100K+', gradient: 'from-purple-500 to-pink-500' },
@@ -343,7 +343,7 @@ export default function MobileAppFeaturesSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.4 + index * 0.1 }}
+              transition={{ delay: 0.15 + index * 0.05 }}
             >
               {/* Hover glow */}
               <div className={`absolute -inset-0.5 bg-gradient-to-r ${stat.gradient} rounded-2xl opacity-0 group-hover:opacity-100 blur-sm transition-all duration-500`} />
@@ -365,7 +365,7 @@ export default function MobileAppFeaturesSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.1 }}
         >
           <motion.button
             className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl font-semibold text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 transition-all duration-300"

@@ -31,7 +31,7 @@ export default function LandingNavbar() {
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* Backdrop blur and background */}
       <div
@@ -87,7 +87,7 @@ export default function LandingNavbar() {
                 className="relative px-4 py-2 text-sm text-slate-300 hover:text-white transition-colors group"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * index, duration: 0.4 }}
+                transition={{ delay: 0.05 * index, duration: 0.25 }}
               >
                 {link.label}
                 {/* Animated underline */}
@@ -101,7 +101,7 @@ export default function LandingNavbar() {
             className="hidden md:flex items-center gap-3"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4, duration: 0.4 }}
+            transition={{ delay: 0.15, duration: 0.25 }}
           >
             {/* Sign In */}
             <Link
@@ -174,7 +174,7 @@ export default function LandingNavbar() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
+                    transition={{ delay: index * 0.03 }}
                   >
                     {link.label}
                   </motion.a>

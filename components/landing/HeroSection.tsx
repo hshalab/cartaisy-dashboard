@@ -69,11 +69,11 @@ export default function HeroSection() {
 
   return (
     <section className="relative md:min-h-screen flex items-start md:items-center pt-20 md:pt-24 pb-8 md:pb-32 px-4 md:px-6 lg:px-8">
-      {/* Dynamic Gradient Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Animated gradient orbs */}
+      {/* Dynamic Gradient Background - GPU accelerated */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none will-change-transform">
+        {/* Animated gradient orbs - GPU accelerated for smooth performance */}
         <motion.div
-          className="absolute w-[1000px] h-[1000px] bg-purple-600/15 rounded-full blur-[150px]"
+          className="absolute w-[600px] h-[600px] md:w-[1000px] md:h-[1000px] bg-purple-600/15 rounded-full blur-[80px] md:blur-[150px] transform-gpu"
           style={{
             x: orbX,
             y: orbY,
@@ -83,19 +83,19 @@ export default function HeroSection() {
           animate="animate"
         />
         <motion.div
-          className="absolute top-1/3 right-0 w-[700px] h-[700px] bg-violet-600/10 rounded-full blur-[120px] translate-x-1/2"
+          className="absolute top-1/3 right-0 w-[400px] h-[400px] md:w-[700px] md:h-[700px] bg-violet-600/10 rounded-full blur-[60px] md:blur-[120px] translate-x-1/2 transform-gpu"
           variants={floatSlow}
           initial="initial"
           animate="animate"
         />
         <motion.div
-          className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-fuchsia-600/8 rounded-full blur-[100px]"
+          className="absolute bottom-0 left-1/4 w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-fuchsia-600/8 rounded-full blur-[50px] md:blur-[100px] transform-gpu"
           variants={float}
           initial="initial"
           animate="animate"
         />
 
-        {/* Grid pattern - more subtle */}
+        {/* Grid pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:80px_80px]" />
 
         {/* Radial gradient overlay */}
@@ -214,7 +214,7 @@ export default function HeroSection() {
                       className="w-9 h-9 rounded-full border-2 border-black bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-medium text-white shadow-lg"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.6 + i * 0.1 }}
+                      transition={{ delay: 0.2 + i * 0.05 }}
                       whileHover={{ scale: 1.1, zIndex: 10 }}
                     />
                   ))}
@@ -240,7 +240,7 @@ export default function HeroSection() {
             className="relative"
             initial={{ opacity: 0, scale: 0.9, y: 40 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ delay: 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* Glow effect behind mockup */}
             <motion.div
@@ -327,7 +327,7 @@ export default function HeroSection() {
                         className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05] hover:border-white/[0.1] transition-all duration-300"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.8 + i * 0.1 }}
+                        transition={{ delay: 0.2 + i * 0.05 }}
                       >
                         <p className="text-xs text-slate-500 mb-1">
                           {stat.label}
@@ -367,7 +367,7 @@ export default function HeroSection() {
                           className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] transition-all cursor-pointer"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 1 + i * 0.15 }}
+                          transition={{ delay: 0.3 + i * 0.08 }}
                         >
                           <Grip className="w-4 h-4 text-slate-600" />
                           <div
@@ -381,8 +381,8 @@ export default function HeroSection() {
                                 initial={{ width: 0 }}
                                 animate={{ width: `${85 - i * 15}%` }}
                                 transition={{
-                                  delay: 1.2 + i * 0.2,
-                                  duration: 0.8,
+                                  delay: 0.4 + i * 0.1,
+                                  duration: 0.5,
                                 }}
                               />
                             </div>
@@ -487,7 +487,7 @@ export default function HeroSection() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+        transition={{ delay: 0.5 }}
       >
         <span className="text-xs text-slate-500">Scroll to explore</span>
         <motion.div

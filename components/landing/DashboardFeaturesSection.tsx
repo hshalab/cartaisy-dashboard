@@ -86,7 +86,7 @@ function BuilderMockup() {
           initial={{ opacity: 0, x: -10 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 + i * 0.1 }}
+          transition={{ delay: 0.1 + i * 0.05 }}
         >
           <Grip className="w-4 h-4 text-slate-600" />
           <div className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-emerald-400' : i === 1 ? 'bg-blue-400' : 'bg-purple-400'}`} />
@@ -115,7 +115,7 @@ function TeamMockup() {
           initial={{ opacity: 0, x: -10 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 + i * 0.1 }}
+          transition={{ delay: 0.1 + i * 0.05 }}
         >
           <div className={`w-8 h-8 rounded-full ${member.color} flex items-center justify-center text-white text-xs font-medium`}>
             {member.name.split(' ').map(n => n[0]).join('')}
@@ -149,7 +149,7 @@ function AnalyticsMockup() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3 + i * 0.1 }}
+            transition={{ delay: 0.1 + i * 0.05 }}
           >
             <div className="text-xs text-slate-500">{stat.label}</div>
             <div className="text-lg font-bold text-white">{stat.value}</div>
@@ -187,7 +187,7 @@ function SyncMockup() {
           initial={{ opacity: 0, x: -10 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 + i * 0.1 }}
+          transition={{ delay: 0.1 + i * 0.05 }}
         >
           <item.icon className="w-4 h-4 text-slate-400" />
           <span className="text-sm text-slate-300">{item.label}</span>
@@ -219,14 +219,14 @@ export default function DashboardFeaturesSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
         >
           <motion.span
             className="inline-block text-sm font-medium text-purple-400 tracking-wide uppercase"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.05 }}
           >
             Dashboard
           </motion.span>
@@ -252,7 +252,7 @@ export default function DashboardFeaturesSection() {
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.4 }}
               >
                 <div className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center ${
                   index % 2 === 1 ? '' : ''
@@ -287,7 +287,7 @@ export default function DashboardFeaturesSection() {
                           initial={{ opacity: 0, x: -10 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
-                          transition={{ delay: 0.2 + idx * 0.05 }}
+                          transition={{ delay: 0.1 + idx * 0.03 }}
                         >
                           <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${feature.gradient} p-1 shrink-0 flex items-center justify-center`}>
                             <Check className="w-3.5 h-3.5 text-white" />
@@ -345,7 +345,7 @@ export default function DashboardFeaturesSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.1 }}
         >
           <p className="text-xl text-gray-400">
             Ready to see how easy store management can be?

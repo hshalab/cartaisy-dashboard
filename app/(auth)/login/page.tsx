@@ -42,7 +42,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] relative overflow-hidden flex items-center justify-center">
+    <div className="min-h-[100dvh] bg-[#0A0A0A] relative overflow-hidden flex items-start md:items-center justify-center pt-16 md:pt-0">
       {/* Refined gradient background - subtle and elegant */}
       <div className="absolute inset-0">
         {/* Top gradient glow */}
@@ -81,7 +81,7 @@ export default function LoginPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.35, delay: 0.05 }}
           className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8 shadow-2xl"
         >
           {/* Header */}
@@ -213,7 +213,7 @@ export default function LoginPage() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.1 }}
           className="mt-8 text-center"
         >
           <Link
