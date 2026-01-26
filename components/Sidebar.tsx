@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "@/lib/auth";
+import { useSession, useAuth } from "@/lib/auth";
 import {
   ChevronLeft,
   ChevronRight,
@@ -20,10 +20,11 @@ import {
   Bell,
   ShoppingBag,
   HelpCircle,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { canManageTeam } from "@/lib/utils/permissions";
 
 // Master admins who can access admin pages
@@ -42,9 +43,10 @@ interface SidebarContentProps {
   onToggleCollapse?: () => void;
 }
 
-function SidebarContent({ collapsed, onToggleCollapse }: SidebarContentProps) {
+function SidebarContent({ collapsed, onToggleCollapse, showSignOut = false }: SidebarContentProps & { showSignOut?: boolean }) {
   const pathname = usePathname();
   const { data: session } = useSession();
+  const { logout } = useAuth();
 
   const storeName = session?.user?.storeName || "My Store";
   const userName = session?.user?.name || "User";
@@ -194,6 +196,22 @@ function SidebarContent({ collapsed, onToggleCollapse }: SidebarContentProps) {
           );
         })}
       </nav>
+
+      {/* Sign Out - Only shown on mobile */}
+      {showSignOut && (
+        <div className="p-2 pb-16 border-t border-slate-200">
+          <button
+            onClick={() => logout()}
+            className={cn(
+              "flex items-center rounded-md transition-colors w-full text-red-600 hover:bg-red-50",
+              collapsed ? "justify-center p-2.5" : "gap-2.5 px-2.5 py-2"
+            )}
+          >
+            <LogOut className="w-4 h-4" />
+            {!collapsed && <span className="text-xs">Sign out</span>}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -233,7 +251,8 @@ export function Sidebar() {
       {/* Mobile Sidebar Sheet */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side="left" className="p-0 w-64 bg-white">
-          <SidebarContent collapsed={false} />
+          <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+          <SidebarContent collapsed={false} showSignOut={true} />
         </SheetContent>
       </Sheet>
     </>

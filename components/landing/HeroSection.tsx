@@ -1,8 +1,14 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 import {
   ArrowRight,
   ChevronRight,
@@ -14,7 +20,7 @@ import {
   Layout,
   Grip,
   Zap,
-} from 'lucide-react';
+} from "lucide-react";
 import {
   fadeInUp,
   fadeInDown,
@@ -24,14 +30,23 @@ import {
   pulseGlow,
   buttonTap,
   textReveal,
-} from '@/lib/animations';
+} from "@/lib/animations";
 
 export default function HeroSection() {
+  const [isMobile, setIsMobile] = useState(false);
   const { scrollY } = useScroll();
 
-  // Parallax values
-  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Parallax values - disabled on mobile
+  const heroY = useTransform(scrollY, [0, 500], [0, isMobile ? 0 : 150]);
+  const heroOpacity = useTransform(scrollY, [0, 300], [1, isMobile ? 1 : 0]);
 
   // Spring mouse position for smooth tracking
   const mouseX = useMotionValue(0);
@@ -48,12 +63,12 @@ export default function HeroSection() {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
   return (
-    <section className="relative min-h-screen flex items-center pt-24 pb-32 px-6 lg:px-8">
+    <section className="relative md:min-h-screen flex items-start md:items-center pt-20 md:pt-24 pb-8 md:pb-32 px-4 md:px-6 lg:px-8">
       {/* Dynamic Gradient Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Animated gradient orbs */}
@@ -108,7 +123,9 @@ export default function HeroSection() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
-              <span className="text-sm text-slate-300">Now powering 500+ Shopify stores</span>
+              <span className="text-sm text-slate-300">
+                Now powering 500+ Shopify stores
+              </span>
               <ChevronRight className="w-4 h-4 text-slate-500" />
             </motion.div>
 
@@ -123,10 +140,10 @@ export default function HeroSection() {
               <motion.span
                 className="block bg-gradient-to-r from-purple-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent"
                 animate={{
-                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                 }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
-                style={{ backgroundSize: '200% auto' }}
+                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                style={{ backgroundSize: "200% auto" }}
               >
                 Mobile Commerce
               </motion.span>
@@ -140,8 +157,9 @@ export default function HeroSection() {
               className="text-lg sm:text-xl text-slate-400 max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed"
               variants={fadeInUp}
             >
-              The complete dashboard to design, manage, and optimize your Shopify mobile app.
-              Drag-and-drop components, real-time analytics, and instant updates.
+              The complete dashboard to design, manage, and optimize your
+              Shopify mobile app. Drag-and-drop components, real-time analytics,
+              and instant updates.
             </motion.p>
 
             {/* CTA Buttons - Refined */}
@@ -157,9 +175,15 @@ export default function HeroSection() {
                 >
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-purple-600 via-violet-600 to-purple-600"
-                    animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                    style={{ backgroundSize: '200% auto' }}
+                    animate={{
+                      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    style={{ backgroundSize: "200% auto" }}
                   />
                   <span className="relative z-10">Get Started Free</span>
                   <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
@@ -200,7 +224,10 @@ export default function HeroSection() {
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-0.5">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    <Star
+                      key={i}
+                      className="w-4 h-4 text-amber-400 fill-amber-400"
+                    />
                   ))}
                 </div>
                 <span className="text-sm text-slate-400">4.9/5 rating</span>
@@ -259,7 +286,9 @@ export default function HeroSection() {
                         <Layout className="w-4 h-4 text-white" />
                       </motion.div>
                       <div>
-                        <div className="text-sm font-medium text-white">My Store</div>
+                        <div className="text-sm font-medium text-white">
+                          My Store
+                        </div>
                         <div className="text-xs text-slate-500">Pro Plan</div>
                       </div>
                     </div>
@@ -274,9 +303,24 @@ export default function HeroSection() {
                   {/* Stats Row */}
                   <div className="grid grid-cols-3 gap-3 mb-6">
                     {[
-                      { label: 'Revenue', value: '$12.4K', change: '+12%', color: 'text-emerald-400' },
-                      { label: 'Orders', value: '847', change: '+8%', color: 'text-blue-400' },
-                      { label: 'Visitors', value: '2.1K', change: '+24%', color: 'text-purple-400' },
+                      {
+                        label: "Revenue",
+                        value: "$12.4K",
+                        change: "+12%",
+                        color: "text-emerald-400",
+                      },
+                      {
+                        label: "Orders",
+                        value: "847",
+                        change: "+8%",
+                        color: "text-blue-400",
+                      },
+                      {
+                        label: "Visitors",
+                        value: "2.1K",
+                        change: "+24%",
+                        color: "text-purple-400",
+                      },
                     ].map((stat, i) => (
                       <motion.div
                         key={stat.label}
@@ -285,9 +329,15 @@ export default function HeroSection() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.8 + i * 0.1 }}
                       >
-                        <p className="text-xs text-slate-500 mb-1">{stat.label}</p>
-                        <p className="text-xl font-bold text-white">{stat.value}</p>
-                        <p className={`text-xs ${stat.color} flex items-center gap-1`}>
+                        <p className="text-xs text-slate-500 mb-1">
+                          {stat.label}
+                        </p>
+                        <p className="text-xl font-bold text-white">
+                          {stat.value}
+                        </p>
+                        <p
+                          className={`text-xs ${stat.color} flex items-center gap-1`}
+                        >
                           <TrendingUp className="w-3 h-3" />
                           {stat.change}
                         </p>
@@ -299,11 +349,19 @@ export default function HeroSection() {
                   <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4">
                     <div className="flex items-center gap-2 mb-4">
                       <Layout className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm font-medium text-white">App Builder</span>
-                      <span className="ml-auto text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">Live</span>
+                      <span className="text-sm font-medium text-white">
+                        App Builder
+                      </span>
+                      <span className="ml-auto text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">
+                        Live
+                      </span>
                     </div>
                     <div className="space-y-2">
-                      {['Hero Banner', 'Product Carousel', 'Collections Grid'].map((item, i) => (
+                      {[
+                        "Hero Banner",
+                        "Product Carousel",
+                        "Collections Grid",
+                      ].map((item, i) => (
                         <motion.div
                           key={item}
                           className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] transition-all cursor-pointer"
@@ -312,7 +370,9 @@ export default function HeroSection() {
                           transition={{ delay: 1 + i * 0.15 }}
                         >
                           <Grip className="w-4 h-4 text-slate-600" />
-                          <div className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-emerald-400' : i === 1 ? 'bg-blue-400' : 'bg-purple-400'}`} />
+                          <div
+                            className={`w-2 h-2 rounded-full ${i === 0 ? "bg-emerald-400" : i === 1 ? "bg-blue-400" : "bg-purple-400"}`}
+                          />
                           <span className="text-sm text-slate-300">{item}</span>
                           <div className="ml-auto">
                             <div className="w-16 h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -320,7 +380,10 @@ export default function HeroSection() {
                                 className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${85 - i * 15}%` }}
-                                transition={{ delay: 1.2 + i * 0.2, duration: 0.8 }}
+                                transition={{
+                                  delay: 1.2 + i * 0.2,
+                                  duration: 0.8,
+                                }}
                               />
                             </div>
                           </div>
@@ -335,7 +398,11 @@ export default function HeroSection() {
               <motion.div
                 className="absolute -right-6 -bottom-6 w-40 hidden lg:block"
                 animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               >
                 <div className="relative">
                   <div className="bg-gray-900 rounded-[2rem] p-1.5 shadow-2xl shadow-black/50 border-2 border-gray-800">
@@ -345,8 +412,11 @@ export default function HeroSection() {
                       {/* App content preview */}
                       <div className="p-3 pt-7">
                         <div className="space-y-2">
-                          {[1, 2, 3].map(i => (
-                            <div key={i} className="bg-white/10 rounded-lg h-16 backdrop-blur-sm" />
+                          {[1, 2, 3].map((i) => (
+                            <div
+                              key={i}
+                              className="bg-white/10 rounded-lg h-16 backdrop-blur-sm"
+                            />
                           ))}
                         </div>
                       </div>
@@ -368,7 +438,9 @@ export default function HeroSection() {
                 whileHover={{ scale: 1.1, y: -4 }}
               >
                 <TrendingUp className="w-5 h-5 text-emerald-400 mb-0.5" />
-                <span className="text-xs text-emerald-400 font-semibold">+47%</span>
+                <span className="text-xs text-emerald-400 font-semibold">
+                  +47%
+                </span>
               </motion.div>
             </motion.div>
 
@@ -420,7 +492,13 @@ export default function HeroSection() {
         <span className="text-xs text-slate-500">Scroll to explore</span>
         <motion.div
           className="w-6 h-10 border-2 border-white/20 rounded-full flex items-start justify-center p-2"
-          animate={{ borderColor: ['rgba(255,255,255,0.2)', 'rgba(168,85,247,0.4)', 'rgba(255,255,255,0.2)'] }}
+          animate={{
+            borderColor: [
+              "rgba(255,255,255,0.2)",
+              "rgba(168,85,247,0.4)",
+              "rgba(255,255,255,0.2)",
+            ],
+          }}
           transition={{ duration: 2, repeat: Infinity }}
         >
           <motion.div
