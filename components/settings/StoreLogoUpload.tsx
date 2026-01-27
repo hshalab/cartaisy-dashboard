@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useSession } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
-import { Upload, X, Loader2 } from 'lucide-react';
+import { Upload, X, Loader2, CheckCircle2 } from 'lucide-react';
 
 interface StoreLogoUploadProps {
   currentLogo?: string | null;
@@ -11,12 +12,42 @@ interface StoreLogoUploadProps {
 }
 
 export function StoreLogoUpload({ currentLogo, storeName = 'Store', onLogoChange }: StoreLogoUploadProps) {
+  const { data: session } = useSession();
   const [logo, setLogo] = useState<string | null>(currentLogo || null);
   const [isUploading, setIsUploading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const storeId = session?.user?.storeId;
   const storeInitial = storeName.charAt(0).toUpperCase();
+
+  // Fetch current branding on mount
+  useEffect(() => {
+    const fetchBranding = async () => {
+      if (!storeId) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/v1/admin/stores/${storeId}/branding`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.data?.logoUrl) {
+            setLogo(data.data.logoUrl);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch branding:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBranding();
+  }, [storeId]);
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -35,53 +66,87 @@ export function StoreLogoUpload({ currentLogo, storeName = 'Store', onLogoChange
       return;
     }
 
+    if (!storeId) {
+      setError('Store not found');
+      return;
+    }
+
     setError(null);
+    setSuccess(null);
     setIsUploading(true);
 
     try {
-      // For now, create a local preview URL
-      // When backend is ready, this will upload to server
-      const previewUrl = URL.createObjectURL(file);
-      setLogo(previewUrl);
-      onLogoChange?.(previewUrl);
+      const formData = new FormData();
+      formData.append('logo', file);
 
-      // TODO: When backend is ready, uncomment this:
-      // const formData = new FormData();
-      // formData.append('logo', file);
-      // const response = await fetch('/api/store/upload-logo', {
-      //   method: 'POST',
-      //   body: formData,
-      // });
-      // if (response.ok) {
-      //   const data = await response.json();
-      //   setLogo(data.logoUrl);
-      //   onLogoChange?.(data.logoUrl);
-      // } else {
-      //   throw new Error('Upload failed');
-      // }
+      const response = await fetch(`/api/v1/admin/stores/${storeId}/branding/logo`, {
+        method: 'POST',
+        body: formData,
+      });
 
-    } catch {
-      setError('Failed to upload logo. Please try again.');
+      if (response.ok) {
+        const data = await response.json();
+        const logoUrl = data.data?.logoUrl;
+        setLogo(logoUrl);
+        onLogoChange?.(logoUrl);
+        setSuccess('Logo uploaded successfully!');
+        setTimeout(() => setSuccess(null), 3000);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Upload failed');
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to upload logo. Please try again.');
       setLogo(currentLogo || null);
     } finally {
       setIsUploading(false);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 
   const handleRemoveLogo = async () => {
-    setIsUploading(true);
-    try {
-      // TODO: When backend is ready, call delete API
-      // await fetch('/api/store/logo', { method: 'DELETE' });
+    if (!storeId) {
+      setError('Store not found');
+      return;
+    }
 
-      setLogo(null);
-      onLogoChange?.(null);
-    } catch {
-      setError('Failed to remove logo');
+    setError(null);
+    setSuccess(null);
+    setIsUploading(true);
+
+    try {
+      const response = await fetch(`/api/v1/admin/stores/${storeId}/branding/logo`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setLogo(null);
+        onLogoChange?.(null);
+        setSuccess('Logo removed successfully!');
+        setTimeout(() => setSuccess(null), 3000);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to remove logo');
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to remove logo');
     } finally {
       setIsUploading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="rounded-xl border border-slate-200 bg-white p-5">
+        <div className="flex items-center justify-center py-4">
+          <Loader2 className="w-5 h-5 animate-spin text-slate-400" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-5">
@@ -163,6 +228,14 @@ export function StoreLogoUpload({ currentLogo, storeName = 'Store', onLogoChange
             onChange={handleFileSelect}
             className="hidden"
           />
+
+          {/* Success message */}
+          {success && (
+            <div className="flex items-center gap-2 mt-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+              <p className="text-xs text-emerald-600">{success}</p>
+            </div>
+          )}
 
           {/* Error message */}
           {error && (

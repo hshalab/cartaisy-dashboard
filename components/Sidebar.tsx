@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, useAuth } from "@/lib/auth";
@@ -47,12 +47,31 @@ function SidebarContent({ collapsed, onToggleCollapse, showSignOut = false }: Si
   const pathname = usePathname();
   const { data: session } = useSession();
   const { logout } = useAuth();
+  const [storeLogo, setStoreLogo] = useState<string | null>(null);
 
+  const storeId = session?.user?.storeId;
   const storeName = session?.user?.storeName || "Cartaisy";
   const userName = session?.user?.name || "User";
   const storeInitial = storeName.charAt(0).toUpperCase();
-  // storeLogo will come from backend when implemented
-  const storeLogo = (session?.user as any)?.storeLogo || null;
+
+  // Fetch store branding (logo) from API
+  useEffect(() => {
+    const fetchBranding = async () => {
+      if (!storeId) return;
+      try {
+        const response = await fetch(`/api/v1/admin/stores/${storeId}/branding`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.data?.logoUrl) {
+            setStoreLogo(data.data.logoUrl);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch store branding:', err);
+      }
+    };
+    fetchBranding();
+  }, [storeId]);
 
   const baseNavItems: NavItem[] = [
     { href: "/dashboard", label: "Home", icon: <House className="w-4 h-4" /> },
