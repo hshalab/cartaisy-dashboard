@@ -9,7 +9,9 @@ import { PlanUsageCard } from '@/components/settings/PlanUsageCard';
 import { StoreSettingsForm } from '@/components/settings/StoreSettingsForm';
 import { DeleteStoreDialog } from '@/components/settings/DeleteStoreDialog';
 import { SyncStatusCard } from '@/components/settings/SyncStatusCard';
+import { StoreLogoUpload } from '@/components/settings/StoreLogoUpload';
 import { Button } from '@/components/ui/button';
+import { useShopifyStatus } from '@/hooks/useShopifyStatus';
 import {
   AlertCircle,
   CheckCircle2,
@@ -24,6 +26,7 @@ import {
   AlertTriangle,
   ChevronRight,
   FileText,
+  ImageIcon,
 } from 'lucide-react';
 import { canManageSettings } from '@/lib/utils/permissions';
 import { useStoreStats } from '@/hooks/useStoreStats';
@@ -32,6 +35,7 @@ function SettingsContent() {
   const searchParams = useSearchParams();
   const { data: session } = useSession();
   const { stats, isLoading: statsLoading } = useStoreStats();
+  const { status: shopifyStatus } = useShopifyStatus();
 
   const [store, setStore] = useState<any>(null);
   const [isLoadingStore, setIsLoadingStore] = useState(true);
@@ -177,6 +181,23 @@ function SettingsContent() {
           <StoreInfoCard
             store={store}
             onStoreUpdated={(updatedStore) => setStore(updatedStore)}
+          />
+        </div>
+      )}
+
+      {/* Store Branding Section - Only show when Shopify is connected */}
+      {shopifyStatus?.isConnected && store && (
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <ImageIcon className="w-4 h-4 text-slate-600" />
+            <h2 className="text-sm font-semibold tracking-tight text-slate-900">Store Branding</h2>
+          </div>
+          <StoreLogoUpload
+            currentLogo={store?.logo}
+            storeName={store?.name || session?.user?.storeName || 'Store'}
+            onLogoChange={(logoUrl) => {
+              setStore({ ...store, logo: logoUrl });
+            }}
           />
         </div>
       )}

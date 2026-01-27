@@ -48,9 +48,11 @@ function SidebarContent({ collapsed, onToggleCollapse, showSignOut = false }: Si
   const { data: session } = useSession();
   const { logout } = useAuth();
 
-  const storeName = session?.user?.storeName || "My Store";
+  const storeName = session?.user?.storeName || "Cartaisy";
   const userName = session?.user?.name || "User";
-  const userInitial = userName.charAt(0).toUpperCase();
+  const storeInitial = storeName.charAt(0).toUpperCase();
+  // storeLogo will come from backend when implemented
+  const storeLogo = (session?.user as any)?.storeLogo || null;
 
   const baseNavItems: NavItem[] = [
     { href: "/dashboard", label: "Home", icon: <House className="w-4 h-4" /> },
@@ -129,7 +131,7 @@ function SidebarContent({ collapsed, onToggleCollapse, showSignOut = false }: Si
       {/* Store Header with User Avatar - matches main header h-14 */}
       <div className="h-14 border-b border-slate-200 flex items-center px-3">
         {collapsed ? (
-          /* Collapsed state - just avatar, click to expand */
+          /* Collapsed state - just store logo/initial, click to expand */
           <div className="flex items-center justify-center w-full">
             <Button
               variant="ghost"
@@ -137,17 +139,25 @@ function SidebarContent({ collapsed, onToggleCollapse, showSignOut = false }: Si
               onClick={onToggleCollapse}
               className="p-0 h-8 w-8 rounded-full hover:bg-slate-100"
             >
-              <div className="w-7 h-7 rounded-full bg-slate-900 flex items-center justify-center">
-                <span className="text-xs font-semibold text-white">{userInitial}</span>
-              </div>
+              {storeLogo ? (
+                <img src={storeLogo} alt={storeName} className="w-7 h-7 rounded-full object-cover" />
+              ) : (
+                <div className="w-7 h-7 rounded-full bg-slate-900 flex items-center justify-center">
+                  <span className="text-xs font-semibold text-white">{storeInitial}</span>
+                </div>
+              )}
             </Button>
           </div>
         ) : (
-          /* Expanded state - avatar, info, collapse button */
+          /* Expanded state - store logo/initial, info, collapse button */
           <div className="flex items-center w-full gap-2.5">
-            <div className="w-7 h-7 rounded-full bg-slate-900 flex items-center justify-center shrink-0">
-              <span className="text-xs font-semibold text-white">{userInitial}</span>
-            </div>
+            {storeLogo ? (
+              <img src={storeLogo} alt={storeName} className="w-7 h-7 rounded-full object-cover shrink-0" />
+            ) : (
+              <div className="w-7 h-7 rounded-full bg-slate-900 flex items-center justify-center shrink-0">
+                <span className="text-xs font-semibold text-white">{storeInitial}</span>
+              </div>
+            )}
             <div className="flex-1 min-w-0">
               <h2 className="text-xs font-semibold text-slate-900 truncate">{storeName}</h2>
               <p className="text-xs text-slate-500 truncate">{userName}</p>
