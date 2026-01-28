@@ -7,9 +7,8 @@ import { Sparkles, Twitter, Linkedin, Github, Mail } from "lucide-react";
 export default function LandingFooter() {
   const footerLinks = {
     product: [
-      { label: "Features", href: "/#features" },
-      { label: "Dashboard", href: "/#dashboard" },
-      { label: "Mobile App", href: "/#mobile-app" },
+      { label: "Features", href: "/features" },
+      { label: "Shopify Integration", href: "/features#shopify-integration" },
       { label: "Pricing", href: "/pricing" },
     ],
     company: [
@@ -20,6 +19,8 @@ export default function LandingFooter() {
     ],
     resources: [
       { label: "Documentation", href: "/docs" },
+      { label: "API Reference", href: "/docs/api" },
+      { label: "FAQ", href: "/docs/faq" },
       { label: "Support", href: "/contact" },
     ],
     legal: [
