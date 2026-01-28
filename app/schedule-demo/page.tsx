@@ -1,77 +1,72 @@
 import { Metadata } from 'next';
-import ScheduleDemoForm from '@/components/ScheduleDemoForm';
 import PageLayout from '@/components/landing/PageLayout';
+import CalendlyEmbed from '@/components/landing/CalendlyEmbed';
+import { Calendar, Clock, Video } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Schedule a Demo | Cartaisy',
-  description: 'Book a personalized demo to see how Cartaisy can help you build a mobile app for your Shopify store.',
+  description: 'Book a personalized demo of Cartaisy and see how we can transform your Shopify store into a mobile app.',
 };
 
 export default function ScheduleDemoPage() {
   return (
-    <PageLayout maxWidth="4xl">
-      <div className="grid md:grid-cols-2 gap-12 items-start">
-        {/* Left Column - Info */}
+    <PageLayout maxWidth="6xl">
+      <div className="grid lg:grid-cols-2 gap-12 items-start">
+        {/* Left side - Info */}
         <div>
-          <h1 className="text-4xl font-bold text-white mb-4">Schedule a Demo</h1>
-          <p className="text-gray-400 text-lg mb-8">
-            See Cartaisy in action. Book a personalized demo with our team and learn how
-            to launch your Shopify mobile app.
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Schedule a Demo
+          </h1>
+          <p className="text-lg text-gray-300 mb-8">
+            See Cartaisy in action. Book a personalized demo with our team and discover how easy it is to launch your mobile app.
           </p>
 
           <div className="space-y-6">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span className="text-purple-400 font-semibold">1</span>
+              <div className="p-3 bg-purple-500/20 rounded-lg shrink-0">
+                <Video className="w-6 h-6 text-purple-400" />
               </div>
               <div>
-                <h3 className="text-white font-medium mb-1">Personalized Walkthrough</h3>
-                <p className="text-gray-400 text-sm">
-                  Get a customized demo based on your store&apos;s needs and goals.
-                </p>
+                <h3 className="text-white font-semibold">Live Demo</h3>
+                <p className="text-gray-400 text-sm">See the dashboard and mobile app in real-time</p>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span className="text-purple-400 font-semibold">2</span>
+              <div className="p-3 bg-purple-500/20 rounded-lg shrink-0">
+                <Clock className="w-6 h-6 text-purple-400" />
               </div>
               <div>
-                <h3 className="text-white font-medium mb-1">Live Q&A</h3>
-                <p className="text-gray-400 text-sm">
-                  Ask questions and get answers from our mobile commerce experts.
-                </p>
+                <h3 className="text-white font-semibold">30 Minutes</h3>
+                <p className="text-gray-400 text-sm">Quick overview tailored to your needs</p>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span className="text-purple-400 font-semibold">3</span>
+              <div className="p-3 bg-purple-500/20 rounded-lg shrink-0">
+                <Calendar className="w-6 h-6 text-purple-400" />
               </div>
               <div>
-                <h3 className="text-white font-medium mb-1">Custom Recommendations</h3>
-                <p className="text-gray-400 text-sm">
-                  Receive tailored advice on features and strategies for your app.
-                </p>
+                <h3 className="text-white font-semibold">Flexible Scheduling</h3>
+                <p className="text-gray-400 text-sm">Pick a time that works for you</p>
               </div>
             </div>
           </div>
 
-          <div className="mt-10 p-6 bg-white/5 rounded-xl border border-white/10">
-            <p className="text-gray-400 text-sm">
-              <strong className="text-white">Prefer to talk now?</strong>
-              <br />
-              Email us at{' '}
-              <a href="mailto:sales@cartaisy.com" className="text-purple-400 hover:text-purple-300">
-                sales@cartaisy.com
+          <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10">
+            <p className="text-gray-300 text-sm">
+              <strong className="text-white">Prefer email?</strong> Reach out to us at{' '}
+              <a href="mailto:demo@cartaisy.com" className="text-purple-400 hover:text-purple-300">
+                demo@cartaisy.com
               </a>
             </p>
           </div>
         </div>
 
-        {/* Right Column - Form */}
-        <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
-          <ScheduleDemoForm />
+        {/* Right side - Calendly */}
+        <div className="bg-white/5 rounded-xl p-4 border border-white/10">
+          {/* TODO: Replace with actual Calendly URL */}
+          <CalendlyEmbed url="https://calendly.com/cartaisy/demo" />
         </div>
       </div>
     </PageLayout>

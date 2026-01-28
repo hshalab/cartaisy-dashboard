@@ -7,9 +7,15 @@ import { X } from 'lucide-react';
 interface DemoVideoModalProps {
   isOpen: boolean;
   onClose: () => void;
+  // TODO: Replace with actual Cartaisy demo video ID
+  videoUrl?: string;
 }
 
-export default function DemoVideoModal({ isOpen, onClose }: DemoVideoModalProps) {
+export default function DemoVideoModal({
+  isOpen,
+  onClose,
+  videoUrl = 'https://www.youtube.com/embed/YOUR_VIDEO_ID'
+}: DemoVideoModalProps) {
   // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -66,9 +72,9 @@ export default function DemoVideoModal({ isOpen, onClose }: DemoVideoModalProps)
 
             {/* Video Container */}
             <div className="relative aspect-video rounded-2xl overflow-hidden bg-slate-900 border border-white/10 shadow-2xl shadow-purple-500/20">
-              {/* Placeholder video - replace YOUR_VIDEO_ID with actual video */}
+              {/* TODO: Update YOUR_VIDEO_ID with actual Cartaisy demo video */}
               <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0"
+                src={isOpen ? `${videoUrl}?autoplay=1&rel=0` : ''}
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
