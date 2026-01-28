@@ -1,0 +1,117 @@
+'use client';
+
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import {
+  CookieConsent,
+  defaultConsent,
+  getStoredConsent,
+  setConsentCookie,
+} from '@/lib/cookies';
+
+type ConsentContextType = {
+  consent: CookieConsent;
+  hasChosen: boolean;
+  showBanner: boolean;
+  acceptAll: () => void;
+  rejectAll: () => void;
+  acceptSelected: (consent: CookieConsent) => void;
+  openSettings: () => void;
+  closeBanner: () => void;
+};
+
+const ConsentContext = createContext<ConsentContextType | null>(null);
+
+export function useCookieConsent() {
+  const context = useContext(ConsentContext);
+  if (!context) {
+    throw new Error('useCookieConsent must be used within CookieConsentProvider');
+  }
+  return context;
+}
+
+export default function CookieConsentProvider({ children }: { children: ReactNode }) {
+  const [consent, setConsent] = useState<CookieConsent>(defaultConsent);
+  const [hasChosen, setHasChosen] = useState(true); // Default true to prevent flash
+  const [showBanner, setShowBanner] = useState(false);
+
+  // Load stored consent on mount
+  useEffect(() => {
+    const stored = getStoredConsent();
+    if (stored) {
+      setConsent(stored);
+      setHasChosen(true);
+    } else {
+      setHasChosen(false);
+      setShowBanner(true);
+    }
+  }, []);
+
+  // Update analytics when consent changes
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('consent', 'update', {
+        analytics_storage: consent.analytics ? 'granted' : 'denied',
+        ad_storage: consent.marketing ? 'granted' : 'denied',
+      });
+    }
+  }, [consent]);
+
+  const acceptAll = () => {
+    const fullConsent: CookieConsent = {
+      necessary: true,
+      analytics: true,
+      marketing: true,
+    };
+    setConsent(fullConsent);
+    setConsentCookie(fullConsent);
+    setHasChosen(true);
+    setShowBanner(false);
+  };
+
+  const rejectAll = () => {
+    const minimalConsent: CookieConsent = {
+      necessary: true,
+      analytics: false,
+      marketing: false,
+    };
+    setConsent(minimalConsent);
+    setConsentCookie(minimalConsent);
+    setHasChosen(true);
+    setShowBanner(false);
+  };
+
+  const acceptSelected = (selectedConsent: CookieConsent) => {
+    const newConsent = { ...selectedConsent, necessary: true };
+    setConsent(newConsent);
+    setConsentCookie(newConsent);
+    setHasChosen(true);
+    setShowBanner(false);
+  };
+
+  const openSettings = () => {
+    setShowBanner(true);
+  };
+
+  const closeBanner = () => {
+    if (hasChosen) {
+      setShowBanner(false);
+    }
+  };
+
+  return (
+    <ConsentContext.Provider
+      value={{
+        consent,
+        hasChosen,
+        showBanner,
+        acceptAll,
+        rejectAll,
+        acceptSelected,
+        openSettings,
+        closeBanner,
+      }}
+    >
+      {children}
+    </ConsentContext.Provider>
+  );
+}

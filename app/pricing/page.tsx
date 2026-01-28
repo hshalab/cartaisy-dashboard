@@ -2,11 +2,13 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { Check, Sparkles } from 'lucide-react';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Pricing | Cartaisy',
-  description: 'Simple, transparent pricing for your Shopify mobile app. Choose the plan that fits your business.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Pricing',
+  description: 'Affordable pricing plans for every Shopify store. Start with Starter at $49/month. No hidden fees, 14-day free trial, cancel anytime.',
+  keywords: ['Shopify app pricing', 'mobile app cost', 'ecommerce app pricing', 'free trial'],
+});
 
 const plans = [
   {

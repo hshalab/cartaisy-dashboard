@@ -12,11 +12,13 @@ import {
   Shield,
 } from 'lucide-react';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Documentation | Cartaisy',
-  description: 'Learn how to use Cartaisy to build and manage your Shopify mobile app.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Documentation',
+  description: 'Cartaisy documentation - guides, tutorials, and API reference to help you build and manage your Shopify mobile app.',
+  keywords: ['documentation', 'guides', 'tutorials', 'API', 'help'],
+});
 
 const docSections = [
   {

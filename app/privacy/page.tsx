@@ -1,11 +1,13 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy | Cartaisy',
-  description: 'Learn how Cartaisy collects, uses, and protects your personal information.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Privacy Policy',
+  description: 'Cartaisy Privacy Policy - how we collect, use, and protect your data. Your privacy matters to us.',
+  keywords: ['privacy', 'data protection', 'GDPR'],
+});
 
 export default function PrivacyPolicy() {
   return (

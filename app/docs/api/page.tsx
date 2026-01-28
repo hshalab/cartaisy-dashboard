@@ -2,11 +2,13 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { Code, Lock, Server, ShoppingBag, Users, Bell, BarChart3, Key } from 'lucide-react';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'API Reference | Cartaisy',
-  description: 'Cartaisy REST API documentation for developers integrating with the platform.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'API Reference',
+  description: 'Cartaisy REST API documentation for developers. Authentication, endpoints, rate limits, and code examples.',
+  keywords: ['API', 'REST API', 'developer docs', 'integration'],
+});
 
 const apiEndpoints = [
   {

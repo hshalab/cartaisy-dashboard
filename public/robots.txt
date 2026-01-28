@@ -1,0 +1,14 @@
+# Cartaisy Robots.txt
+
+User-agent: *
+Allow: /
+
+# Disallow admin/dashboard areas
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+Disallow: /invite/
+
+# Sitemap
+Sitemap: https://cartaisy.com/sitemap.xml

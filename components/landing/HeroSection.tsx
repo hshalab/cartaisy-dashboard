@@ -31,6 +31,7 @@ import {
   buttonTap,
   textReveal,
 } from "@/lib/animations";
+import { analytics } from "@/lib/analytics";
 import DemoVideoModal from "./DemoVideoModal";
 
 export default function HeroSection() {
@@ -169,7 +170,7 @@ export default function HeroSection() {
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
               variants={fadeInUp}
             >
-              <Link href="/login">
+              <Link href="/login" onClick={() => analytics.ctaClick('get_started')}>
                 <motion.button
                   className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-white overflow-hidden shadow-lg shadow-purple-500/20"
                   whileHover={{ scale: 1.02, y: -2 }}
@@ -193,7 +194,11 @@ export default function HeroSection() {
               </Link>
 
               <motion.button
-                onClick={() => setIsVideoOpen(true)}
+                onClick={() => {
+                  analytics.ctaClick('watch_demo');
+                  analytics.videoWatched('demo_video');
+                  setIsVideoOpen(true);
+                }}
                 className="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-white/90 backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300"
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={buttonTap}

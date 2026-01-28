@@ -2,11 +2,13 @@ import { Metadata } from 'next';
 import PageLayout from '@/components/landing/PageLayout';
 import CalendlyEmbed from '@/components/landing/CalendlyEmbed';
 import { Calendar, Clock, Video } from 'lucide-react';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Schedule a Demo | Cartaisy',
-  description: 'Book a personalized demo of Cartaisy and see how we can transform your Shopify store into a mobile app.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Schedule a Demo',
+  description: 'Book a personalized 30-minute demo of Cartaisy. See how easy it is to turn your Shopify store into a mobile app.',
+  keywords: ['demo', 'book demo', 'free demo', 'product demo'],
+});
 
 export default function ScheduleDemoPage() {
   return (

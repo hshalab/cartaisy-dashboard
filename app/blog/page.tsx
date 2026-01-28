@@ -2,11 +2,13 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { BookOpen, Bell } from 'lucide-react';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Blog | Cartaisy',
-  description: 'Stay updated with the latest news, tips, and insights about mobile commerce and Shopify app development.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Blog',
+  description: 'Mobile commerce insights, Shopify tips, conversion strategies, and Cartaisy product updates. Learn how to grow your mobile sales.',
+  keywords: ['blog', 'mobile commerce', 'ecommerce tips', 'Shopify tips'],
+});
 
 export default function BlogPage() {
   return (

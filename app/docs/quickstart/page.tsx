@@ -2,11 +2,13 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { Rocket, UserPlus, Link2, Palette, Upload, CheckCircle } from 'lucide-react';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Quick Start Guide | Cartaisy',
-  description: 'Get started with Cartaisy in minutes. Learn how to set up your Shopify mobile app.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Quick Start Guide',
+  description: 'Get started with Cartaisy in minutes. Step-by-step guide to set up your Shopify mobile app.',
+  keywords: ['quickstart', 'getting started', 'setup guide', 'tutorial'],
+});
 
 const steps = [
   {

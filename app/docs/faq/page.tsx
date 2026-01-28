@@ -2,11 +2,13 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { HelpCircle, ChevronDown } from 'lucide-react';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'FAQ | Cartaisy',
-  description: 'Frequently asked questions about Cartaisy mobile app builder for Shopify.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'FAQ',
+  description: 'Frequently asked questions about Cartaisy. Pricing, setup, features, and support answers.',
+  keywords: ['FAQ', 'questions', 'answers', 'help', 'support'],
+});
 
 const faqs = [
   {

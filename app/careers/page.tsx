@@ -1,11 +1,13 @@
 import { Metadata } from 'next';
 import { Briefcase, Mail, Heart } from 'lucide-react';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Careers | Cartaisy',
-  description: 'Join the Cartaisy team and help shape the future of mobile commerce for Shopify merchants.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Careers',
+  description: 'Join the Cartaisy team and help shape the future of mobile commerce for Shopify merchants. Remote-friendly, great culture.',
+  keywords: ['careers', 'jobs', 'remote work', 'hiring'],
+});
 
 export default function CareersPage() {
   return (

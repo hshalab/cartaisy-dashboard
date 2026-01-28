@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { SessionProvider } from "@/components/SessionProvider";
+import { OrganizationSchema, SoftwareApplicationSchema } from "@/components/landing/StructuredData";
+import { GoogleAnalytics, AnalyticsProvider, VercelAnalytics, VercelSpeedInsights } from "@/components/analytics";
+import { CookieConsentProvider, CookieBanner } from "@/components/cookies";
+import { siteConfig } from "@/lib/seo";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -11,8 +15,47 @@ const geistSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Cartaisy - Transform Your Shopify Store Into a Mobile App",
-  description: "The complete dashboard to design, manage, and optimize your Shopify mobile app. Drag-and-drop components, real-time analytics, and instant updates.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: `${siteConfig.name} - Mobile App Builder for Shopify`,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  robots: 'index, follow',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} - Mobile App Builder for Shopify`,
+    description: siteConfig.description,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${siteConfig.name} - Mobile App Builder for Shopify`,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+    creator: siteConfig.twitterHandle,
+    site: siteConfig.twitterHandle,
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({
@@ -22,11 +65,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={geistSans.variable} suppressHydrationWarning>
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body
         className="font-sans antialiased"
         suppressHydrationWarning
       >
-        <SessionProvider>{children}</SessionProvider>
+        <OrganizationSchema />
+        <SoftwareApplicationSchema />
+        <CookieConsentProvider>
+          <AnalyticsProvider>
+            <SessionProvider>{children}</SessionProvider>
+          </AnalyticsProvider>
+          <CookieBanner />
+        </CookieConsentProvider>
+        <VercelAnalytics />
+        <VercelSpeedInsights />
       </body>
     </html>
   );

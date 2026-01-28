@@ -2,11 +2,13 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { ShoppingBag, CheckCircle, RefreshCw, Package, Users, Webhook, AlertCircle } from 'lucide-react';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Shopify Integration | Cartaisy',
-  description: 'Learn how to connect and sync your Shopify store with Cartaisy.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Shopify Integration',
+  description: 'Connect your Shopify store to Cartaisy. Products, orders, customers, and inventory sync automatically.',
+  keywords: ['Shopify integration', 'connect Shopify', 'sync products', 'Shopify API'],
+});
 
 const syncFeatures = [
   {

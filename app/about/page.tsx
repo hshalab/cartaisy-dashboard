@@ -2,11 +2,13 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { Smartphone, Zap, ShoppingBag, BarChart3 } from 'lucide-react';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'About Us | Cartaisy',
-  description: 'Learn about Cartaisy - the mobile app builder platform helping Shopify merchants create native mobile apps.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'About Us',
+  description: 'Learn about Cartaisy - our mission to empower Shopify merchants with powerful mobile apps that boost sales and customer engagement.',
+  keywords: ['about Cartaisy', 'company', 'mission', 'mobile commerce'],
+});
 
 export default function AboutUs() {
   const values = [

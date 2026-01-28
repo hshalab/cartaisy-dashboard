@@ -1,10 +1,12 @@
 import { Metadata } from 'next';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Terms of Service | Cartaisy',
-  description: 'Read the terms and conditions for using Cartaisy mobile app builder platform.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Terms of Service',
+  description: 'Cartaisy Terms of Service - the terms and conditions for using our mobile app builder platform.',
+  keywords: ['terms', 'conditions', 'legal', 'agreement'],
+});
 
 export default function TermsOfService() {
   return (

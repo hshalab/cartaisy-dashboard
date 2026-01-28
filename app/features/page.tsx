@@ -19,11 +19,13 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Features | Cartaisy',
-  description: 'Discover all the powerful features Cartaisy offers to build and manage your Shopify mobile app.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Features',
+  description: 'Explore Cartaisy features: real-time Shopify sync, push notifications, Apple Pay, Google Pay, abandoned cart recovery, drag-and-drop app builder, and more.',
+  keywords: ['mobile app features', 'push notifications', 'Apple Pay integration', 'Shopify sync', 'abandoned cart recovery'],
+});
 
 const shopifyFeatures = [
   {

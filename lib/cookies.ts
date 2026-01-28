@@ -1,0 +1,47 @@
+// Cookie consent types
+export type CookieConsent = {
+  necessary: boolean; // Always true, required for site function
+  analytics: boolean;
+  marketing: boolean;
+};
+
+export const CONSENT_COOKIE_NAME = 'cartaisy_cookie_consent';
+export const CONSENT_COOKIE_EXPIRY = 365; // days
+
+export const defaultConsent: CookieConsent = {
+  necessary: true,
+  analytics: false,
+  marketing: false,
+};
+
+// Get consent from cookie
+export function getStoredConsent(): CookieConsent | null {
+  if (typeof window === 'undefined') return null;
+
+  const cookie = document.cookie
+    .split('; ')
+    .find(row => row.startsWith(`${CONSENT_COOKIE_NAME}=`));
+
+  if (!cookie) return null;
+
+  try {
+    return JSON.parse(decodeURIComponent(cookie.split('=')[1]));
+  } catch {
+    return null;
+  }
+}
+
+// Set consent cookie
+export function setConsentCookie(consent: CookieConsent) {
+  const expires = new Date();
+  expires.setDate(expires.getDate() + CONSENT_COOKIE_EXPIRY);
+
+  document.cookie = `${CONSENT_COOKIE_NAME}=${encodeURIComponent(
+    JSON.stringify(consent)
+  )}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
+}
+
+// Check if user has made a consent choice
+export function hasConsentChoice(): boolean {
+  return getStoredConsent() !== null;
+}

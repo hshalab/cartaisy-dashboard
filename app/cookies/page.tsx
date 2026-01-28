@@ -1,10 +1,13 @@
 import { Metadata } from 'next';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
+import CookieSettingsSection from './CookieSettingsSection';
 
-export const metadata: Metadata = {
-  title: 'Cookie Policy | Cartaisy',
-  description: 'Learn about how Cartaisy uses cookies and similar technologies.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Cookie Policy',
+  description: 'Cartaisy Cookie Policy - learn about how we use cookies and similar technologies on our platform.',
+  keywords: ['cookies', 'tracking', 'privacy'],
+});
 
 export default function CookiePolicy() {
   return (
@@ -27,31 +30,20 @@ export default function CookiePolicy() {
           <h2 className="text-2xl font-semibold text-white mb-4">2. Types of Cookies We Use</h2>
           <div className="space-y-6">
             <div className="bg-white/5 rounded-lg p-6 border border-white/10">
-              <h3 className="text-lg font-medium text-purple-300 mb-3">Essential Cookies</h3>
+              <h3 className="text-lg font-medium text-purple-300 mb-3">Necessary Cookies</h3>
               <p className="leading-relaxed">
-                These cookies are necessary for the website to function properly. They enable basic functions
+                These cookies are essential for the website to function properly. They enable basic functions
                 like page navigation, secure area access, and user authentication. The website cannot function
                 properly without these cookies.
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-6 border border-white/10">
-              <h3 className="text-lg font-medium text-purple-300 mb-3">Functional Cookies</h3>
-              <p className="leading-relaxed">
-                These cookies allow us to remember choices you make (such as your language preference or
-                the region you are in) and provide enhanced, more personalized features. They may also be
-                used to remember changes you have made to text size, fonts, and other customizable parts
-                of web pages.
-              </p>
-            </div>
-
-            <div className="bg-white/5 rounded-lg p-6 border border-white/10">
               <h3 className="text-lg font-medium text-purple-300 mb-3">Analytics Cookies</h3>
               <p className="leading-relaxed">
-                These cookies collect information about how visitors use our website, such as which pages
-                are visited most often and if users receive error messages. This data helps us improve how
-                our website works. All information collected by these cookies is aggregated and therefore
-                anonymous.
+                These cookies help us understand how visitors interact with our website by collecting
+                and reporting information anonymously. This data helps us improve how our website works.
+                All information collected by these cookies is aggregated and therefore anonymous.
               </p>
             </div>
 
@@ -79,14 +71,14 @@ export default function CookiePolicy() {
               </thead>
               <tbody>
                 <tr className="border-b border-white/10">
+                  <td className="py-3 pr-4 text-purple-300">cartaisy_cookie_consent</td>
+                  <td className="py-3 pr-4">Stores your cookie preferences</td>
+                  <td className="py-3">1 year</td>
+                </tr>
+                <tr className="border-b border-white/10">
                   <td className="py-3 pr-4 text-purple-300">session_token</td>
                   <td className="py-3 pr-4">Authentication and session management</td>
                   <td className="py-3">Session</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-3 pr-4 text-purple-300">user_preferences</td>
-                  <td className="py-3 pr-4">Stores user preferences and settings</td>
-                  <td className="py-3">1 year</td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-4 text-purple-300">_ga</td>
@@ -111,14 +103,16 @@ export default function CookiePolicy() {
           </p>
           <ul className="list-disc list-inside space-y-2 ml-4">
             <li><strong className="text-white">Google Analytics:</strong> For website analytics and performance monitoring</li>
+            <li><strong className="text-white">Vercel Analytics:</strong> For performance and usage insights</li>
             <li><strong className="text-white">Shopify:</strong> For integration with your Shopify store</li>
             <li><strong className="text-white">Stripe:</strong> For secure payment processing</li>
-            <li><strong className="text-white">Intercom:</strong> For customer support and communication</li>
           </ul>
         </section>
 
+        <CookieSettingsSection />
+
         <section>
-          <h2 className="text-2xl font-semibold text-white mb-4">5. Managing Cookies</h2>
+          <h2 className="text-2xl font-semibold text-white mb-4">6. Browser Settings</h2>
           <p className="leading-relaxed mb-4">
             Most web browsers allow you to control cookies through their settings. You can:
           </p>
@@ -129,14 +123,6 @@ export default function CookiePolicy() {
             <li>Block all cookies from being set</li>
             <li>Delete all cookies when you close your browser</li>
           </ul>
-          <p className="leading-relaxed">
-            Please note that if you choose to block or delete cookies, some features of our Service may not
-            work properly, and you may need to manually adjust some preferences every time you visit our site.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-semibold text-white mb-4">6. Browser Settings</h2>
           <p className="leading-relaxed mb-4">
             Here are links to manage cookies in popular browsers:
           </p>
@@ -178,8 +164,8 @@ export default function CookiePolicy() {
           <h2 className="text-2xl font-semibold text-white mb-4">8. Contact Us</h2>
           <p className="leading-relaxed">
             If you have any questions about our use of cookies, please contact us at:{' '}
-            <a href="mailto:support@cartaisy.com" className="text-purple-400 hover:text-purple-300">
-              support@cartaisy.com
+            <a href="mailto:privacy@cartaisy.com" className="text-purple-400 hover:text-purple-300">
+              privacy@cartaisy.com
             </a>
           </p>
         </section>

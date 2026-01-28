@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Sparkles, Twitter, Linkedin, Github, Mail } from "lucide-react";
+import NewsletterForm from "./NewsletterForm";
+import { CookieSettingsButton } from "@/components/cookies";
 
 export default function LandingFooter() {
   const footerLinks = {
@@ -21,6 +23,7 @@ export default function LandingFooter() {
       { label: "Documentation", href: "/docs" },
       { label: "API Reference", href: "/docs/api" },
       { label: "FAQ", href: "/docs/faq" },
+      { label: "Newsletter", href: "/newsletter" },
       { label: "Support", href: "/contact" },
     ],
     legal: [
@@ -63,6 +66,17 @@ export default function LandingFooter() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 py-16">
+        {/* Newsletter Section */}
+        <div className="mb-12 pb-12 border-b border-white/10">
+          <div className="max-w-md">
+            <h3 className="text-white font-semibold mb-2">Stay Updated</h3>
+            <p className="text-gray-400 text-sm mb-4">
+              Get the latest updates on mobile commerce and Cartaisy features.
+            </p>
+            <NewsletterForm variant="inline" />
+          </div>
+        </div>
+
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
           {/* Brand Column - Takes 2 columns on large screens */}
@@ -187,6 +201,9 @@ export default function LandingFooter() {
                   </a>
                 </li>
               ))}
+              <li>
+                <CookieSettingsButton className="text-sm" />
+              </li>
             </ul>
           </div>
         </div>

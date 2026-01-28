@@ -1,11 +1,13 @@
 import { Metadata } from 'next';
 import ContactForm from '@/components/ContactForm';
 import PageLayout from '@/components/landing/PageLayout';
+import { generateMetadata as genMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Contact Us | Cartaisy',
-  description: 'Get in touch with the Cartaisy team. We\'re here to help with any questions about our mobile app builder platform.',
-};
+export const metadata: Metadata = genMeta({
+  title: 'Contact Us',
+  description: 'Get in touch with Cartaisy. We\'re here to help you launch your Shopify mobile app. Response within 24 hours.',
+  keywords: ['contact', 'support', 'help', 'customer service'],
+});
 
 export default function ContactPage() {
   return (
