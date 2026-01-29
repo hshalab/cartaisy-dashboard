@@ -3,12 +3,11 @@
 import { useEffect } from 'react';
 
 interface CalendlyEmbedProps {
-  // TODO: Replace with actual Calendly URL (e.g., 'https://calendly.com/cartaisy/demo')
   url?: string;
 }
 
 export default function CalendlyEmbed({
-  url = 'https://calendly.com/cartaisy/demo'
+  url = 'https://calendly.com/rendernext/cartaisy-demo'
 }: CalendlyEmbedProps) {
 
   useEffect(() => {
@@ -30,8 +29,8 @@ export default function CalendlyEmbed({
   return (
     <div
       className="calendly-inline-widget rounded-xl overflow-hidden"
-      data-url={`${url}?hide_gdpr_banner=1&background_color=1e1b4b&text_color=ffffff&primary_color=9333ea`}
-      style={{ minWidth: '320px', height: '700px' }}
+      data-url={`${url}?hide_gdpr_banner=1&background_color=0f172a&text_color=ffffff&primary_color=9333ea`}
+      style={{ minWidth: '320px', height: '630px' }}
     />
   );
 }

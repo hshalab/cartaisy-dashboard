@@ -1,13 +1,14 @@
-import { Metadata } from 'next';
-import PageLayout from '@/components/landing/PageLayout';
-import CalendlyEmbed from '@/components/landing/CalendlyEmbed';
-import { Calendar, Clock, Video } from 'lucide-react';
-import { generateMetadata as genMeta } from '@/lib/seo';
+import { Metadata } from "next";
+import PageLayout from "@/components/landing/PageLayout";
+import CalendlyEmbed from "@/components/landing/CalendlyEmbed";
+import { Calendar, Clock, Video } from "lucide-react";
+import { generateMetadata as genMeta } from "@/lib/seo";
 
 export const metadata: Metadata = genMeta({
-  title: 'Schedule a Demo',
-  description: 'Book a personalized 30-minute demo of Cartaisy. See how easy it is to turn your Shopify store into a mobile app.',
-  keywords: ['demo', 'book demo', 'free demo', 'product demo'],
+  title: "Schedule a Demo",
+  description:
+    "Book a personalized 30-minute demo of Cartaisy. See how easy it is to turn your Shopify store into a mobile app.",
+  keywords: ["demo", "book demo", "free demo", "product demo"],
 });
 
 export default function ScheduleDemoPage() {
@@ -20,7 +21,8 @@ export default function ScheduleDemoPage() {
             Schedule a Demo
           </h1>
           <p className="text-lg text-gray-300 mb-8">
-            See Cartaisy in action. Book a personalized demo with our team and discover how easy it is to launch your mobile app.
+            See Cartaisy in action. Book a personalized demo with our team and
+            discover how easy it is to launch your mobile app.
           </p>
 
           <div className="space-y-6">
@@ -30,7 +32,9 @@ export default function ScheduleDemoPage() {
               </div>
               <div>
                 <h3 className="text-white font-semibold">Live Demo</h3>
-                <p className="text-gray-400 text-sm">See the dashboard and mobile app in real-time</p>
+                <p className="text-gray-400 text-sm">
+                  See the dashboard and mobile app in real-time
+                </p>
               </div>
             </div>
 
@@ -40,7 +44,9 @@ export default function ScheduleDemoPage() {
               </div>
               <div>
                 <h3 className="text-white font-semibold">30 Minutes</h3>
-                <p className="text-gray-400 text-sm">Quick overview tailored to your needs</p>
+                <p className="text-gray-400 text-sm">
+                  Quick overview tailored to your needs
+                </p>
               </div>
             </div>
 
@@ -49,16 +55,24 @@ export default function ScheduleDemoPage() {
                 <Calendar className="w-6 h-6 text-purple-400" />
               </div>
               <div>
-                <h3 className="text-white font-semibold">Flexible Scheduling</h3>
-                <p className="text-gray-400 text-sm">Pick a time that works for you</p>
+                <h3 className="text-white font-semibold">
+                  Flexible Scheduling
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Pick a time that works for you
+                </p>
               </div>
             </div>
           </div>
 
           <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10">
             <p className="text-gray-300 text-sm">
-              <strong className="text-white">Prefer email?</strong> Reach out to us at{' '}
-              <a href="mailto:demo@cartaisy.com" className="text-purple-400 hover:text-purple-300">
+              <strong className="text-white">Prefer email?</strong> Reach out to
+              us at{" "}
+              <a
+                href="mailto:demo@cartaisy.com"
+                className="text-purple-400 hover:text-purple-300"
+              >
                 demo@cartaisy.com
               </a>
             </p>
@@ -67,8 +81,7 @@ export default function ScheduleDemoPage() {
 
         {/* Right side - Calendly */}
         <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-          {/* TODO: Replace with actual Calendly URL */}
-          <CalendlyEmbed url="https://calendly.com/cartaisy/demo" />
+          <CalendlyEmbed url="https://calendly.com/rendernext/cartaisy-demo" />
         </div>
       </div>
     </PageLayout>

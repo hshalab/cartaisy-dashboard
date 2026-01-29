@@ -13,7 +13,6 @@ declare global {
 }
 
 interface CalendlyPopupButtonProps {
-  // TODO: Replace with actual Calendly URL (e.g., 'https://calendly.com/cartaisy/demo')
   url?: string;
   text?: string;
   className?: string;
@@ -21,7 +20,7 @@ interface CalendlyPopupButtonProps {
 }
 
 export default function CalendlyPopupButton({
-  url = 'https://calendly.com/cartaisy/demo',
+  url = 'https://calendly.com/rendernext/cartaisy-demo',
   text = 'Schedule a Demo',
   className = '',
   showIcon = true
