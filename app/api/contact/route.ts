@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
               Submitted at: ${new Date().toISOString()}
             </p>
             <div style="text-align: center; padding: 20px 0; border-top: 1px solid #e5e7eb; margin-top: 20px;">
-              <img src="https://cartaisy.com/cartaisy-color-logo.png" alt="Cartaisy" style="height: 32px;" />
+              <img src="https://cartaisy.com/cartaisy-black-logo.png" alt="Cartaisy" style="height: 32px;" />
               <p style="color: #999; font-size: 11px; margin-top: 8px;">&copy; ${new Date().getFullYear()} Cartaisy. All rights reserved.</p>
             </div>
           </div>
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
             </blockquote>
             <p>Best regards,<br>The Cartaisy Team</p>
             <div style="text-align: center; padding: 20px 0; border-top: 1px solid #e5e7eb; margin-top: 20px;">
-              <img src="https://cartaisy.com/cartaisy-color-logo.png" alt="Cartaisy" style="height: 32px;" />
+              <img src="https://cartaisy.com/cartaisy-black-logo.png" alt="Cartaisy" style="height: 32px;" />
               <p style="color: #999; font-size: 11px; margin-top: 8px;">&copy; ${new Date().getFullYear()} Cartaisy. All rights reserved.</p>
               <p style="color: #999; font-size: 11px;">This is an automated response. Please do not reply to this email.</p>
             </div>
