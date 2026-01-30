@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
+import { connectToDatabase } from '@/lib/db';
+import { ContactSubmission } from '@/models/ContactSubmission';
 
-// Simple in-memory rate limiting (for production, use Redis or similar)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
+// Rate limiting
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
-const RATE_LIMIT = 5; // Max 5 requests
-const RATE_WINDOW = 60 * 1000; // Per minute
+const RATE_LIMIT = 5;
+const RATE_WINDOW = 60 * 1000;
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
@@ -24,7 +29,6 @@ function isRateLimited(ip: string): boolean {
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate limiting
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     if (isRateLimited(ip)) {
       return NextResponse.json(
@@ -36,7 +40,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, email, subject, message } = body;
 
-    // Validation
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: 'Name, email, and message are required' },
@@ -44,7 +47,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -53,7 +55,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Sanitize inputs
     const sanitizedData = {
       name: name.trim().slice(0, 100),
       email: email.trim().toLowerCase().slice(0, 100),
@@ -61,42 +62,55 @@ export async function POST(request: NextRequest) {
       message: message.trim().slice(0, 5000),
     };
 
-    // Log to console (for development)
-    console.log('Contact form submission:', {
+    // Save to database
+    await connectToDatabase();
+    await ContactSubmission.create({
       ...sanitizedData,
-      timestamp: new Date().toISOString(),
-      ip,
+      ipAddress: ip,
     });
 
-    // TODO: Uncomment when Resend is set up
-    // Option: Send email via Resend
-    // if (process.env.RESEND_API_KEY) {
-    //   const { Resend } = await import('resend');
-    //   const resend = new Resend(process.env.RESEND_API_KEY);
-    //
-    //   await resend.emails.send({
-    //     from: 'Cartaisy Contact <noreply@cartaisy.com>',
-    //     to: 'support@cartaisy.com',
-    //     replyTo: sanitizedData.email,
-    //     subject: `Contact Form: ${sanitizedData.subject}`,
-    //     html: `
-    //       <h2>New Contact Form Submission</h2>
-    //       <p><strong>Name:</strong> ${sanitizedData.name}</p>
-    //       <p><strong>Email:</strong> ${sanitizedData.email}</p>
-    //       <p><strong>Subject:</strong> ${sanitizedData.subject}</p>
-    //       <p><strong>Message:</strong></p>
-    //       <p>${sanitizedData.message.replace(/\n/g, '<br>')}</p>
-    //       <hr>
-    //       <p style="color: #666; font-size: 12px;">
-    //         Submitted at: ${new Date().toISOString()}<br>
-    //         IP: ${ip}
-    //       </p>
-    //     `,
-    //   });
-    // }
+    // Send emails via Resend
+    if (resend) {
+      // 1. Notification to team
+      await resend.emails.send({
+        from: 'Cartaisy Contact <noreply@cartaisy.com>',
+        to: 'support@cartaisy.com',
+        replyTo: sanitizedData.email,
+        subject: `Contact Form: ${sanitizedData.subject}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${sanitizedData.name}</p>
+          <p><strong>Email:</strong> ${sanitizedData.email}</p>
+          <p><strong>Subject:</strong> ${sanitizedData.subject}</p>
+          <p><strong>Message:</strong></p>
+          <p>${sanitizedData.message.replace(/\n/g, '<br>')}</p>
+          <hr>
+          <p style="color: #666; font-size: 12px;">
+            Submitted at: ${new Date().toISOString()}
+          </p>
+        `,
+      });
 
-    // TODO: Store in database for tracking
-    // await db.contactSubmissions.create({ data: sanitizedData });
+      // 2. Confirmation to visitor
+      await resend.emails.send({
+        from: 'Cartaisy <noreply@cartaisy.com>',
+        to: sanitizedData.email,
+        subject: 'Thank you for contacting Cartaisy',
+        html: `
+          <h2>Hi ${sanitizedData.name},</h2>
+          <p>Thank you for reaching out to us! We've received your message and will get back to you within 24 hours.</p>
+          <p><strong>Your message:</strong></p>
+          <blockquote style="border-left: 3px solid #9333ea; padding-left: 12px; color: #555;">
+            ${sanitizedData.message.replace(/\n/g, '<br>')}
+          </blockquote>
+          <p>Best regards,<br>The Cartaisy Team</p>
+          <hr>
+          <p style="color: #999; font-size: 12px;">
+            This is an automated response. Please do not reply to this email.
+          </p>
+        `,
+      });
+    }
 
     return NextResponse.json(
       { success: true, message: 'Message sent successfully' },

@@ -1,4 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
+import { connectToDatabase } from '@/lib/db';
+import { NewsletterSubscriber } from '@/models/NewsletterSubscriber';
+
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 // Rate limiting
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
@@ -22,9 +27,6 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-// Simple in-memory store (replace with database in production)
-const subscribers = new Set<string>();
-
 export async function POST(request: NextRequest) {
   try {
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
@@ -39,7 +41,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { email } = body;
 
-    // Validation
     if (!email) {
       return NextResponse.json(
         { error: 'Email is required' },
@@ -47,7 +48,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -58,31 +58,29 @@ export async function POST(request: NextRequest) {
 
     const normalizedEmail = email.toLowerCase().trim();
 
-    // Check if already subscribed
-    if (subscribers.has(normalizedEmail)) {
+    // Save to database
+    await connectToDatabase();
+
+    const existing = await NewsletterSubscriber.findOne({ email: normalizedEmail });
+    if (existing) {
       return NextResponse.json(
         { error: 'This email is already subscribed' },
         { status: 400 }
       );
     }
 
-    // Add to subscribers (in-memory for now)
-    subscribers.add(normalizedEmail);
+    await NewsletterSubscriber.create({
+      email: normalizedEmail,
+      ipAddress: ip,
+    });
 
-    // Log for development
-    console.log('New newsletter subscriber:', normalizedEmail);
-    console.log('Total subscribers:', subscribers.size);
-
-    // TODO: Integrate with email service (Mailchimp, ConvertKit, Resend Audiences)
-    // Example with Resend Audiences:
-    // if (process.env.RESEND_API_KEY && process.env.RESEND_AUDIENCE_ID) {
-    //   const { Resend } = await import('resend');
-    //   const resend = new Resend(process.env.RESEND_API_KEY);
-    //   await resend.contacts.create({
-    //     email: normalizedEmail,
-    //     audienceId: process.env.RESEND_AUDIENCE_ID,
-    //   });
-    // }
+    // Add to Resend Audience
+    if (resend && process.env.RESEND_AUDIENCE_ID) {
+      await resend.contacts.create({
+        email: normalizedEmail,
+        audienceId: process.env.RESEND_AUDIENCE_ID,
+      });
+    }
 
     return NextResponse.json(
       { success: true, message: 'Successfully subscribed!' },
@@ -98,7 +96,8 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET endpoint to check subscriber count (for admin use)
 export async function GET() {
-  return NextResponse.json({ count: subscribers.size });
+  await connectToDatabase();
+  const count = await NewsletterSubscriber.countDocuments();
+  return NextResponse.json({ count });
 }
