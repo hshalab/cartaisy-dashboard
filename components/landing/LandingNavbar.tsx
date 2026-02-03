@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+
+const MotionLink = motion.create(Link);
 import Image from "next/image";
 import { Sparkles, Menu, X } from "lucide-react";
 
@@ -82,7 +84,7 @@ export default function LandingNavbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link, index) => (
-              <motion.a
+              <MotionLink
                 key={link.href}
                 href={link.href}
                 className="relative px-4 py-2 text-sm text-slate-300 hover:text-white transition-colors group"
@@ -93,7 +95,7 @@ export default function LandingNavbar() {
                 {link.label}
                 {/* Animated underline */}
                 <span className="absolute bottom-0 left-2 right-2 h-px bg-gradient-to-r from-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-              </motion.a>
+              </MotionLink>
             ))}
           </div>
 
@@ -168,7 +170,7 @@ export default function LandingNavbar() {
             >
               <div className="px-6 py-6 space-y-1">
                 {navLinks.map((link, index) => (
-                  <motion.a
+                  <MotionLink
                     key={link.href}
                     href={link.href}
                     className="block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
@@ -178,7 +180,7 @@ export default function LandingNavbar() {
                     transition={{ delay: index * 0.03 }}
                   >
                     {link.label}
-                  </motion.a>
+                  </MotionLink>
                 ))}
 
                 <div className="pt-4 mt-4 border-t border-white/10 space-y-3">
