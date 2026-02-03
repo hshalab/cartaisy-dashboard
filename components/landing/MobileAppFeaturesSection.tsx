@@ -14,12 +14,6 @@ import {
   ShoppingBag,
   ArrowRight
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-
-const LottieAnimation = dynamic(() => import('@/components/ui/LottieAnimation'), {
-  ssr: false,
-});
 
 const mobileFeatures = [
   {
@@ -73,16 +67,6 @@ const mobileFeatures = [
 ];
 
 export default function MobileAppFeaturesSection() {
-  const [ecommerceAnimation, setEcommerceAnimation] = useState<object | null>(null);
-
-  useEffect(() => {
-    if (window.innerWidth >= 768) {
-      import('@/public/lottie/E-commerce.json').then((mod) => {
-        setEcommerceAnimation(mod.default);
-      });
-    }
-  }, []);
-
   return (
     <section id="mobile-app" className="py-24 md:py-32 px-6 lg:px-8 relative overflow-hidden">
       {/* Background elements - more subtle */}
@@ -99,23 +83,6 @@ export default function MobileAppFeaturesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
-          {/* E-commerce Lottie - decorative behind header */}
-          <motion.div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-          >
-            {ecommerceAnimation && (
-              <LottieAnimation
-                animationData={ecommerceAnimation}
-                className="w-80 h-80"
-                loop={true}
-              />
-            )}
-          </motion.div>
-
           <motion.span
             className="inline-block text-sm font-medium text-purple-400 tracking-wide uppercase relative z-10"
             initial={{ opacity: 0 }}

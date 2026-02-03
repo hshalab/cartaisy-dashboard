@@ -22,22 +22,11 @@ import {
 } from "lucide-react";
 import { float, floatSlow, pulseGlow, buttonTap } from "@/lib/animations";
 import { analytics } from "@/lib/analytics";
-import dynamic from "next/dynamic";
 import DemoVideoModal from "./DemoVideoModal";
-
-const LottieAnimation = dynamic(
-  () => import("@/components/ui/LottieAnimation"),
-  {
-    ssr: false,
-  },
-);
 
 export default function HeroSection() {
   const [isMobile, setIsMobile] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [shoppingCartAnimation, setShoppingCartAnimation] = useState<
-    object | null
-  >(null);
   const { scrollY } = useScroll();
 
   // Check if mobile
@@ -48,26 +37,9 @@ export default function HeroSection() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Lazy-load Lottie animation data - desktop only
-  useEffect(() => {
-    if (window.innerWidth >= 768) {
-      import("@/public/lottie/shopping cart.json").then((mod) => {
-        setShoppingCartAnimation(mod.default);
-      });
-    }
-  }, []);
-
   // Parallax values - disabled on mobile
   const heroY = useTransform(scrollY, [0, 500], [0, isMobile ? 0 : 150]);
   const heroOpacity = useTransform(scrollY, [0, 300], [1, isMobile ? 1 : 0]);
-  // Lottie fades IN as hero fades OUT
-  // Cart fades in AFTER hero fades out (starts at 250px scroll, full at 450px)
-  const lottieOpacity = useTransform(
-    scrollY,
-    [230, 450],
-    [0, isMobile ? 0 : 1],
-  );
-
   // Spring mouse position for smooth tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -508,25 +480,6 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
         </div>
-      </motion.div>
-
-      {/* Centered Shopping Cart Lottie Animation - fades in as hero fades out */}
-      <motion.div
-        className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 hidden md:block"
-        style={{ opacity: lottieOpacity }}
-      >
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {shoppingCartAnimation && (
-            <LottieAnimation
-              animationData={shoppingCartAnimation}
-              className="w-48 h-48"
-              loop={true}
-            />
-          )}
-        </motion.div>
       </motion.div>
 
       {/* Scroll indicator */}

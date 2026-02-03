@@ -1,15 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import dynamic from 'next/dynamic';
 import LandingNavbar from './LandingNavbar';
 import LandingFooter from './LandingFooter';
-
-const LottieAnimation = dynamic(() => import('@/components/ui/LottieAnimation'), {
-  ssr: false,
-});
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -37,33 +31,8 @@ export default function PageLayout({
   backLabel = 'Back to Home',
   maxWidth = '4xl',
 }: PageLayoutProps) {
-  const [flowAnimation, setFlowAnimation] = useState<object | null>(null);
-  const [isMobile, setIsMobile] = useState(true);
-
-  useEffect(() => {
-    const mobile = window.innerWidth < 768;
-    setIsMobile(mobile);
-    // Only load Lottie on desktop - too heavy for mobile
-    if (!mobile) {
-      import('@/public/lottie/ai animation Flow 1.json').then((mod) => {
-        setFlowAnimation(mod.default);
-      });
-    }
-  }, []);
-
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative">
-      {/* Flow Animation Background - desktop only */}
-      {!isMobile && flowAnimation && (
-        <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-0">
-          <LottieAnimation
-            animationData={flowAnimation}
-            className="w-[1000px] h-[1000px] opacity-[0.06]"
-            loop={true}
-          />
-        </div>
-      )}
-
       <div className="relative z-10 min-h-screen flex flex-col">
         <LandingNavbar />
         <main className="flex-1 pt-24 pb-16">
