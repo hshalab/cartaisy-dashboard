@@ -131,20 +131,12 @@ export default function QuickStartPage() {
       {/* CTA */}
       <div className="text-center">
         <p className="text-gray-400 mb-4">Ready to get started?</p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/signup"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors"
-          >
-            Create Account
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 text-white rounded-lg font-medium border border-white/10 transition-colors"
-          >
-            Get Help
-          </Link>
-        </div>
+        <Link
+          href="/contact"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors"
+        >
+          Get Started
+        </Link>
       </div>
     </PageLayout>
   );
