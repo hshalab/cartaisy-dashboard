@@ -10,6 +10,9 @@ import DashboardFeaturesSection from '@/components/landing/DashboardFeaturesSect
 import MobileAppFeaturesSection from '@/components/landing/MobileAppFeaturesSection';
 import LandingNavbar from '@/components/landing/LandingNavbar';
 import LandingFooter from '@/components/landing/LandingFooter';
+import dynamic from 'next/dynamic';
+
+const FAQSection = dynamic(() => import('@/components/landing/FAQSection'));
 
 export default function LandingPage() {
   const { status } = useSession();
@@ -57,6 +60,7 @@ export default function LandingPage() {
       <FeaturesSection />
       <DashboardFeaturesSection />
       <MobileAppFeaturesSection />
+      <FAQSection />
       <LandingFooter />
     </main>
   );
