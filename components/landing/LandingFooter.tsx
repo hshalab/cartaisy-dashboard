@@ -37,19 +37,19 @@ export default function LandingFooter() {
   const socialLinks = [
     {
       icon: Twitter,
-      href: "https://twitter.com/cartaisy",
+      href: "#",
       label: "Twitter",
       gradient: "from-blue-400 to-cyan-400",
     },
     {
       icon: Linkedin,
-      href: "https://linkedin.com/company/cartaisy",
+      href: "#",
       label: "LinkedIn",
       gradient: "from-blue-600 to-blue-400",
     },
     {
       icon: Github,
-      href: "https://github.com/cartaisy",
+      href: "#",
       label: "GitHub",
       gradient: "from-gray-600 to-gray-400",
     },
