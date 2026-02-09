@@ -178,9 +178,12 @@ export default async function BlogPostPage({
               className="w-full h-full object-cover"
             />
             {post.category && (
-              <span className="absolute top-4 left-4 px-4 py-2 bg-purple-600/90 text-white text-sm font-medium rounded-full">
+              <Link
+                href={`/blog?category=${encodeURIComponent(post.category)}`}
+                className="absolute top-4 left-4 px-4 py-2 bg-purple-600/90 hover:bg-purple-700 text-white text-sm font-medium rounded-full transition-colors"
+              >
                 {post.category}
-              </span>
+              </Link>
             )}
           </div>
         )}
@@ -230,47 +233,18 @@ export default async function BlogPostPage({
 
             {/* Article Content */}
             <article
-              className="prose prose-invert max-w-none mb-10 text-gray-300 text-base leading-relaxed [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-white [&_h1]:mt-8 [&_h1]:mb-4 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-white [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-white [&_h3]:mt-5 [&_h3]:mb-2 [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4 [&_li]:mb-1 [&_blockquote]:border-l-4 [&_blockquote]:border-purple-500 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-gray-400 [&_blockquote]:my-4 [&_a]:text-purple-400 [&_a]:underline [&_a:hover]:text-purple-300 [&_strong]:text-white [&_code]:bg-white/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_pre]:bg-white/5 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_hr]:border-white/10 [&_hr]:my-6"
+              className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8 prose prose-invert max-w-none mb-10 text-gray-300 text-base leading-relaxed [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-white [&_h1]:mt-8 [&_h1]:mb-4 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-white [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-white [&_h3]:mt-5 [&_h3]:mb-2 [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4 [&_li]:mb-1 [&_blockquote]:border-l-4 [&_blockquote]:border-purple-500 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-gray-400 [&_blockquote]:my-4 [&_a]:text-purple-400 [&_a]:underline [&_a:hover]:text-purple-300 [&_strong]:text-white [&_code]:bg-white/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_pre]:bg-white/5 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_hr]:border-white/10 [&_hr]:my-6"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
 
-            {/* Related Posts */}
-            {relatedPosts.length > 0 && (
-              <section className="border-t border-white/10 pt-8">
-                <h2 className="text-xl font-bold text-white mb-6">Related Posts</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {relatedPosts.slice(0, 4).map((relatedPost: BlogPost) => (
-                    <Link
-                      key={relatedPost.id}
-                      href={`/blog/${relatedPost.slug}`}
-                      className="group flex gap-3 p-3 bg-white/5 rounded-xl border border-white/10 hover:border-purple-500/50 transition-all"
-                    >
-                      <div className="w-16 h-16 flex-shrink-0 rounded-lg bg-gradient-to-br from-purple-600/20 to-blue-600/20 overflow-hidden">
-                        {relatedPost.featuredImage ? (
-                          <img
-                            src={relatedPost.featuredImage}
-                            alt={relatedPost.title}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <BookOpen className="w-5 h-5 text-purple-400/50" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="min-w-0">
-                        <h3 className="text-sm font-semibold text-white group-hover:text-purple-400 transition-colors line-clamp-2">
-                          {relatedPost.title.replace(/\s*Slug:.*$/i, '')}
-                        </h3>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {formatDate(relatedPost.publishedAt)}
-                        </p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            )}
+            {/* Share */}
+            <section className="border-t border-white/10 pt-8">
+              <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Share2 className="w-5 h-5 text-purple-400" />
+                Share this article
+              </h2>
+              <ShareButtons url={shareUrl} title={post.title} />
+            </section>
           </div>
 
           {/* Sidebar */}
@@ -389,14 +363,6 @@ export default async function BlogPostPage({
                 </div>
               )}
 
-              {/* Share Widget */}
-              <div className="bg-white/5 rounded-xl border border-white/10 p-5">
-                <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
-                  <Share2 className="w-4 h-4 text-purple-400" />
-                  Share
-                </h3>
-                <ShareButtons url={shareUrl} title={post.title} />
-              </div>
             </div>
           </aside>
         </div>
