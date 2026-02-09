@@ -16,7 +16,9 @@ import PageLayout from '@/components/landing/PageLayout';
 import { ShareButtons } from '@/components/blog/ShareButtons';
 import { ArticleSchema, BreadcrumbSchema } from '@/components/landing/StructuredData';
 import { siteConfig } from '@/lib/seo';
-import { getBlogBySlug, getRelatedPosts, getAllTags, getAllCategories, getPublishedBlogs } from '@/lib/services/blog';
+import { getBlogBySlug, getRelatedPosts, getAllCategories, getPublishedBlogs, getAllPublishedSlugs } from '@/lib/services/blog';
+
+export const revalidate = 60;
 
 interface BlogPost {
   id: string;
@@ -38,7 +40,7 @@ async function getBlogPost(slug: string): Promise<{ data: BlogPost; relatedPosts
   try {
     const blog = await getBlogBySlug(slug);
     if (blog.status !== 'published') return null;
-    const relatedPosts = await getRelatedPosts(slug, 5);
+    const relatedPosts = await getRelatedPosts(slug, 5, { tags: blog.tags, category: blog.category });
     return { data: blog, relatedPosts };
   } catch {
     return null;
@@ -115,6 +117,15 @@ function calculateReadingTime(content: string): number {
   return Math.ceil(words / 200);
 }
 
+export async function generateStaticParams() {
+  try {
+    const slugs = await getAllPublishedSlugs();
+    return slugs.map((slug) => ({ slug }));
+  } catch {
+    return [];
+  }
+}
+
 export default async function BlogPostPage({
   params,
 }: {
@@ -122,9 +133,8 @@ export default async function BlogPostPage({
 }) {
   const { slug } = await params;
 
-  const [response, tags, categories, recentResult] = await Promise.all([
+  const [response, categories, recentResult] = await Promise.all([
     getBlogPost(slug),
-    getAllTags(),
     getAllCategories(),
     getPublishedBlogs(1, 5),
   ]);
@@ -301,24 +311,61 @@ export default async function BlogPostPage({
               )}
 
               {/* Tags */}
-              {(tags.length > 0 || post.tags.length > 0) && (
+              {post.tags.length > 0 && (
                 <div className="bg-white/5 rounded-xl border border-white/10 p-5">
                   <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
                     <Tag className="w-4 h-4 text-purple-400" />
                     Tags
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {[...new Set([...tags, ...post.tags])].map((t: string) => (
+                    {post.tags.map((t: string) => (
                       <Link
                         key={t}
                         href={`/blog?tag=${encodeURIComponent(t)}`}
-                        className={`px-2.5 py-1 rounded-full text-xs transition-colors ${
-                          post.tags.includes(t)
-                            ? 'bg-purple-600/20 text-purple-300'
-                            : 'bg-white/10 text-gray-400 hover:bg-white/15 hover:text-gray-300'
-                        }`}
+                        className="px-2.5 py-1 rounded-full text-xs transition-colors bg-purple-600/20 text-purple-300 hover:bg-purple-600/30"
                       >
                         {t}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Related Blogs */}
+              {relatedPosts.length > 0 && (
+                <div className="bg-white/5 rounded-xl border border-white/10 p-5">
+                  <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-purple-400" />
+                    Related Blogs
+                  </h3>
+                  <div className="space-y-3">
+                    {relatedPosts.slice(0, 4).map((related: BlogPost) => (
+                      <Link
+                        key={related.id}
+                        href={`/blog/${related.slug}`}
+                        className="group flex gap-3 items-start"
+                      >
+                        <div className="w-10 h-10 flex-shrink-0 rounded-lg bg-gradient-to-br from-purple-600/20 to-blue-600/20 overflow-hidden">
+                          {related.featuredImage ? (
+                            <img
+                              src={related.featuredImage}
+                              alt={related.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <BookOpen className="w-4 h-4 text-purple-400/50" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="min-w-0">
+                          <h4 className="text-sm text-gray-300 group-hover:text-purple-400 transition-colors line-clamp-2">
+                            {related.title.replace(/\s*Slug:.*$/i, '')}
+                          </h4>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {formatDate(related.publishedAt)}
+                          </p>
+                        </div>
                       </Link>
                     ))}
                   </div>

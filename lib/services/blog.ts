@@ -309,40 +309,63 @@ export async function getAllCategories(): Promise<string[]> {
  */
 export async function getRelatedPosts(
   slug: string,
-  limit: number = 3
+  limit: number = 3,
+  currentPostData?: { tags?: string[]; category?: string | null }
 ): Promise<any[]> {
   await connectToDatabase();
 
-  const currentPost = await BlogPost.findOne({ slug }).lean();
-  if (!currentPost) {
-    return [];
+  let tags = currentPostData?.tags;
+  let category = currentPostData?.category;
+  let currentId: any = null;
+
+  // Only fetch current post if data wasn't provided
+  if (!currentPostData) {
+    const currentPost = await BlogPost.findOne({ slug }).select('_id tags category').lean();
+    if (!currentPost) return [];
+    tags = currentPost.tags;
+    category = currentPost.category;
+    currentId = currentPost._id;
   }
 
   const query: any = {
-    _id: { $ne: currentPost._id },
+    slug: { $ne: slug },
     status: 'published',
     $or: [],
   };
 
-  if (currentPost.tags && currentPost.tags.length > 0) {
-    query.$or.push({ tags: { $in: currentPost.tags } });
+  if (currentId) {
+    query._id = { $ne: currentId };
+    delete query.slug;
   }
 
-  if (currentPost.category) {
-    query.$or.push({ category: currentPost.category });
+  if (tags && tags.length > 0) {
+    query.$or.push({ tags: { $in: tags } });
   }
 
-  // If no tags or category, just get recent posts
+  if (category) {
+    query.$or.push({ category });
+  }
+
   if (query.$or.length === 0) {
     delete query.$or;
   }
 
   const relatedPosts = await BlogPost.find(query)
+    .select('-content')
     .sort({ publishedAt: -1 })
     .limit(limit)
     .lean();
 
   return relatedPosts.map(formatBlogPost);
+}
+
+/**
+ * Get all published blog slugs (for static generation)
+ */
+export async function getAllPublishedSlugs(): Promise<string[]> {
+  await connectToDatabase();
+  const posts = await BlogPost.find({ status: 'published' }).select('slug').lean();
+  return posts.map((p) => p.slug);
 }
 
 /**

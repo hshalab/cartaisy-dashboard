@@ -5,6 +5,8 @@ import PageLayout from '@/components/landing/PageLayout';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { getPublishedBlogs, getAllTags } from '@/lib/services/blog';
 
+export const revalidate = 60;
+
 export const metadata: Metadata = genMeta({
   title: 'Blog',
   description: 'Mobile commerce insights, Shopify tips, conversion strategies, and Cartaisy product updates. Learn how to grow your mobile sales.',
