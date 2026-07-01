@@ -21,7 +21,7 @@ This file is a human/agent-maintained snapshot, not an automatically guaranteed 
 
 ## Known gaps:
 
-- Do not assume this exists unless verified in code.
+- Do not assume any feature or behavior described above is implemented unless verified in the current code.
 - Merchant onboarding: current signup is invite-token based, but a full guided readiness checklist was not found.
 - Store setup/status: dashboard home has status-style cards, but no canonical setup readiness model was identified.
 - Shopify connection/configuration: current dashboard server routes perform OAuth and collection reads; backend-mediated tenant policy needs verification.

@@ -25,7 +25,7 @@ Before release, verify:
 
 ## Known gaps:
 
-- Do not assume this exists unless verified in code.
+- Do not assume any feature or behavior described above is implemented unless verified in the current code.
 - Dedicated build request, app-store submission, release status, and rollback automation were not found in the audited files.
 - No CI workflow was found.
 - No env example file was found; deployments must be checked without exposing secrets.

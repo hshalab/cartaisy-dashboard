@@ -28,9 +28,9 @@
 
 ## Known gaps:
 
-- Do not assume this exists unless verified in code.
+- Do not assume any feature or behavior described above is implemented unless verified in the current code.
 - A single guided setup checklist or canonical readiness model was not found.
-- Token master-admin authorization is implemented with hard-coded email lists in audited files; operational ownership should be reviewed before expansion.
+- Token master-admin authorization is implemented with hard-coded real email identifiers in audited files; this is both an operational ownership concern and a security/PII concern because source-embedded identifiers persist in git history and may appear in client bundle analysis. Future work should move this allowlist to a server-side environment variable or database-backed admin record instead of expanding the in-source list.
 - Shopify connection exists, but backend-mediated tenant-safe Shopify operation is a target guardrail that needs verification against current code.
 - Branding/theme setup beyond logo, timezone, and currency was not verified.
 - Product picker was not identified.

@@ -19,7 +19,7 @@
 ## Known gaps:
 
 - Do not treat planned SaaS features as implemented unless verified in code.
-- Do not assume this exists unless verified in code.
+- Do not assume any feature or behavior described above is implemented unless verified in the current code.
 - If a behavior is unclear, document it as a known gap or verification task rather than an implemented fact.
 
 ## Related docs/issues:

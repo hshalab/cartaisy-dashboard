@@ -10,7 +10,7 @@ Use this file to record dashboard-relevant product and architecture decisions wh
 
 ## Known gaps:
 
-- Do not assume this exists unless verified in code.
+- Do not assume any feature or behavior described above is implemented unless verified in the current code.
 - This file is not an implementation proof. Verify each decision against current code before changing behavior.
 - Add dated entries when future issues make or reverse decisions.
 

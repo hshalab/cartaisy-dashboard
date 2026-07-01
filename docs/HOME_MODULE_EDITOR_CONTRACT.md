@@ -27,7 +27,7 @@
 
 ## Known gaps:
 
-- Do not assume this exists unless verified in code.
+- Do not assume any feature or behavior described above is implemented unless verified in the current code.
 - Product picker support was not identified; collection picker support was identified.
 - Explicit backend validation of store-owned Shopify references must be verified before relying on it.
 - Draft/publish/status behavior for home modules was not identified in audited dashboard files.

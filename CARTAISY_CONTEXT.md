@@ -20,7 +20,7 @@ Read this file before dashboard work. It is the dashboard repo entrypoint for ag
 
 ## Known gaps:
 
-- Do not assume this exists unless verified in code.
+- Do not assume any feature or behavior described above is implemented unless verified in the current code.
 - The repo has user-facing docs pages under `app/docs`, but this context pack is the first repo-level dashboard architecture/status pack found during the issue audit.
 - Environment example files were not found during the audit. Required runtime variables must be verified from code and deployment settings without exposing secret values.
 - Some current dashboard implementation performs Shopify OAuth/token work in dashboard server routes and stores Shopify access tokens in the dashboard MongoDB store model. Treat backend-mediated Shopify operations as a target guardrail and verify current behavior before changing it.

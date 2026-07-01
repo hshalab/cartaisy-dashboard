@@ -24,10 +24,10 @@
 
 ## Known gaps:
 
-- Do not assume this exists unless verified in code.
+- Do not assume any feature or behavior described above is implemented unless verified in the current code.
 - No repo-level lint/typecheck/unit/e2e command was found.
 - No CI workflow was found.
-- `test:api` may require manual setup and currently references port 3000, while the dev script starts on port 3002.
+- `test:api` may require manual setup and currently references port 3000, while the dev script starts on port 3002. Future work should either update `scripts/test-api.ts` to default to `http://localhost:3002`, make it read a `BASE_URL` environment variable, or document running it with `BASE_URL=http://localhost:3002`.
 - Docs-only PRs do not need runtime validation unless they modify executable files.
 
 ## Required validation before PR:

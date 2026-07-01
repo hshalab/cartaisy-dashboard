@@ -22,7 +22,7 @@
 
 ## Known gaps:
 
-- Do not assume this exists unless verified in code.
+- Do not assume any feature or behavior described above is implemented unless verified in the current code.
 - The current repo includes local dashboard API routes and Mongoose models for store/module behavior; whether each route should remain dashboard-owned or move behind backend APIs needs product/security review.
 - Shopify collection ownership is implied by using the connected store's stored Shopify credentials, but explicit backend validation of store-owned Shopify references must be verified before relying on it.
 - Product picker behavior was not found during the audit.
